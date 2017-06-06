@@ -7,9 +7,11 @@ require('dotenv').config()
 
 // Routers
 const { translateRouter } = require('./routers/translateRouter');
+const { usersRouter } = require('./routers/usersRouter');
 
-// API endpoints
+// API routers
 app.use('/api/translate', translateRouter);
+app.use('/api/users', usersRouter);
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
