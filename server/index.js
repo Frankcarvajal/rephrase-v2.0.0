@@ -3,8 +3,13 @@ const express = require('express');
 
 const app = express();
 
-// API endpoints go here!
+require('dotenv').config()
 
+// Routers
+const { translateRouter } = require('./routers/translateRouter');
+
+// API endpoints
+app.use('/api/translate', translateRouter);
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
