@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../header';
+import Dictaphone from '../dictaphone';
 import './App.css';
 
 class App extends Component {
@@ -7,6 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
+        <Dictaphone />
       </div>
     );
   }
