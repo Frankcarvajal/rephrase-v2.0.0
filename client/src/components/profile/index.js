@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import './profile.css';
+// import React, { Component } from 'react';
+// import './profile.css';
 
-class Profile extends Component {
-    render() {
-        return (
-            <h1 className="Profile"> Profile Picture</h1>
-        );
-    }
-}
+// class Profile extends Component {
+//     render() {
+//         return (
+    
+//         );
+//     }
+// }
 
-export default Profile;
+// export default Profile;

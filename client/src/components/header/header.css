@@ -1,4 +1,41 @@
-.app-header .app-logo {
-  width: 100px;
-  height: 100px;
+h1,h2,h3,h4 {
+  font-family: 'Raleway', sans-serif;
+}
+p{
+  font-family: 'Open Sans', sans-serif;
+}
+.header-wrapper{
+  width: 100%;
+  background-color: #AFC2D5;
+
+}
+.app-header{
+  background-color: #AFC2D5;
+  color: #474448;
+  display: flex;
+  justify-content: space-around;
+  max-width: 800px;
+  align-items: center;
+  margin: 0 auto;
+}
+.highlight{
+  color: white;
+}
+img.app-logo{
+  height: 40px;
+  margin-left: 15px;
+  
+}
+.app-title{
+  display: flex;
+  align-items: center;
+}
+.app-title h1, .app-title img{
+  display: inline-block;
+  vertical-align: center;
+}
+.fa{
+  font-size: 50px;
+  text-align: center;
+  vertical-align: center;
 }

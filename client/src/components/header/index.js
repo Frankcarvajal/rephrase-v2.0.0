@@ -7,9 +7,14 @@ import './header.css';
 class Header extends Component {
     render() {
         return (
-            <div className="app-header">
-                <img src={logo} className="app-logo" alt="logo" />
-                <h1>rephrase</h1>
+            <div className="header-wrapper">
+                <div className="app-header">
+                    <i className="fa fa-bars" aria-hidden="true"></i>
+                    <div className="app-title">
+                    <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
+                     </div>
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                </div>
             </div>
         );
     }
