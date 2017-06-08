@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
 import './header.css';
-import Menu from '../menu';
-import Profile from '../profile';
+
+// <h1 className="menu">Menu Menu Menu Menu</h1> -> We can use the hamburger menu icon from react icon package
 
 class Header extends Component {
     render() {
         return (
-            <div className="App-header">
-                <Menu />
-                <img src={logo} className="App-logo" alt="logo" />
-                <Profile />
-                <h2>rephrase</h2>
+            <div className="app-header">
+                <img src={logo} className="app-logo" alt="logo" />
+                <h1>rephrase</h1>
             </div>
         );
     }

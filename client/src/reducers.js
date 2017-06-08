@@ -1,7 +1,11 @@
 // combine reducers go here
-import {combineReducers} from 'redux';
-import app from './components/app/reducers';
+import { combineReducers } from 'redux';
+import basicTranslateReducer from './components/dictaphone/reducer'
+import speechRecognitionReducer from './components/app/reducer';
 
-export default combineReducers({
-    app
+const rootReducer = combineReducers({
+    speech: speechRecognitionReducer,
+    basicTranslate: basicTranslateReducer
 });
+
+export default rootReducer;
