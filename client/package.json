@@ -6,10 +6,17 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "js-cookie": "^2.1.4",
     "material-ui": "^0.18.1",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-redux": "^5.0.5"
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "react-speech-recognition": "^1.0.1",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
