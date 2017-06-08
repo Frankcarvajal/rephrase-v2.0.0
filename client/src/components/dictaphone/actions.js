@@ -8,12 +8,12 @@ export const TRANSLATION_SUCCESS = 'TRANSLATION_SUCCESS';
 export const translationSuccess = data => ({
     type: TRANSLATION_SUCCESS,
     loading: false,
-    detectedSourceLanguage: data.detectedSourceLanguage,
-    originalText: data.originalText,
-    translatedText: data.translatedText
+    detectedSourceLanguage: data.translation.detectedSourceLanguage,
+    originalText: data.translation.originalText,
+    translatedText: data.translation.translatedText
 });
 
-export const postTranscriptGetTranslation = dispatch => transcript => {
+export const postTranscriptGetTranslation = transcript => dispatch => {
   console.log(transcript);
   dispatch(translationRequest());
   return fetch('/api/translate', {

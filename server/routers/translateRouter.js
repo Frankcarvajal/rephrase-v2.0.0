@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/', jsonParser, (req, res) => {
   // For posting a string to translate, will return the translated string
   // Google translate will identify the language for you as well. 
-  console.log(req.body);
   return googleTranslate.translate(req.body.toTranslate, req.body.targetLanguage, function(err, translation) {
     if (err) {
       return res.status(500);

@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import './menu.css';
+// import React, { Component } from 'react';
+// import './menu.css';
 
-class Menu extends Component {
-    render() {
-        return (
-            <h1 className="Menu">Menu Menu Menu Menu</h1>
-        );
-    }
-}
+// // The Menu component is for the sliding side bar menu. 
+// // It will be reusable and will display different content based on the user's current view and state
+// // components need to return more than just a single html node. 
 
-export default Menu;
+// class Menu extends Component {
+//     render() {
+//         return (
+//             
+//         );
+//     }
+// }
+
+// export default Menu;

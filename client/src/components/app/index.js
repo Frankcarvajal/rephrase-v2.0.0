@@ -1,38 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleBtn } from './actions';
+
 import Header from '../header';
 import Dictaphone from '../dictaphone';
-import SpeechRecognition from 'react-speech-recognition';
-import './App.css';
+import './app.css';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      speechRecognitionOn: false
-    };
-  }
-
-  toggleRecognition() {
-    this.setState({
-      speechRecognitionOn: !this.state.speechRecognitionOn
-    });
+  toggleSpeechRecognition() {
+    this.props.dispatch(toggleBtn());
   }
 
   handleSpeechRecognition() {
-    if (this.state.speechRecognitionOn) {
+    if (this.props.speechRecognitionOn) {
       return (<Dictaphone />);
     }
     else {
       return (
-        <button onClick={(e) => this.toggleRecognition()}>Start Transcription</button>
+        <button onClick={(e) => this.toggleSpeechRecognition()}>Start Transcription</button>
       );
     }
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Header />
         {this.handleSpeechRecognition()}
       </div>
@@ -40,4 +33,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  speechRecognitionOn: state.speech.speechRecognitionOn
+});
+
+export default connect(mapStateToProps)(App);
