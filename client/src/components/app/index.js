@@ -5,7 +5,7 @@ import { toggleBtn } from './actions';
 import Header from '../header';
 import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
-import './App.css';
+import './app.css';
 import Dictaphone from '../dictaphone';
 
 
