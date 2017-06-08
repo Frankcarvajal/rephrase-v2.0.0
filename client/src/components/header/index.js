@@ -7,11 +7,14 @@ import Profile from '../profile';
 class Header extends Component {
     render() {
         return (
-            <div className="App-header">
-                <Menu />
-                <img src={logo} className="App-logo" alt="logo" />
-                <Profile />
-                <h2>rephrase</h2>
+            <div className="header-wrapper">
+                <div className="app-header">
+                    <i className="fa fa-bars" aria-hidden="true"></i>
+                    <div className="app-title">
+                    <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
+                     </div>
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                </div>
             </div>
         );
     }
