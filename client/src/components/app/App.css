@@ -1,6 +1,7 @@
-.App {
+.app {
   text-align: center;
 }
+
 
 .App-logo {
   animation: App-logo-spin infinite 5s linear;
@@ -66,3 +67,4 @@ form.translate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+

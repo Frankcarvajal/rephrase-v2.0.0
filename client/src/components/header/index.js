@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
 import './header.css';
-import Menu from '../menu';
-import Profile from '../profile';
+
+// <h1 className="menu">Menu Menu Menu Menu</h1> -> We can use the hamburger menu icon from react icon package
 
 class Header extends Component {
     render() {

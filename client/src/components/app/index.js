@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleBtn } from './actions';
+
 import Header from '../header';
 import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
 import './App.css';
+import Dictaphone from '../dictaphone';
+
 
 class App extends Component {
+
+  toggleSpeechRecognition() {
+    this.props.dispatch(toggleBtn());
+  }
+
+  handleSpeechRecognition() {
+    if (this.props.speechRecognitionOn) {
+      return (<Dictaphone />);
+    }
+    else {
+      return (
+        <button onClick={(e) => this.toggleSpeechRecognition()}>Start Transcription</button>
+      );
+    }
+  }
+
   render() {
     return (
-      <div className="App">
+      <div className="app">
+      
         <Header />
         <LanguageChoice />
         <form className="translate">
@@ -21,10 +43,17 @@ class App extends Component {
           </div>
     
         <button className="speak"><i className="fa fa-microphone" aria-hidden="true"></i></button>
+
+        {this.handleSpeechRecognition()}
+
       </div>
  
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  speechRecognitionOn: state.speech.speechRecognitionOn
+});
+
+export default connect(mapStateToProps)(App);
