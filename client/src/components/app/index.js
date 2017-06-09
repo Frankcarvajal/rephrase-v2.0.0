@@ -6,7 +6,7 @@ import {  postTranscriptGetTranslation } from '../dictaphone/actions';
 import Header from '../header';
 import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
-import './app.css';
+import './App.css';
 import Dictaphone from '../dictaphone';
 
 
