@@ -5,7 +5,8 @@ import SpeechRecognition from 'react-speech-recognition';
 import { connect } from 'react-redux';
 import { postTranscriptGetTranslation } from './actions';
 import { toggleBtn } from '../app/actions';
-// import './output.css';
+import './dictaphone.css';
+import EditButton from '../edit-btn';
 
     const propTypes = {
         transcript: PropTypes.string,
@@ -21,6 +22,7 @@ class Dictaphone extends Component {
 
   componentWillUnmount() {
     console.log('Dictaphone is being torn down');
+
   }
 
   componentWillReceiveProps() {
@@ -35,7 +37,7 @@ class Dictaphone extends Component {
     }
 
     const sendTranscriptToServer = transcript => {
-      recognition.onend = function(e) { console.log(e); }
+      recognition.onend = function(e) { console.log('trancript:', e); }
       const final = transcript;
       resetTranscript();
       recognition.stop(); 
@@ -45,8 +47,11 @@ class Dictaphone extends Component {
 
     return (
       <div>
-        <button onClick={(e) => sendTranscriptToServer(transcript)}>End Transcrition and get translation</button>
-        <span>{transcript}</span>
+        <div>
+          <button className="speak" onClick={(e) => sendTranscriptToServer(transcript)}>Stop</button>
+          <EditButton className="edit" />
+        </div>
+        <div className="transcript">{transcript}</div>
       </div>
     )
   }
