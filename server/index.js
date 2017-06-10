@@ -3,6 +3,8 @@ const express = require('express');
 
 const app = express();
 
+mongoose.Promise = global.Promise;
+
 require('dotenv').config()
 
 // Routers
@@ -26,9 +28,15 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        server = app.listen(port, () => {
-            resolve();
-        }).on('error', reject);
+        return mongoose.connect(process.env.DATABASE_URL, err => {
+            if (err) {
+                return reject(err);
+            }
+            console.log('Database connected');        
+            server = app.listen(port, () => {
+                return resolve();
+            }).on('error', reject);
+        });
     });
 }
 
