@@ -47,4 +47,7 @@ passport.use(
     )
 );
 
+// for reference
+// https://github.com/bookcasey/spaced-repetition-starter/blob/master/server/index.js
+
 module.exports = { passportStrategies: passport };
