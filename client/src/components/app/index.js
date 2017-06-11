@@ -8,9 +8,18 @@ import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
 import './App.css';
 import Dictaphone from '../dictaphone';
-
+import * as Cookies from 'js-cookie';
+import { fetchUserData } from './actions';
 
 export class App extends Component {
+
+  componentDidMount() {
+    const accessToken = Cookies.get('accessToken');
+    if (accessToken) {
+      // call an action that fetches user data and sets in state
+      this.props.dispatch(fetchUserData(accessToken));
+    }
+  }
 
   toggleSpeechRecognition() {
     this.props.dispatch(toggleBtn());

@@ -6,19 +6,14 @@ const { User } = require('../models/user');
 
 mongoose.Promise = global.Promise;
 
-let secret = {
-  CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET
-}
-
 // Define the google and bearer strategies here and then export
 // them to the usersRouter where you can insert passport middleware
 // for user authentication
 
 passport.use(
     new GoogleStrategy({
-        clientID:  secret.CLIENT_ID,
-        clientSecret: secret.CLIENT_SECRET,
+        clientID:  process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
