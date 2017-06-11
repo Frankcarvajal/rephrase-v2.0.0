@@ -1,9 +1,12 @@
-// Steps
-// 1 Review how other team did oauth 
-// 2 Try to implement yourself without looking at past code
-// 3 Start here with user model and setting up db
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// Signing in should route to profile from where they can route to list of 
-// availble chat messages, which then routes to indidual chat rooms
-// so implement react router to handle all this and facilitate chat 
-// functionality development
+const userSchema = new Schema({
+  googleId: {type: String, unique: true, required: true},
+  accessToken: {type: String, required: true},
+  displayName: {type: String},
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = { User };

@@ -1,19 +1,33 @@
+require('dotenv').config();
+mongoose.Promise = global.Promise;
+
 const path = require('path');
 const express = require('express');
 
 const app = express();
 
-mongoose.Promise = global.Promise;
+const { passport } = require('./auth');
+const { User } = require('../models/user');
 
-require('dotenv').config()
-
-// Routers
+// require the routers
 const { translateRouter } = require('./routers/translateRouter');
-const { usersRouter } = require('./routers/usersRouter');
+const { authRouter } = require('./routers/authRouter');
 
-// API routers
+// OAuth
+app.use(passport.initialize());
+// pass API routers to app
+app.use('/api/auth', authRouter);
 app.use('/api/translate', translateRouter);
-app.use('/api/users', usersRouter);
+
+// Test auth log in endpoint
+app.get('/api/me',
+    passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+        return res.json({
+        googleId: req.user.googleId,
+        displayName: req.user.displayName
+    })}
+);
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
