@@ -18,6 +18,12 @@ p{
   align-items: center;
   margin: 0 auto;
 }
+a:link, a:visited {
+  color: #474448;
+}
+.nav-icons svg{
+  margin: 0 30px 0 30px;
+}
 .highlight{
   color: white;
 }

@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import FaBars from 'react-icons/lib/fa/bars';
 import FaMicrophone from 'react-icons/lib/fa/microphone';
 import FaUser from 'react-icons/lib/fa/user';
+import FaHome from 'react-icons/lib/fa/home';
+import FaWechat from 'react-icons/lib/fa/wechat';
 
 export class Header extends Component {
 
@@ -25,8 +27,11 @@ export class Header extends Component {
                     <div className="app-title">
                         <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
                     </div>
-                    <Link to={'/profile'}><FaUser size={30} /></Link>
-                    <Link to={'/'}>Home</Link>
+                    <div className="nav-icons">
+                        <Link to={'/'}><FaHome size={30} /></Link>
+                        <Link to={'/'}><FaWechat size={30} /></Link>
+                        <Link to={'/profile'}><FaUser size={30} /></Link>
+                    </div>
                     {this.getUserRegistration()}    
                 </div>
             </div>
