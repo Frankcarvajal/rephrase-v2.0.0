@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SpeechRecognition from 'react-speech-recognition';
 import { connect } from 'react-redux';
 import { postTranscriptGetTranslation } from './actions';
-import { toggleBtn } from '../app/actions';
+import { toggleBtn } from '../home/actions';
 import './dictaphone.css';
 import EditButton from '../edit-btn';
 import FaMicrophoneSlash from 'react-icons/lib/fa/microphone-slash';

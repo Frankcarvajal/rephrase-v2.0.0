@@ -1,7 +1,7 @@
 // combine reducers go here
 import { combineReducers } from 'redux';
 import basicTranslateReducer from './components/dictaphone/reducer';
-import speechRecognitionReducer from './components/app/reducer';
+import speechRecognitionReducer from './components/home/reducer';
 import selectLanguageReducer from './components/language-choice/reducer';
 import userReducer from './components/app/userReducer';
 
