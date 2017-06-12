@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+
 import { toggleBtn, editBtn} from './actions';
 import {  postTranscriptGetTranslation } from '../dictaphone/actions';
 
@@ -16,7 +18,7 @@ export class App extends Component {
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');
     if (accessToken) {
-      // call an action that fetches user data and sets in state
+      // fetch user data and set it in state
       this.props.dispatch(fetchUserData(accessToken));
     }
   }
@@ -53,29 +55,26 @@ export class App extends Component {
   }
   handleEdit(e){
     if(!this.props.speechRecognitionOn){
-      if(this.props.isEditing){
-        return(
+      if(this.props.isEditing) {
+        return (
           <div>
             <input type="text" ref={input => this.input = input} defaultValue={this.props.speechText.originalText}></input>
-            <button className="submit" type="submit" 
-            >Submit</button>
+            <button className="submit" type="submit">Submit</button>
           </div>
-          )
+        );
       }
-      else{
-        return(
+      else {
+        return (
           <div className="original-text-container">
             <p className="original-text" value="speak to have text trascribed">{this.props.speechText.originalText}</p>
-            <div className="edit-container">
-            </div>
+            <div className="edit-container"></div>
           </div>
-        )
+        );
       }
     }
   }
 
   render() {
-    console.log('SpeechRecognitionOn', this.props.speechText.originalText);
     return (
       <div className="app">
       
@@ -86,13 +85,12 @@ export class App extends Component {
           {this.handleEdit()}
 
         </form>
-                 <hr/>
+                <hr/>
           <div className="translation">
             <p>{this.props.speechText.translatedText}</p>
           </div>
 
       </div>
- 
     );
   }
 }
