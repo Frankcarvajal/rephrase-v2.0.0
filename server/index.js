@@ -14,6 +14,8 @@ const { User } = require('./models/user');
 // require the routers
 const { translateRouter } = require('./routers/translateRouter');
 const { authRouter } = require('./routers/authRouter');
+const { chatRoomRouter } = require('./routers/chatRoomRouter');
+
 
 // OAuth, set up passport middleware
 app.use(passport.initialize());
@@ -21,6 +23,7 @@ app.use(passport.initialize());
 // pass API routers to app
 app.use('/api/auth', authRouter);
 app.use('/api/translate', translateRouter);
+app.use('/api/chat', chatRoomRouter);
 
 // Get the current user if they are authenticated w/ token
 app.get('/api/me', passport.authenticate('bearer', {session: false}), 
