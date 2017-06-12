@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import logo from './logo.png';
 import './header.css';
 
-// <h1 className="menu">Menu Menu Menu Menu</h1> -> We can use the hamburger menu icon from react icon package
+import FaBars from 'react-icons/lib/fa/bars';
+import FaMicrophone from 'react-icons/lib/fa/microphone';
+import FaUser from 'react-icons/lib/fa/user';
 
 export class Header extends Component {
 
@@ -17,11 +19,11 @@ export class Header extends Component {
         return (
             <div className="header-wrapper">
                 <div className="app-header">
-                    <i className="fa fa-bars" aria-hidden="true"></i>
+                   <FaBars size={30}/>
                     <div className="app-title">
                     <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
                      </div>
-                    <i className="fa fa-user" aria-hidden="true"></i>
+                    <FaUser size={30} />
                     <a href={'/api/auth/google'}>Sign in with Google</a>
                     {this.logOutBtn()}    
                 </div>

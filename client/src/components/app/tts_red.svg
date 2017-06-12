@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1.375,0,0,1.35282,-21.5,-47.621)">
+        <g transform="matrix(1,0,0,1,-15.25,2.99099)">
+            <path d="M136,101C136,101 161,107.273 161,140C161,172.727 135.798,178.268 136,178" style="fill:none;stroke:rgb(201,90,123);stroke-width:6.97px;"/>
+            <path d="M130,115C130,115 146,117.078 146,140C146,162.922 130,164 130,164" style="fill:none;stroke:rgb(201,90,123);stroke-width:6.97px;"/>
+            <g>
+                <g transform="matrix(0.809524,0,0,0.809524,12.8333,27.381)">
+                    <rect x="70" y="128" width="21" height="21" style="fill:rgb(201,90,123);stroke:rgb(201,90,123);stroke-width:11.77px;"/>
+                </g>
+                <g transform="matrix(1.04095e-16,-1.7,0.805556,4.93261e-17,-32.1667,305.5)">
+                    <path d="M97.5,138L115,174L80,174L97.5,138Z" style="fill:rgb(201,90,123);stroke:rgb(201,90,123);stroke-width:7.2px;"/>
+                </g>
+            </g>
+            <path d="M124,129C124,129 131,129.561 131,139.75C131,149.939 124,150 124,150" style="fill:none;stroke:rgb(201,90,123);stroke-width:6.97px;"/>
+        </g>
+        <clipPath id="_clip1">
+            <rect x="15.636" y="35.183" width="169.455" height="190.013"/>
+        </clipPath>
+        <g clip-path="url(#_clip1)">
+            <path d="M180,90.233L129.767,90.233L129.767,40C99.398,40 62.354,40 40,40C34.696,40 29.609,42.107 25.858,45.858C22.107,49.609 20,54.696 20,60C20,94.631 20,165.369 20,200C20,205.304 22.107,210.391 25.858,214.142C29.609,217.893 34.696,220 40,220C70.74,220 129.26,220 160,220C165.304,220 170.391,217.893 174.142,214.142C177.893,210.391 180,205.304 180,200C180,173.695 180,126.556 180,90.233Z" style="fill:none;stroke:rgb(201,90,123);stroke-width:9.53px;"/>
+        </g>
+        <g transform="matrix(0.965035,0,0,1.00364,6.29371,-0.509091)">
+            <path d="M128,40L180,90" style="fill:none;stroke:rgb(201,90,123);stroke-width:9.68px;"/>
+        </g>
+    </g>
+</svg>

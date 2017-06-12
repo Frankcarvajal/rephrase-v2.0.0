@@ -34,8 +34,6 @@ img.app-logo{
   display: inline-block;
   vertical-align: center;
 }
-.fa{
-  font-size: 50px;
-  text-align: center;
-  vertical-align: center;
+svg:hover{
+  color: white;
 }

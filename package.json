@@ -23,8 +23,11 @@
   "dependencies": {
     "cross-env": "^3.1.4",
     "express": "^4.14.1",
+    "google-tts-api": "0.0.1",
     "http-proxy-middleware": "^0.17.3",
     "npm-run-all": "^4.0.1",
+    "react-icons": "^2.2.5",
+    "react-voice-components": "^1.0.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "xp": "^1.0.1"

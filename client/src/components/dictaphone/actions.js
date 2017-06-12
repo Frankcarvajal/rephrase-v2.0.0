@@ -13,8 +13,8 @@ export const translationSuccess = data => ({
     translatedText: data.translation.translatedText
 });
 
-export const postTranscriptGetTranslation = transcript => dispatch => {
-  console.log(transcript);
+export const postTranscriptGetTranslation = (transcript, language) => dispatch => {
+  console.log(transcript, language);
   dispatch(translationRequest());
   return fetch('/api/translate', {
     method: "POST",
@@ -22,7 +22,7 @@ export const postTranscriptGetTranslation = transcript => dispatch => {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({toTranslate: transcript, targetLanguage: 'fr'})
+    body: JSON.stringify({toTranslate: transcript, targetLanguage: language})
   })
   .then(res => res.json())
   .then(translationData => { 
