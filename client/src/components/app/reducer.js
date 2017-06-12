@@ -13,7 +13,7 @@ const speechRecognitionReducer = (state=initialState, action) => {
     });
   }
   if (action.type === EDIT_BTN) {
-    console.log('We are totally editting');
+    console.log('We are totally editting', state);
     return Object.assign({}, state, {
       isEditing: !state.isEditing
     })

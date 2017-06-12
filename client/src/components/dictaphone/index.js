@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SpeechRecognition from 'react-speech-recognition';
-
 import { connect } from 'react-redux';
 import { postTranscriptGetTranslation } from './actions';
 import { toggleBtn } from '../app/actions';
 import './dictaphone.css';
 import EditButton from '../edit-btn';
+import FaMicrophoneSlash from 'react-icons/lib/fa/microphone-slash';
 
     const propTypes = {
         transcript: PropTypes.string,
@@ -37,18 +37,18 @@ class Dictaphone extends Component {
     }
 
     const sendTranscriptToServer = transcript => {
-      recognition.onend = function(e) { console.log('trancript:', e); }
+      recognition.onend = function(e) { console.log('SEND-TRANSCRIPT-TO-SERVER:', this.props) }
       const final = transcript;
       resetTranscript();
       recognition.stop(); 
       this.props.dispatch(toggleBtn());
-      this.props.dispatch(postTranscriptGetTranslation(final));
+      this.props.dispatch(postTranscriptGetTranslation(final, this.props.userLanguage ));
     }
 
     return (
       <div>
         <div>
-          <button className="speak" onClick={(e) => sendTranscriptToServer(transcript)}>Stop</button>
+          <button className="speak" onClick={(e) => sendTranscriptToServer(transcript)}><FaMicrophoneSlash /></button>
           <EditButton className="edit" />
         </div>
         <div className="transcript">{transcript}</div>
@@ -60,5 +60,9 @@ class Dictaphone extends Component {
 
 Dictaphone.propTypes = propTypes;
 
-export default connect()(SpeechRecognition(Dictaphone));
+const mapStateToProps = state => ({
+  userLanguage: state.selectedLanguage.userLanguage
+});
+
+export default connect(mapStateToProps)(SpeechRecognition(Dictaphone));
 

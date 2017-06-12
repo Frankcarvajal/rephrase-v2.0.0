@@ -8,8 +8,11 @@ import {Provider} from 'react-redux';
 import store from './store';
 
 ReactDOM.render(
+  <div>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider> 
+  
+  </div>,
   document.getElementById('root')
 );

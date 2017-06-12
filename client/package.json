@@ -11,13 +11,15 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-icons": "^2.2.5",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-speech-recognition": "^1.0.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "speech": "^0.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
