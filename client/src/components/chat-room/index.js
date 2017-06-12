@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ChatMessage from '../chat-message'
-import './chat.css';
+import './chat-room.css';
 
-export default class Chat extends Component {
+export default class ChatRoom extends Component {
 
   // write a method that loops over a user's given chats and renders all chat messages
 
