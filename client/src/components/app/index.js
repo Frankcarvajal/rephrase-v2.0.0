@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 import Home from '../home';
+import Profile from '../profile';
+import ChatRoom from '../chat-room';
 import * as Cookies from 'js-cookie';
 import { fetchUserData } from './actions';
 
@@ -16,23 +18,28 @@ export class App extends Component {
     }
   }
 
+  handleProfileView() {
+    if (!this.props.user) {
+      return (<Redirect to={'/'} />);
+    }
+    return (<Profile />);
+  }
+
   render() {
     return (
       <Router>
         <div className="app">
-            <Home /> 
+          <Route exact path="/" component={Home} />
+          <Route exact path="/profile" component={() => this.handleProfileView()} />
+          <Route exact path="/profile/chat" component={ChatRoom} />
         </div>
       </Router>
     );
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   speechRecognitionOn: state.speech.speechRecognitionOn,
-//   speechText: state.basicTranslate,
-//   translatedText: state.basicTranslate.translatedText,
-//   isEditing: state.speech.isEditing,
-//   userLanguage: state.selectedLanguage.userLanguage
-// });
+const mapStateToProps = state => ({
+  user: state.userData.user
+});
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);
