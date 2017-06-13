@@ -21,6 +21,3 @@ export default class ChatRoom extends Component {
   }
 
 }
-
-
-
