@@ -32,7 +32,7 @@ export class App extends Component {
         <div className="app">
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={() => this.handleProfileView()} />
-          <Route exact path="/profile/chat" component={ChatRoom} />
+          <Route exact path="/profile/chat/:roomId" component={ChatRoom} />
           <Route exact path="/profile/chatlist" component={ChatList} />
         </div>
       </Router>

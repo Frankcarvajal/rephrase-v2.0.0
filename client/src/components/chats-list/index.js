@@ -2,6 +2,8 @@ import React from 'react';
 import './chats-list.css';
 import { connect } from 'react-redux';
 import { fetchChatList } from './actions';
+import { Link } from 'react-router-dom';
+
 export class ChatList extends React.Component{
 
   componentDidMount(){
@@ -12,10 +14,12 @@ export class ChatList extends React.Component{
     if(this.props.chatRooms){
       return this.props.chatRooms.map((room, index) => {
         return (
+          <Link to={`/profile/chat/${room._id}`}>
             <li className="chat-listing" key={index} >
-                  <p>{ `Participants: ${room.participants.join(' ')}` }</p>
-                  <p>{ `RoomId: ${room._id}` }</p>
+                <p>{ `Participants: ${room.participants.join(' ')}` }</p>
+                <p>{ `RoomId: ${room._id}` }</p>
             </li>
+          </Link>
         )
       })
     }

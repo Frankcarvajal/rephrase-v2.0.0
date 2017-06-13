@@ -5,11 +5,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const socketEvents = require('./socketEvents');
 
 mongoose.Promise = global.Promise;
 
 const { passport } = require('./auth');
 const { User } = require('./models/user');
+
+// Set up the socket.io events
+socketEvents(io);
 
 // require the routers
 const { translateRouter } = require('./routers/translateRouter');
@@ -45,7 +51,6 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     res.sendFile(index);
 });
 
-let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
         return mongoose.connect(process.env.DATABASE_URL, err => {
@@ -53,7 +58,7 @@ function runServer(port=3001) {
                 return reject(err);
             }
             console.log('Database connected');        
-            server = app.listen(port, () => {
+            return server.listen(port, () => {
                 return resolve();
             }).on('error', reject);
         });
