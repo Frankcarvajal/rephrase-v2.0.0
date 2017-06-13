@@ -30,7 +30,8 @@ app.get('/api/me', passport.authenticate('bearer', {session: false}),
     (req, res) => {
         return res.json({
             googleId: req.user.googleId,
-            displayName: req.user.displayName
+            displayName: req.user.displayName,
+            id: req.user._id
         });
 });
 

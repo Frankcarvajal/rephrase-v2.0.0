@@ -18,6 +18,14 @@ export class Header extends Component {
         }
         return (<a href={'/api/auth/google'}>Sign in with Google</a>);
     }
+    getChatIcon(){
+        if(this.props.user){
+            return(
+                <Link to={'/profile/chatlist'}><FaWechat size={30} /></Link>
+            )
+        }
+        return (<FaWechat size={30} />)
+    }
 
     render() {
         return (
@@ -29,7 +37,7 @@ export class Header extends Component {
                     </div>
                     <div className="nav-icons">
                         <Link to={'/'}><FaHome size={30} /></Link>
-                        <Link to={'/'}><FaWechat size={30} /></Link>
+                        { this.getChatIcon() }
                         <Link to={'/profile'}><FaUser size={30} /></Link>
                     </div>
                     {this.getUserRegistration()}    
