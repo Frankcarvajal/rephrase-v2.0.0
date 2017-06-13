@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChatMessage from '../chat-message'
+// import ChatMessage from '../chat-message'
 import './chat-room.css';
 import io from 'socket.io-client';
 
