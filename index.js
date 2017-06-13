@@ -1,5 +1,6 @@
 const express = require('express');
 const proxy = require('http-proxy-middleware');
+const socketEvents = require('./server/socketEvents');
 
 const app = express();
 
@@ -13,7 +14,6 @@ if (process.env.NODE_ENV === 'production') {
     runServer(process.env.PORT || 8080);
 }
 else {
-    const app = express();
     // Proxy everything through to Create React App
     app.use(proxy('http://localhost:3000/', {
         logLevel: 'warn', // Keep the logs clean
@@ -23,5 +23,9 @@ else {
             'localhost:8080/api': 'http://localhost:3001'
         }
     }));
-    app.listen(process.env.PORT || 8080);
+    
+    const server = require('http').createServer(app);
+    server.listen(process.env.PORT || 8080);
+    const io = require('socket.io')(server);
+    socketEvents(io);
 }
