@@ -5,8 +5,8 @@ mongoose.Promise = global.Promise;
 const chatRoomSchema = new Schema({
     participants: [{ type: String }],
     createdAt: { type: Date, default: Date.now },
-		messages: [{
-        createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
+	messages: [{
+        createdBy: { type: String, required: true },
         date: { type: Date, default: Date.now },
         body: { type: String, required: true } 
     }]

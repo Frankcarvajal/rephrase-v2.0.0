@@ -1,0 +1,11 @@
+.chat-list{
+  padding: 0;
+  margin: 10px auto;
+  max-width: 300px;
+  list-style: none;
+}
+.chat-listing{
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 3px;
+}
