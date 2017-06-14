@@ -8,6 +8,7 @@ import ChatRoom from '../chat-room';
 import * as Cookies from 'js-cookie';
 import { fetchUserData } from './actions';
 import ChatList from '../chats-list';
+import Header from '../header';
 
 export class App extends Component {
 
@@ -30,6 +31,7 @@ export class App extends Component {
     return (
       <Router>
         <div className="app">
+          <Header />
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={() => this.handleProfileView()} />
           <Route exact path="/profile/chat/:roomId" component={ChatRoom} />

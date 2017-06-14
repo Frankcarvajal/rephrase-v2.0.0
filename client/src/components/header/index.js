@@ -31,7 +31,7 @@ export class Header extends Component {
         return (
             <div className="header-wrapper">
                 <div className="app-header">
-                   <FaBars size={30}/>
+                    <FaBars size={30}/>
                     <div className="app-title">
                         <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
                     </div>

@@ -23,7 +23,7 @@ export class Home extends Component {
       return (
         <div>
         <button className="speak" onClick={(e) => this.toggleSpeechRecognition()}>
-         <FaMicrophone />
+          <FaMicrophone />
         </button>
         <EditButton className="edit" onClick={e => this.toggleEdit()} />
         </div>
@@ -62,7 +62,6 @@ export class Home extends Component {
   render() {
     return (
       <div className="home-view">
-        <Header />
         <LanguageChoice />
         {this.handleSpeechRecognition()}
         <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
