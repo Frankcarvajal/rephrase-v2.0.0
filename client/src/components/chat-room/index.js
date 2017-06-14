@@ -40,13 +40,13 @@ export default class ChatRoom extends Component {
 
   componentDidMount() {
     // socket.on('connect', function(connection) {
-    console.log('connecting to room '+this.props.match.params.id);
-    this.socket.emit('join room', { roomId: this.props.match.params.id });
+    console.log('connecting to room '+ this.props.match.params.roomId);
+    this.socket.emit('join room', { roomId: this.props.match.params.roomId });
     // });
   }
 
   componentWillUnmount() {
-    this.socket.emit('leave room', { roomId: this.props.match.params.id });
+    this.socket.emit('leave room', { roomId: this.props.match.params.roomId });
   }
 
   componentWillReceiveProps() {
@@ -57,7 +57,7 @@ export default class ChatRoom extends Component {
     event.preventDefault();
     const msg = this.input.value.trim();
     this.input.value = '';
-    this.socket.emit('new message', { msg, roomId: this.props.match.params.id });
+    this.socket.emit('new message', { msg, roomId: this.props.match.params.roomId });
   }
 
   insertMessagesDom() {
