@@ -12,18 +12,18 @@
 .home-view-intro {
   font-size: large;
 }
-.userText{
+.home-view .userText{
   height: 30px;
   width: 600px;
   vertical-align: text-top;
 }
-input{
+.home-view input{
   font-size:20px;
 }
-p{
+.home-view p{
   color: #474448;
 }
-.home-view hr{
+.home-view .home-view hr{
   border-top: 1px solid #dcdcdc;
   width: 100%;
 }
@@ -41,7 +41,7 @@ p{
   margin-top: 30px;
   transition: all 0.3s ease 0s;
 }
-.submit{
+.home-view .submit{
   width: 250px;
   height: 60px;
   background-color: #C95A7B;
@@ -54,16 +54,16 @@ p{
   margin-top: 30px;
   transition: all 0.3s ease 0s;
 }
-.fa-microphone {
+.home-view .fa-microphone {
   font-size: 30px;
 }
-button:hover{
+.home-view button:hover{
   opacity: 0.75;
 }
-.fa-bars:hover, .fa-user:hover {
+.home-view .fa-bars:hover, .fa-user:hover {
   color: white; 
 }
-.edit-button{
+.home-view .edit-button{
   background-color: white;
   width: 80px;
   height: 60px;
@@ -77,26 +77,26 @@ button:hover{
   font-size: 30px;
   font-family: 'Open Sans', sans-serif;
 }
-.speak, .edit-button{
+.home-view .speak, .edit-button{
   margin-bottom: 50px;
 }
 
-form#translate {
+.home-view form#translate {
   vertical-align: middle;
 } 
-form#translate p{
+.home-view form#translate p{
   width: 500px;
 }
-.original-text-container{
+.home-view .original-text-container{
   position: relative;
   max-width: 500px;
   margin: 0 auto;
 }
-.original-text{
+.home-view .original-text{
   text-align: center;
   width:430px;
 }
-input {
+.home-view input {
     width: 100%;
     height: 150px;
     padding: 12px 20px;
@@ -107,7 +107,7 @@ input {
     resize: none;
     text-align: center;
 }
-.tts-icon{
+.home-view .tts-icon{
   height: 60px;
   vertical-align: top;
   margin-top: 30px;

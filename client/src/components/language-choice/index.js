@@ -6,7 +6,6 @@ export class LanguageChoice extends Component{
   handleChange(event){
     event.preventDefault();
     let lan = event.target.value;
-    console.log(lan);
     this.props.dispatch(selectLanguage(lan));    
   }
 render(){ 

@@ -19,7 +19,7 @@ router.get('/:userId', (req, res) => {
             return res.status(200).json(filteredRooms)
         })
         .catch(err => console.error('the error'))
-})
+});
 
 router.get('/chatRoom/:chatRoomId', (req, res) => {
     return ChatRoom
@@ -30,7 +30,7 @@ router.get('/chatRoom/:chatRoomId', (req, res) => {
             return res.status(200).json(room)
         })
         .catch(err => console.error(err));
-})
+});
 
 router.post('/', jsonParser, (req, res) => {
     return ChatRoom.create({
@@ -41,7 +41,7 @@ router.post('/', jsonParser, (req, res) => {
         return res.status(200).json(newChatroom)
     })
     .catch(err => console.error('the error'))
-})
+});
 
 router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
     const { newMessage } = req.body;
@@ -56,5 +56,6 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
             return res.status(200).json(room);
         })
         .catch(err => console.error(err));
-})
+});
+
 module.exports = { chatRoomRouter: router };
