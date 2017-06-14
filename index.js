@@ -1,6 +1,9 @@
 const express = require('express');
 const proxy = require('http-proxy-middleware');
 const socketEvents = require('./server/socketEvents');
+// const mongoose = require('mongoose');
+const rp = require('request-promise-native');
+
 
 const app = express();
 
@@ -24,8 +27,15 @@ else {
         }
     }));
     
+    // require('dotenv').config();
+
     const server = require('http').createServer(app);
+    // mongoose.connect(process.env.DATABASE_URL, err => {
+    //     if (err) {
+    //         console.error(err)
+    //     }
     server.listen(process.env.PORT || 8080);
     const io = require('socket.io')(server);
     socketEvents(io);
+    // });
 }

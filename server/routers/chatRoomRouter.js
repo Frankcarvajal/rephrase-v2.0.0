@@ -44,6 +44,7 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
+    console.log(req.body);
     const { newMessage } = req.body;
     return ChatRoom
         .findByIdAndUpdate(

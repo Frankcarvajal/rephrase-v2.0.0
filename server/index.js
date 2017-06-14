@@ -3,6 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const rp = require('request-promise-native');
 
 const app = express();
 const server = require('http').createServer(app);
