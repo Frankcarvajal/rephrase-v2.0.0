@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 // import ChatMessage from '../chat-message'
+import { connect } from 'react-redux';
 import './chat-room.css';
 import io from 'socket.io-client';
 
 
-export default class ChatRoom extends Component {
+export class ChatRoom extends Component {
 
   // write a method that loops over a user's given chats and renders all chat messages
   constructor(props) {
@@ -39,10 +40,8 @@ export default class ChatRoom extends Component {
   }
 
   componentDidMount() {
-    // socket.on('connect', function(connection) {
     console.log('connecting to room '+ this.props.match.params.roomId);
     this.socket.emit('join room', { roomId: this.props.match.params.roomId });
-    // });
   }
 
   componentWillUnmount() {
@@ -57,7 +56,10 @@ export default class ChatRoom extends Component {
     event.preventDefault();
     const msg = this.input.value.trim();
     this.input.value = '';
-    this.socket.emit('new message', { msg, roomId: this.props.match.params.roomId });
+    this.socket.emit('new message', { 
+      roomId: this.props.match.params.roomId,
+      msgData: { createdBy: this.props.user.id, body: msg }
+    });
   }
 
   insertMessagesDom() {
@@ -65,9 +67,6 @@ export default class ChatRoom extends Component {
   }
 
   render() {
-    
-    console.log(this.state.messages);
-
     return (
       <div className='room'>
         <h2>{`You are in the Room ${this.props.match.params.roomId}`}</h2>
@@ -82,3 +81,9 @@ export default class ChatRoom extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.userData.user
+});
+
+export default connect(mapStateToProps)(ChatRoom);

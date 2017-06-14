@@ -1,3 +1,5 @@
+const { ChatRoom } = require('./models/chatRoom');
+
 exports = module.exports = io => { 
 
     io.on('connection', function(socket) {
@@ -5,10 +7,25 @@ exports = module.exports = io => {
     console.log('a user established a connection');
 
         socket.on('new message', function(data) {
-            console.log(data);
-            io.sockets.in(data.roomId).emit('receive new message', data.msg);
-            //   socket.broadcast.to(data.roomId)
-            //       .emit('receive new message', data.msg);
+            console.log('hello from the new message event!');
+            console.log('The newest of the messages to add');
+            console.log(data.msgData.body);
+            // io.sockets.in(data.roomId).emit('receive new message', data.msgData.body);
+            // Push the new message onto the array for the chatroom (server-side)
+            ChatRoom
+                .findByIdAndUpdate(
+                    data.roomId,
+                    { $push: { messages: data.msgData } },
+                    { safe: true, upsert: true, new: true }
+                )
+                .exec()
+                .then(room => {
+                    console.log('db success');
+                    console.log(room.messages);
+                })
+                .catch(err => console.error(err));
+
+            io.sockets.in(data.roomId).emit('receive new message', data.msgData.body);
         });
 
         /*
