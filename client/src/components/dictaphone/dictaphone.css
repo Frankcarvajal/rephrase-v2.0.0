@@ -1,8 +1,8 @@
-
-button:hover{
+.dictaphone-wrapper button:hover{
   opacity: 0.75;
 }
-.transcript{
+
+.dictaphone-wrapper .transcript{
   width: 500px;
   margin: 0 auto;
 }

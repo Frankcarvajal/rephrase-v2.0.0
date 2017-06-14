@@ -67,13 +67,11 @@ export class Home extends Component {
         {this.handleSpeechRecognition()}
         <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
           {this.handleEdit()}
-
         </form>
-                <hr/>
-          <div className="translation">
-            <p>{this.props.speechText.translatedText}</p>
-          </div>
-
+        <hr/>
+        <div className="translation">
+          <p>{this.props.speechText.translatedText}</p>
+        </div>
       </div>
     );
   }

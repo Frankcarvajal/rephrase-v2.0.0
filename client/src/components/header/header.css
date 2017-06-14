@@ -1,15 +1,9 @@
-h1,h2,h3,h4 {
-  font-family: 'Raleway', sans-serif;
-}
-p{
-  font-family: 'Open Sans', sans-serif;
-}
-.header-wrapper{
+.header-wrapper {
   width: 100%;
   background-color: #AFC2D5;
-
 }
-.app-header{
+
+.header-wrapper .app-header {
   background-color: #AFC2D5;
   color: #474448;
   display: flex;
@@ -18,28 +12,34 @@ p{
   align-items: center;
   margin: 0 auto;
 }
-a:link, a:visited {
+
+.header-wrapper a:link, .header-wrapper a:visited {
   color: #474448;
 }
-.nav-icons svg{
+
+.header-wrapper .nav-icons svg {
   margin: 0 30px 0 30px;
 }
-.highlight{
+
+.header-wrapper .highlight{
   color: white;
 }
-img.app-logo{
+
+.header-wrapper img.app-logo{
   height: 40px;
-  margin-left: 15px;
-  
+  margin-left: 15px; 
 }
-.app-title{
+
+.header-wrapper .app-title{
   display: flex;
   align-items: center;
 }
-.app-title h1, .app-title img{
+
+.header-wrapper .app-title h1, .header-wrapper .app-title img {
   display: inline-block;
   vertical-align: center;
 }
-svg:hover{
+
+.header-wrapper svg:hover{
   color: white;
 }

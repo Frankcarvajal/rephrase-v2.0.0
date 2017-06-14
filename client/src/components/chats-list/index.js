@@ -4,13 +4,22 @@ import { connect } from 'react-redux';
 import { fetchChatList } from './actions';
 import { Link } from 'react-router-dom';
 
-export class ChatList extends React.Component{
+export class ChatList extends React.Component {
 
-  componentDidMount(){
+  componentDidMount() {
     //go to server, get all of users chats, and save them in state
-    this.props.dispatch(fetchChatList(this.props.user.id));
+    console.log('ComponentDidMount -> current props', this.props);
+    if (this.props.user) {
+      this.props.dispatch(fetchChatList(this.props.user.id));
+    }
   }
-  getChatRoomListings(){
+
+  componentWillReceiveProps(nextProps) {
+    console.log('Current props -> Props', this.props);
+    console.log('componentWillReceiveProps -> nextProps are: ', nextProps);
+  }
+
+  getChatRoomListings() {
     if(this.props.chatRooms){
       return this.props.chatRooms.map((room, index) => {
         return (
@@ -25,21 +34,24 @@ export class ChatList extends React.Component{
     }
     return <p>Loading</p>
   }
+
   render(){
     console.log(this.props.chatRooms);
       return(
-      <div>
+      <div className='chat-list-wrapper'>
+        <h1>Chat Room List</h1>
         <ul className="chat-list">
-            <h1>Chat Room List</h1>
             {this.getChatRoomListings()}
         </ul>
       </div>
     )
   }
+
 }
 
 const mapStateToProps = state => ({
   user: state.userData.user,
   chatRooms: state.chat.chatRooms
-})
+});
+
 export default connect(mapStateToProps)(ChatList);
