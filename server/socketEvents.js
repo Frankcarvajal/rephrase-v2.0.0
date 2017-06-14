@@ -17,16 +17,17 @@ exports = module.exports = io => {
                 method: 'POST',
                 uri: `http://localhost:8080/api/chat/chatRoom/${data.roomId}`,
                 body: {
-                    newMessage: data.msgData.body
+                    newMessage: data.msgData.body,
+                    createdBy: data.msgData.createdBy
                 },
                 json: true // Automatically stringifies the body to JSON 
             };
             rp(options)
-                .then(function (parsedBody) {
+                .then(function(parsedBody) {
                     console.log('POST succeeded...'); 
                     console.log(parsedBody);
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     console.log(err);
                     console.log('POST failed...'); 
                 });

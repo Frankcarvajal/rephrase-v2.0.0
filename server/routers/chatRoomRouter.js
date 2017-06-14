@@ -44,17 +44,17 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
-    console.log(req.body);
     const { newMessage } = req.body;
+    const { createdBy } = req.body;
     return ChatRoom
         .findByIdAndUpdate(
             req.params.chatRoomId,
-            { $push: { messages: newMessage } },
+            { $push: { messages: { createdBy, body: newMessage } } },
             { safe: true, upsert: true, new: true }
         )
         .exec()
         .then(room => {
-            return res.status(200).json(room);
+            return res.status(200).json(room.messages);
         })
         .catch(err => console.error(err));
 });
