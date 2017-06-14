@@ -8,23 +8,23 @@ export class ChatList extends React.Component {
 
   componentDidMount() {
     //go to server, get all of users chats, and save them in state
-    console.log('ComponentDidMount -> current props', this.props);
     if (this.props.user) {
       this.props.dispatch(fetchChatList(this.props.user.id));
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('Current props -> Props', this.props);
-    console.log('componentWillReceiveProps -> nextProps are: ', nextProps);
+    if (nextProps.user && !this.props.user) {
+      this.props.dispatch(fetchChatList(nextProps.user.id));
+    }
   }
 
   getChatRoomListings() {
     if(this.props.chatRooms){
       return this.props.chatRooms.map((room, index) => {
         return (
-          <Link to={`/profile/chat/${room._id}`}>
-            <li className="chat-listing" key={index} >
+          <Link to={`/profile/chat/${room._id}`} key={index}>
+            <li className="chat-listing">
                 <p>{ `Participants: ${room.participants.join(' ')}` }</p>
                 <p>{ `RoomId: ${room._id}` }</p>
             </li>
@@ -36,7 +36,6 @@ export class ChatList extends React.Component {
   }
 
   render(){
-    console.log(this.props.chatRooms);
       return(
       <div className='chat-list-wrapper'>
         <h1>Chat Room List</h1>
