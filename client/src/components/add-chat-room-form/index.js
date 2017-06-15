@@ -44,9 +44,10 @@ export class AddChatRoomForm extends React.Component {
     }
   }
 
-  handleRemoveSelectedUser(e, userData) {
+  // Update this...
+  // handleRemoveSelectedUser(e, userData) {
 
-  }
+  // }
 
   displayUsersAvailable() {
     if (!this.state.users) {
