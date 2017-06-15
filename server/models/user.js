@@ -7,6 +7,13 @@ const userSchema = new Schema({
   displayName: {type: String},
 });
 
+userSchema.methods.apiRepr = function() {
+  return {
+    googleId: this.googleId,
+    displayName: this.displayName
+  };
+}
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = { User };

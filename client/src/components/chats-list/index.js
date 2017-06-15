@@ -39,6 +39,11 @@ export class ChatList extends React.Component {
       return(
       <div className='chat-list-wrapper'>
         <h1>Chat Room List</h1>
+        <div className='btn-container'>
+          <Link to={'/profile/new-room'}>
+            <button>Start a new conversation</button>
+          </Link>
+        </div>
         <ul className="chat-list">
             {this.getChatRoomListings()}
         </ul>
