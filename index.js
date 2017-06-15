@@ -24,6 +24,7 @@ else {
         }
     }));
 
+    // Activate socket events at proxy server lvl in development
     const server = require('http').createServer(app);
     server.listen(process.env.PORT || 8080);
     const io = require('socket.io')(server);
