@@ -40,6 +40,17 @@ app.get('/api/me', passport.authenticate('bearer', {session: false}),
         });
 });
 
+app.get('/api/users', (req, res) => {
+    return User
+        .find()
+        .exec()
+        .then(users => { 
+            // Need to update this so sensitive is not sent to client
+            return res.status(200).json(users); 
+        })
+        .catch(err => console.error(err));
+})
+
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
