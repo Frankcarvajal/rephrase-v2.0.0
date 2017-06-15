@@ -4,7 +4,7 @@ const router = express.Router();
 const jsonParser = require('body-parser').json();
 
 
-// this endpoint gets the all the chatrooms that a user is a participant in
+// this endpoint gets all the chatrooms that a user is a participant in
 // array.indexOf to find if req.params.userId is in the participants array for each item in the rooms array
 //build out new array with all of the chats and send to frontend.
 router.get('/:userId', (req, res) => {
@@ -18,7 +18,7 @@ router.get('/:userId', (req, res) => {
             });
             return res.status(200).json(filteredRooms)
         })
-        .catch(err => console.error('the error'))
+        .catch(err => console.error(err))
 });
 
 router.get('/chatRoom/:chatRoomId', (req, res) => {
@@ -54,7 +54,7 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
         )
         .exec()
         .then(room => {
-            return res.status(200).json(room.messages);
+            return res.status(200).json(room.messages); // send back all msgs for the room
         })
         .catch(err => console.error(err));
 });

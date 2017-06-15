@@ -1,71 +1,60 @@
-const { ChatRoom } = require('./models/chatRoom');
-const rp = require('request-promise-native');
+const requestPromise = require('request-promise-native');
+
+let origin = 'http://localhost:8080';
+if (process.env.NODE_ENV === 'production') {
+    origin = 'https://re-phrase.herokuapp.com';
+}
 
 exports = module.exports = io => { 
 
-    io.on('connection', function(socket) {
+    io.on('connection', socket => {
 
     console.log('a user established a connection');
 
-        socket.on('new message', function(data) {
-            console.log(data);
-            console.log('hello from the new message event!');
-            console.log('The newest of the messages to add');
-            console.log(data.msgData.body);
+        socket.on('new message', data => {
+
+            // Send API a request to add the incoming message to the db and then
+            // emit a 'receive new message' event for the client with the new message
+            // data.
 
             const options = {
                 method: 'POST',
-                uri: `http://localhost:8080/api/chat/chatRoom/${data.roomId}`,
+                uri: `${origin}/api/chat/chatRoom/${data.roomId}`,
                 body: {
                     newMessage: data.msgData.body,
                     createdBy: data.msgData.createdBy
                 },
                 json: true // Automatically stringifies the body to JSON 
             };
-            rp(options)
-                .then(function(parsedBody) {
+
+            requestPromise(options)
+                .then(response => {
                     console.log('POST succeeded...'); 
-                    console.log(parsedBody);
+                    console.log(response);
                 })
-                .catch(function(err) {
-                    console.log(err);
-                    console.log('POST failed...'); 
-                });
-            // io.sockets.in(data.roomId).emit('receive new message', data.msgData.body);
-            // Push the new message onto the array for the chatroom (server-side)
-            // ChatRoom
-            //     .findByIdAndUpdate(
-            //         data.roomId,
-            //         { $push: { messages: data.msgData } },
-            //         { safe: true, upsert: true, new: true }
-            //     )
-            //     .exec()
-            //     .then(room => {
-            //         console.log('db success');
-            //         console.log(room.messages);
-            //     })
-            //     .catch(err => console.error(err));
+                .catch(err => console.error(err));
 
             io.sockets.in(data.roomId).emit('receive new message', data.msgData.body);
+
         });
 
-        /*
-            The server will respond by "joining" the room, 
-            which establishes a room-specific channel layered over 
-            our socket connection.
-        */
+        // If the server-side socket connection receives the 'join room event' defined
+        // client-side, the server will respond by "joining" the room with .join method. 
+        // This establishes a room-specific channel layered over our socket connection.
 
-        socket.on('join room', function(data) {
+        socket.on('join room', data => {
             console.log('a user connected to '+ data.roomId);
             socket.join(data.roomId);
         });
 
-        socket.on('leave room', function(data) {
+        socket.on('leave room', data => {
             socket.leave(data.roomId);
         });
 
         socket.on('disconnect', () => {
             console.log('user disconnected');
         });
+
     });
+
 }
