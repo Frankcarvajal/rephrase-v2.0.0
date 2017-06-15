@@ -86,20 +86,23 @@ export class AddChatRoomForm extends React.Component {
     });
   }
 
-  sendNewRoomRequest(){
-   fetch('/api/chat', {
-     method: 'POST',
-     headers: {
+  sendNewRoomRequest(e){
+		const selectedIds = this.state.selectedUsers.map((user, index) => user.id);
+		const participantsIds = [...selectedIds, this.props.user.id];
+    fetch('/api/chat', {
+    method: 'POST',
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-     body: JSON.stringify([...this.state.selectedUsers, this.props.user.id])
-   })
-   .then(responseStream => responseStream.json())
-   .then(newChatRoom => {
-     this.props.dispatch(fetchChatList(this.props.user.id))
-     //when you create the chat room you have to update the redux state chat.chatRooms
-   })
+    body: JSON.stringify({participantsIds})
+  	})
+		.then(responseStream => responseStream.json())
+		.then(newChatRoom => {
+			console.log(newChatRoom);
+			this.props.dispatch(fetchChatList(this.props.user.id))
+			//when you create the chat room you have to update the redux state chat.chatRooms
+  	})
   }
 
   render() {
@@ -111,7 +114,7 @@ export class AddChatRoomForm extends React.Component {
         <h1>Open a new conversation</h1>
         <form action="">
           <input type="text" placeholder='Start a new conversation'/>
-          <button>Go</button>
+          <button onClick={e => this.sendNewRoomRequest(e)}>Go</button>
         </form>
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
