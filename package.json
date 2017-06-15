@@ -1,7 +1,7 @@
 {
-  "name": "thinkful-full-stack-template-v2",
+  "name": "rephrase",
   "version": "0.1.0",
-  "description": "A full-stack starter template",
+  "description": "Translation and chat app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -18,14 +18,12 @@
     "server/node_modules",
     "client/node_modules"
   ],
-  "author": "Joe Turner <jturner@thinkful.com>",
+  "author": "Thinkful cohort 9",
   "license": "MIT",
   "dependencies": {
     "cross-env": "^3.1.4",
-    "dotenv": "^4.0.0",
     "express": "^4.14.1",
     "http-proxy-middleware": "^0.17.3",
-    "mongoose": "^4.10.6",
     "npm-run-all": "^4.0.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",

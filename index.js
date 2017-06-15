@@ -1,9 +1,6 @@
 const express = require('express');
 const proxy = require('http-proxy-middleware');
 const socketEvents = require('./server/socketEvents');
-// const mongoose = require('mongoose');
-const rp = require('request-promise-native');
-
 
 const app = express();
 
@@ -17,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
     runServer(process.env.PORT || 8080);
 }
 else {
-    // Proxy everything through to Create React App
+    // Proxy everything through to Create React App dev server
     app.use(proxy('http://localhost:3000/', {
         logLevel: 'warn', // Keep the logs clean
         ws: true, // Proxy websockets too
@@ -26,17 +23,10 @@ else {
             'localhost:8080/api': 'http://localhost:3001'
         }
     }));
-    
-    // require('dotenv').config(); // 
 
+    // Activate socket events at proxy server lvl in development
     const server = require('http').createServer(app);
-    // mongoose.connect(process.env.DATABASE_URL, err => {
-    //     if (err) {
-    //         console.error(err)
-    //     }
-    
     server.listen(process.env.PORT || 8080);
     const io = require('socket.io')(server);
     socketEvents(io);
-    // });
 }
