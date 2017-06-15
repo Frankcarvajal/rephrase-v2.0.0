@@ -3,7 +3,7 @@ import FaClose from 'react-icons/lib/fa/close';
 import './addChatRmForm.css';
 import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
-// import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class AddChatRoomForm extends React.Component {
 
@@ -45,7 +45,6 @@ export class AddChatRoomForm extends React.Component {
     }
   }
 
-  // Update this...
   handleRemoveSelectedUser(e, userData) {
     e.preventDefault();
     let newSelectedUsers = [];
@@ -86,20 +85,25 @@ export class AddChatRoomForm extends React.Component {
     });
   }
 
-  sendNewRoomRequest(){
-   fetch('/api/chat', {
-     method: 'POST',
-     headers: {
+  sendNewRoomRequest(e){
+		// e.preventDefault();
+		const selectedIds = this.state.selectedUsers.map((user, index) => user.id);
+		const participantsIds = [...selectedIds, this.props.user.id];
+    return fetch('/api/chat', {
+    method: 'POST',
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-     body: JSON.stringify([...this.state.selectedUsers, this.props.user.id])
-   })
-   .then(responseStream => responseStream.json())
-   .then(newChatRoom => {
-     this.props.dispatch(fetchChatList(this.props.user.id))
-     //when you create the chat room you have to update the redux state chat.chatRooms
-   })
+    body: JSON.stringify({participantsIds})
+  	})
+		.then(responseStream => responseStream.json())
+		.then(newChatRoom => {
+			console.log(newChatRoom);
+			this.props.dispatch(fetchChatList(this.props.user.id))
+			// return (<Redirect to={`/profile/chat/${newChatRoom._id}`} push />)
+			return this.history.pushState(null, `/profile/chat/${newChatRoom._id}`)
+  	})
   }
 
   render() {
@@ -111,7 +115,7 @@ export class AddChatRoomForm extends React.Component {
         <h1>Open a new conversation</h1>
         <form action="">
           <input type="text" placeholder='Start a new conversation'/>
-          <button>Go</button>
+          <button onClick={e => this.sendNewRoomRequest(e)}>Go</button>
         </form>
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
@@ -124,7 +128,6 @@ export class AddChatRoomForm extends React.Component {
       </div>
     );
   }
-
 }
 
 const mapStateToProps = state => ({
