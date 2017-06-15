@@ -18,30 +18,33 @@ export class ChatRoom extends Component {
 
   }
 
-  componentWillMount() {
-    this.socket = io(); 
-    const currentRoom = this;
-    this.socket.on('receive new message', function(msg) {
-      console.log(msg);
-      currentRoom.addMessageUpdateState(msg, currentRoom);
-    });
-  }
-
-  componentWillUpdate() {
-    console.log('Updating');
-    console.log(this.state);
-  }
-
-  addMessageUpdateState(newMsg, context) {
-    console.log('Updating state', newMsg);
-    context.setState({
-      messages: [...context.state.messages, newMsg]
-    });
+  getChatRoomStateFromDb() {
+    return fetch(`/api/chat/chatRoom/${this.props.match.params.roomId}`, {
+      method: 'GET'
+    })
+    .then(responseStream => responseStream.json())
+    .catch(err => console.error(err));
   }
 
   componentDidMount() {
     console.log('connecting to room '+ this.props.match.params.roomId);
     this.socket.emit('join room', { roomId: this.props.match.params.roomId });
+    this.getChatRoomStateFromDb()
+      .then(room => this.updateStateWithMessages(room.messages, this));
+  }
+
+  componentWillMount() {
+    this.socket = io(); 
+    const currentRoom = this;
+    this.socket.on('receive new message', function(roomMessages) {
+      currentRoom.updateStateWithMessages(roomMessages, currentRoom);
+    });
+  }
+
+  updateStateWithMessages(roomMessages, context) {
+    context.setState({
+      messages: roomMessages
+    });
   }
 
   componentWillUnmount() {
@@ -63,7 +66,7 @@ export class ChatRoom extends Component {
   }
 
   insertMessagesDom() {
-    return this.state.messages.map((msg, index) => <li key={index}>{msg}</li>)
+    return this.state.messages.map((msg, index) => <li key={index}>{msg.body}</li>);
   }
 
   render() {

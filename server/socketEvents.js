@@ -28,14 +28,12 @@ exports = module.exports = io => {
             };
 
             requestPromise(options)
-                .then(response => {
+                .then(updatedMessages => {
                     console.log('POST succeeded...'); 
-                    console.log(response);
+                    io.sockets.in(data.roomId).emit('receive new message', updatedMessages);
                 })
                 .catch(err => console.error(err));
-
-            io.sockets.in(data.roomId).emit('receive new message', data.msgData.body);
-
+                
         });
 
         // If the server-side socket connection receives the 'join room event' defined
