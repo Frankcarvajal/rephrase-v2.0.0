@@ -2,6 +2,7 @@ import React from 'react';
 import FaClose from 'react-icons/lib/fa/close';
 import './addChatRmForm.css';
 import { connect } from 'react-redux';
+import { fetchChatList } from '../chats-list/actions';
 // import { Link } from 'react-router-dom';
 
 export class AddChatRoomForm extends React.Component {
@@ -45,9 +46,18 @@ export class AddChatRoomForm extends React.Component {
   }
 
   // Update this...
-  // handleRemoveSelectedUser(e, userData) {
-
-  // }
+  handleRemoveSelectedUser(e, userData) {
+    e.preventDefault();
+    let newSelectedUsers = [];
+    for(let i = 0; i<this.state.selectedUsers.length; i++){
+      if (this.state.selectedUsers[i].displayName !== userData.displayName) {
+        newSelectedUsers.push(this.state.selectedUsers[i]);
+      }
+    }
+    this.setState({
+      selectedUsers: newSelectedUsers
+    })
+  }
 
   displayUsersAvailable() {
     if (!this.state.users) {
@@ -74,6 +84,22 @@ export class AddChatRoomForm extends React.Component {
         </div>
       );
     });
+  }
+
+  sendNewRoomRequest(){
+   fetch('/api/chat', {
+     method: 'POST',
+     headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+     body: JSON.stringify([...this.state.selectedUsers, this.props.user.id])
+   })
+   .then(responseStream => responseStream.json())
+   .then(newChatRoom => {
+     this.props.dispatch(fetchChatList(this.props.user.id))
+     //when you create the chat room you have to update the redux state chat.chatRooms
+   })
   }
 
   render() {
