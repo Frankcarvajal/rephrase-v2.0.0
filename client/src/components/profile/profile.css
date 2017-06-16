@@ -1,3 +1,7 @@
 .Profile {
     display: inline-block;
 }
+.profile-view{
+    max-width: 700px;
+    margin: 0 auto;
+}
