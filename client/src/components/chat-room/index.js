@@ -66,7 +66,9 @@ export class ChatRoom extends Component {
   }
 
   insertMessagesDom() {
-    return this.state.messages.map((msg, index) => <li key={index}>{msg.body}</li>);
+    if(this.props.user){
+    return this.state.messages.map((msg, index) => <li key={index}><b>{msg.createdBy}: &emsp;</b>{msg.body}</li>);
+  }
   }
 
   render() {

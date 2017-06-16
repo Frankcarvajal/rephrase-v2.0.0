@@ -46,7 +46,7 @@ class Dictaphone extends Component {
     }
 
     return (
-      <div class='dictaphone-wrapper'>
+      <div className='dictaphone-wrapper'>
         <div>
           <button className="speak" onClick={(e) => sendTranscriptToServer(transcript)}>
             <FaMicrophoneSlash />
