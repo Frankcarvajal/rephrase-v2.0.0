@@ -37,9 +37,9 @@ router.post('/', jsonParser, (req, res) => {
         participants: req.body.participantsIds,
         messages: []
     })
-    .then(newChatroom => {
-        console.log(newChatroom);
-        return res.status(200).json(newChatroom)
+    .then(newChatRoom => {
+        console.log(newChatRoom);
+        return res.status(200).json(newChatRoom);
     })
     .catch(err => console.error(err))
 });
