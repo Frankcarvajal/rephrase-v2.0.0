@@ -86,23 +86,21 @@ export class AddChatRoomForm extends React.Component {
   }
 
   sendNewRoomRequest(e){
-		// e.preventDefault();
+		e.preventDefault();
 		const selectedIds = this.state.selectedUsers.map((user, index) => user.id);
 		const participantsIds = [...selectedIds, this.props.user.id];
     return fetch('/api/chat', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({participantsIds})
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({participantsIds})
   	})
 		.then(responseStream => responseStream.json())
 		.then(newChatRoom => {
-			console.log(newChatRoom);
-			this.props.dispatch(fetchChatList(this.props.user.id))
-			// return (<Redirect to={`/profile/chat/${newChatRoom._id}`} push />)
-			return this.history.pushState(null, `/profile/chat/${newChatRoom._id}`)
+      this.props.history.push(`/profile/chat/${newChatRoom._id}`);
+      this.props.dispatch(fetchChatList(this.props.user.id))
   	})
   }
 
