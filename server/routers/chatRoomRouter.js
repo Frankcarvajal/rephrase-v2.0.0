@@ -2,12 +2,13 @@ const express = require('express');
 const { ChatRoom } = require('../models/chatRoom');
 const router = express.Router();
 const jsonParser = require('body-parser').json();
+const { passport } = require('../auth');
 
 
 // this endpoint gets all the chatrooms that a user is a participant in
 // array.indexOf to find if req.params.userId is in the participants array for each item in the rooms array
 //build out new array with all of the chats and send to frontend.
-router.get('/:userId', (req, res) => {
+router.get('/:userId', passport.authenticate('bearer', {session: false}), (req, res) => {
     return ChatRoom
         .find()
         .exec()
@@ -21,20 +22,21 @@ router.get('/:userId', (req, res) => {
         .catch(err => console.error(err))
 });
 
-router.get('/chatRoom/:chatRoomId', (req, res) => {
+router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: false}), (req, res) => {
     return ChatRoom
         .findById(req.params.chatRoomId)
         .exec()
         .then(room => {
-            console.log('hey there its yogi bear');
             return res.status(200).json(room)
         })
         .catch(err => console.error(err));
 });
 
-router.post('/', jsonParser, (req, res) => {
+router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
+    console.log(req.user);
+    const participants = req.body.participants.map(users => users._id);
     return ChatRoom.create({
-        participants: req.body.participantsIds,
+        participants: [...participants, req.user._id],
         messages: []
     })
     .then(newChatRoom => {

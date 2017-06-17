@@ -1,9 +1,8 @@
 import React from 'react';
 import FaClose from 'react-icons/lib/fa/close';
 import './addChatRmForm.css';
+import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
-import { fetchChatList } from '../chats-list/actions';
-import { Redirect } from 'react-router-dom';
 
 export class AddChatRoomForm extends React.Component {
 
@@ -14,6 +13,8 @@ export class AddChatRoomForm extends React.Component {
       users: [],
       selectedUsers: []
     };
+
+    this.accessToken = Cookies.get('accessToken');
   }
 
   componentDidMount() {
@@ -24,7 +25,12 @@ export class AddChatRoomForm extends React.Component {
   }
 
   fetchAllUsers() {
-    return fetch('/api/users', { method: 'GET' })
+    return fetch('/api/users', { 
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+      }
+     })
       .then(responseStream => responseStream.json())
       .catch(err => console.error(err));
   }
@@ -38,7 +44,6 @@ export class AddChatRoomForm extends React.Component {
       }
     }
     if (!isUserAlreadySelected) {
-      console.log(userData);
       this.setState({
         selectedUsers: [...this.state.selectedUsers, userData]
       });
@@ -47,12 +52,9 @@ export class AddChatRoomForm extends React.Component {
 
   handleRemoveSelectedUser(e, userData) {
     e.preventDefault();
-    let newSelectedUsers = [];
-    for(let i = 0; i<this.state.selectedUsers.length; i++){
-      if (this.state.selectedUsers[i].displayName !== userData.displayName) {
-        newSelectedUsers.push(this.state.selectedUsers[i]);
-      }
-    }
+    let newSelectedUsers = this.state.selectedUsers.filter(selected => {
+      return selected.displayName !== userData.displayName;
+    });
     this.setState({
       selectedUsers: newSelectedUsers
     })
@@ -63,12 +65,8 @@ export class AddChatRoomForm extends React.Component {
       return;
     }
     return this.state.users.map((user, index) => {
-      const userData = {
-        displayName: user.displayName,
-        id: user._id
-      }; 
       return (  
-        <li key={index} onClick={ e => this.handleAddUser(e, userData) }>
+        <li key={index} onClick={ e => this.handleAddUser(e, user) }>
           {user.displayName}
         </li>  
       );
@@ -87,20 +85,19 @@ export class AddChatRoomForm extends React.Component {
 
   sendNewRoomRequest(e){
 		e.preventDefault();
-		const selectedIds = this.state.selectedUsers.map((user, index) => user.id);
-		const participantsIds = [...selectedIds, this.props.user.id];
+		const participants = this.state.selectedUsers;
     return fetch('/api/chat', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({participantsIds})
+      body: JSON.stringify({ participants })
   	})
 		.then(responseStream => responseStream.json())
 		.then(newChatRoom => {
       this.props.history.push(`/profile/chat/${newChatRoom._id}`);
-      this.props.dispatch(fetchChatList(this.props.user.id))
   	})
   }
 

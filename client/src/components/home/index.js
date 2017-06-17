@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { toggleBtn, editBtn } from './actions';
 import { postTranscriptGetTranslation } from '../dictaphone/actions';
 import FaMicrophone from 'react-icons/lib/fa/microphone';
-import Header from '../header';
 import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
 import './home.css';

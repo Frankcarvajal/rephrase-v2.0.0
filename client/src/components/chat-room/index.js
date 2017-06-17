@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './chat-room.css';
 import io from 'socket.io-client';
-
+import * as Cookies from 'js-cookie'; 
+import { fetchChatList } from '../chats-list/actions';
 
 export class ChatRoom extends Component {
 
@@ -16,21 +17,33 @@ export class ChatRoom extends Component {
       messages: []
     };
 
+    this.accessToken = Cookies.get('accessToken');
   }
 
   getChatRoomStateFromDb() {
     return fetch(`/api/chat/chatRoom/${this.props.match.params.roomId}`, {
-      method: 'GET'
+      method: 'GET',
+      headers: { 
+			'Authorization': `Bearer ${this.accessToken}` 
+		  }
     })
     .then(responseStream => responseStream.json())
     .catch(err => console.error(err));
   }
 
   componentDidMount() {
-    console.log('connecting to room '+ this.props.match.params.roomId);
-    this.socket.emit('join room', { roomId: this.props.match.params.roomId });
+    const currentRm = this.props.match.params.roomId;
+    this.socket.emit('join room', { roomId: currentRm });
     this.getChatRoomStateFromDb()
       .then(room => this.updateStateWithMessages(room.messages, this));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps');
+    if (nextProps.user && !this.props.user) {
+      console.log('fetching chat list from componentWillReceiveProps');
+      this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
+    }
   }
 
   componentWillMount() {
@@ -51,24 +64,20 @@ export class ChatRoom extends Component {
     this.socket.emit('leave room', { roomId: this.props.match.params.roomId });
   }
 
-  componentWillReceiveProps() {
-    console.log('receiving new props.');
-  }
-
   sendMessageToRoom(event) {
     event.preventDefault();
     const msg = this.input.value.trim();
     this.input.value = '';
     this.socket.emit('new message', { 
-      roomId: this.props.match.params.roomId,
+      roomId: this.props.match.params.roomId, 
       msgData: { createdBy: this.props.user.id, body: msg }
     });
   }
 
   insertMessagesDom() {
-    if(this.props.user){
-    return this.state.messages.map((msg, index) => <li key={index}><b>{msg.createdBy}: &emsp;</b>{msg.body}</li>);
-  }
+    if (this.props.user) {
+      return this.state.messages.map((msg, index) => <li key={index}><b>{msg.createdBy}: &emsp;</b>{msg.body}</li>);
+    }
   }
 
   render() {
@@ -80,7 +89,8 @@ export class ChatRoom extends Component {
           {this.insertMessagesDom()}
         </ul>
         <form action="">
-          <input id="m" placeholder='Enter thine message here-ith' ref={input => this.input = input} /><button onClick={e => this.sendMessageToRoom(e)}>Send</button>
+          <input id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+          <button onClick={ e => this.sendMessageToRoom(e) }>Send</button>
         </form> 
       </div>
     );
@@ -88,7 +98,8 @@ export class ChatRoom extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.userData.user
+  user: state.userData.user,
+  chatRooms: state.chat.chatRooms
 });
 
 export default connect(mapStateToProps)(ChatRoom);

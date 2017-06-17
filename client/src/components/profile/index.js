@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../header';
 import './profile.css';
 
 export class Profile extends Component {

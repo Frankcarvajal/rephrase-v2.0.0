@@ -1,21 +1,27 @@
 import React from 'react';
 import './chats-list.css';
+import * as Cookies from 'js-cookie'; 
 import { connect } from 'react-redux';
 import { fetchChatList } from './actions';
 import { Link } from 'react-router-dom';
 
 export class ChatList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.accessToken = Cookies.get('accessToken');
+  }
+
   componentDidMount() {
     //go to server, get all of users chats, and save them in state
     if (this.props.user) {
-      this.props.dispatch(fetchChatList(this.props.user.id));
+      this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user && !this.props.user) {
-      this.props.dispatch(fetchChatList(nextProps.user.id));
+      this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
     }
   }
 
@@ -25,7 +31,7 @@ export class ChatList extends React.Component {
         return (
           <Link to={`/profile/chat/${room._id}`} key={index}>
             <li className="chat-listing">
-                <p>{ `Participants: ${room.participants.join(' ')}` }</p>
+                <p>{ `Participants: ${room.participants.join(', ')}` }</p>
                 <p>{ `RoomId: ${room._id}` }</p>
             </li>
           </Link>

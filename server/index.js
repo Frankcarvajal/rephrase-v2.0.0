@@ -45,7 +45,7 @@ app.get('/api/users', (req, res) => {
         .find()
         .exec()
         .then(users => { 
-            // Need to update this so sensitive is not sent to client
+            // Need to update this so sensitive data is not sent to client
             return res.status(200).json(users); 
         })
         .catch(err => console.error(err));
@@ -63,7 +63,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        return mongoose.connect(process.env.DATABASE_URL, err => {
+        return mongoose.connect(process.env.DATABASE_LOCAL, err => {
             if (err) {
                 return reject(err);
             }
