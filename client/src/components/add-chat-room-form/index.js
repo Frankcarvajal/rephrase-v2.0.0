@@ -22,9 +22,10 @@ export class AddChatRoomForm extends React.Component {
       .then(users => {
         this.setState({ users });
       });
+    console.log('component mounts', this.props.chatRooms);
   }
 
-  fetchAllUsers() {
+  fetchAllUsers() { // move to helpers
     return fetch('/api/users', { 
       method: 'GET',
       headers: {
@@ -83,10 +84,35 @@ export class AddChatRoomForm extends React.Component {
     });
   }
 
+  isTheSameChatRoom(participants, room) { // move to helpers
+    if (participants.length !== room.participants.length) {
+      return false;
+    }
+    for (let j=0; j < participants.length; j++) {
+      if (room.participants.indexOf(participants[j]) === -1) {
+        return false;
+      }
+    } 
+    return true;
+  }
+
+  isNewChatRoomUnique(participants) { // move to helpers
+    for (let i=0; i<this.props.chatRooms.length; i++) {
+      let room = this.props.chatRooms[i];
+      let isTheSameRoom = this.isTheSameChatRoom(participants, room);
+      if (isTheSameRoom) return { res: false, room };
+    }
+    return { res: true };
+  }
+
   sendNewRoomRequest(e){
 		e.preventDefault();
 		const participants = this.state.selectedUsers;
-    return fetch('/api/chat', {
+    const isUnique = this.isNewChatRoomUnique(participants);
+    if (!isUnique.res) {
+      return this.props.history.push(`/profile/chat/${isUnique.room._id}`);
+    }
+    return fetch('/api/chat', { // move to helpers
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.accessToken}`,
@@ -97,7 +123,7 @@ export class AddChatRoomForm extends React.Component {
   	})
 		.then(responseStream => responseStream.json())
 		.then(newChatRoom => {
-      this.props.history.push(`/profile/chat/${newChatRoom._id}`);
+      return this.props.history.push(`/profile/chat/${newChatRoom._id}`);
   	})
   }
 
@@ -126,7 +152,8 @@ export class AddChatRoomForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.userData.user
+  user: state.userData.user,
+  chatRooms: state.chat.chatRooms
 });
 
 export default connect(mapStateToProps)(AddChatRoomForm);

@@ -1,7 +1,7 @@
 import { CHAT_LIST_REQUEST, CHAT_LIST_SUCCESS } from './actions';
 
 const initialState = {
-  chatRooms: null,
+  chatRooms: [],
   loading: false
 }
 

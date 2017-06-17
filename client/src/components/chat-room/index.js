@@ -8,13 +8,12 @@ import { fetchChatList } from '../chats-list/actions';
 
 export class ChatRoom extends Component {
 
-  // write a method that loops over a user's given chats and renders all chat messages
   constructor(props) {
 
     super(props);
 
     this.state = {
-      messages: []
+      messages: [] // we store the all rm messages locally
     };
 
     this.accessToken = Cookies.get('accessToken');
@@ -33,15 +32,16 @@ export class ChatRoom extends Component {
 
   componentDidMount() {
     const currentRm = this.props.match.params.roomId;
+    if (this.props.user && this.props.chatRooms.indexOf(currentRm) < 0) {
+      this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
+    }
     this.socket.emit('join room', { roomId: currentRm });
     this.getChatRoomStateFromDb()
       .then(room => this.updateStateWithMessages(room.messages, this));
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps');
     if (nextProps.user && !this.props.user) {
-      console.log('fetching chat list from componentWillReceiveProps');
       this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
     }
   }
