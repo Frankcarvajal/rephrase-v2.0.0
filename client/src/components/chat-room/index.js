@@ -13,7 +13,10 @@ export class ChatRoom extends Component {
     super(props);
 
     this.state = {
-      messages: [] // we store the all rm messages locally
+      // this needs to be updated with all room data. everything changed here and 
+      // change to just current room, for which you get the messages from there.
+      messages: [], // we store the all rm messages locally
+      participants: [] 
     };
 
     this.accessToken = Cookies.get('accessToken');
@@ -37,7 +40,9 @@ export class ChatRoom extends Component {
     }
     this.socket.emit('join room', { roomId: currentRm });
     this.getChatRoomStateFromDb()
-      .then(room => this.updateStateWithMessages(room.messages, this));
+      .then(room => { 
+        this.updateStateWithMessages(room.messages, this); 
+      });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -80,10 +85,17 @@ export class ChatRoom extends Component {
     }
   }
 
+  showParticipants() {
+    const currentRoom = this.props.chatRooms.filter(room => room._id === this.props.match.params.roomId);
+    // return currentRoom[0].participants.filter(user => )
+  }
+
   render() {
     return (
       <div className='room'>
-        <h2>{`You are in the Room ${this.props.match.params.roomId}`}</h2>
+        <div className='room-header'>
+          { this.showParticipants() }
+        </div>
         <h2>Messages shall come forth here</h2>
         <ul id="messages">
           {this.insertMessagesDom()}

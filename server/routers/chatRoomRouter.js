@@ -25,18 +25,20 @@ router.get('/:userId', passport.authenticate('bearer', {session: false}), (req, 
 router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: false}), (req, res) => {
     return ChatRoom
         .findById(req.params.chatRoomId)
+        .populate('participants')
         .exec()
         .then(room => {
+            console.log(room);
             return res.status(200).json(room)
         })
         .catch(err => console.error(err));
 });
 
 router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
-    console.log(req.user);
-    const participants = req.body.participants.map(users => users._id);
+    const { participants } = req.body;
+    console.log(participants);
     return ChatRoom.create({
-        participants: [...participants, req.user._id],
+        participants,
         messages: []
     })
     .then(newChatRoom => {
@@ -61,5 +63,16 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
         })
         .catch(err => console.error(err));
 });
+
+// router.get('/chatRoom/test/:chatRoomId', (req, res) => {
+//     return ChatRoom
+//         .findById(req.params.chatRoomId)
+//         .populate('participants')
+//         .exec()
+//         .then(room => {
+//             return res.status(200).json(room)
+//         })
+//         .catch(err => console.error(err));
+// });
 
 module.exports = { chatRoomRouter: router };

@@ -4,6 +4,9 @@ import './addChatRmForm.css';
 import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 
+// require the helper functions
+import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb } from './helpers';
+
 export class AddChatRoomForm extends React.Component {
 
   constructor(props) { 
@@ -18,22 +21,10 @@ export class AddChatRoomForm extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchAllUsers()
+    fetchAllUsers(this.accessToken)
       .then(users => {
         this.setState({ users });
       });
-    console.log('component mounts', this.props.chatRooms);
-  }
-
-  fetchAllUsers() { // move to helpers
-    return fetch('/api/users', { 
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-      }
-     })
-      .then(responseStream => responseStream.json())
-      .catch(err => console.error(err));
   }
 
   handleAddUser(event, userData) {
@@ -44,7 +35,7 @@ export class AddChatRoomForm extends React.Component {
         isUserAlreadySelected = true;
       }
     }
-    if (!isUserAlreadySelected) {
+    if (!isUserAlreadySelected && userData._id !== this.props.user.id) {
       this.setState({
         selectedUsers: [...this.state.selectedUsers, userData]
       });
@@ -77,54 +68,26 @@ export class AddChatRoomForm extends React.Component {
   displaySelectedUsers() {
     return this.state.selectedUsers.map((user, index) => { 
       return (
-        <div key={index} className='selected'>{user.displayName}
+        <div key={index} className='selected'>
+          {user.displayName}
           <span onClick={e => this.handleRemoveSelectedUser(e, user)}>X</span>
         </div>
       );
     });
   }
 
-  isTheSameChatRoom(participants, room) { // move to helpers
-    if (participants.length !== room.participants.length) {
-      return false;
-    }
-    for (let j=0; j < participants.length; j++) {
-      if (room.participants.indexOf(participants[j]) === -1) {
-        return false;
-      }
-    } 
-    return true;
-  }
-
-  isNewChatRoomUnique(participants) { // move to helpers
-    for (let i=0; i<this.props.chatRooms.length; i++) {
-      let room = this.props.chatRooms[i];
-      let isTheSameRoom = this.isTheSameChatRoom(participants, room);
-      if (isTheSameRoom) return { res: false, room };
-    }
-    return { res: true };
-  }
-
   sendNewRoomRequest(e){
 		e.preventDefault();
-		const participants = this.state.selectedUsers;
-    const isUnique = this.isNewChatRoomUnique(participants);
-    if (!isUnique.res) {
+    const selectedUsersIds = this.state.selectedUsers.map(users => users._id);
+		const participants = [...selectedUsersIds, this.props.user.id];
+    const isUnique = isNewChatRoomUnique(participants, this.props.chatRooms);
+    if (!isUnique.res) { // then chat room already exists
       return this.props.history.push(`/profile/chat/${isUnique.room._id}`);
     }
-    return fetch('/api/chat', { // move to helpers
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ participants })
-  	})
-		.then(responseStream => responseStream.json())
-		.then(newChatRoom => {
-      return this.props.history.push(`/profile/chat/${newChatRoom._id}`);
-  	})
+    return postChatRoomToDb(this.accessToken, participants)
+      .then(newChatRoom => {
+        return this.props.history.push(`/profile/chat/${newChatRoom._id}`);
+      })
   }
 
   render() {
