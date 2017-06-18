@@ -29,6 +29,7 @@ passport.use(
             .then(user => {
                 if (!user) {
                     // If there is no user in the database, just create a new user
+                   _user.defaultLanguage = 'en';
                    return User.create(_user) 
                 }
                 // Otherwise, update new access token
