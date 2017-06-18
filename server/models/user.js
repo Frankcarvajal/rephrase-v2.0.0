@@ -5,13 +5,14 @@ const userSchema = new Schema({
   googleId: {type: String, unique: true, required: true},
   accessToken: {type: String, required: true},
   displayName: {type: String},
-  nickName: {type: String}
+  defaultLanguage: {type: String, required: true}
 });
 
 userSchema.methods.apiRepr = function() {
   return {
     googleId: this.googleId,
-    displayName: this.displayName
+    displayName: this.displayName,
+    defaultLanguage: this.defaultLanguage
   };
 }
 

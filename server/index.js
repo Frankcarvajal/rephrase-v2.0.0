@@ -36,7 +36,8 @@ app.get('/api/me', passport.authenticate('bearer', {session: false}),
         return res.json({
             googleId: req.user.googleId,
             displayName: req.user.displayName,
-            id: req.user._id
+            id: req.user._id,
+            defaultLanguage: req.user.defaultLanguage
         });
 });
 
@@ -51,6 +52,12 @@ app.get('/api/users', (req, res) => {
         .catch(err => console.error(err));
 })
 
+app.put('/api/me', (req, res) => {
+    User.update({
+        defaultLanguage: req.body.defaultLanguage
+    })
+    res.status(204).end();
+})
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 

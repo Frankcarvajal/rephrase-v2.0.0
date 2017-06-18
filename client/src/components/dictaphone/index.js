@@ -11,7 +11,7 @@ import FaMicrophoneSlash from 'react-icons/lib/fa/microphone-slash';
     const propTypes = {
         transcript: PropTypes.string,
         resetTranscript: PropTypes.func,
-        browserSupportsSpeechRecognition: PropTypes.bool
+        browserSupportsSpeechRecognition: PropTypes.bool,
     }
     
 class Dictaphone extends Component {
@@ -37,6 +37,7 @@ class Dictaphone extends Component {
     }
 
     const sendTranscriptToServer = transcript => {
+      SpeechRecognition.lang = 'zh-CN';
       recognition.onend = function(e) { console.log('SEND-TRANSCRIPT-TO-SERVER:', this.props) }
       const final = transcript;
       resetTranscript();
