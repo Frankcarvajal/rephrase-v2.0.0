@@ -5,7 +5,7 @@ import './header.css';
 
 import { Link } from 'react-router-dom';
 import FaBars from 'react-icons/lib/fa/bars';
-import FaMicrophone from 'react-icons/lib/fa/microphone';
+// import FaMicrophone from 'react-icons/lib/fa/microphone';
 import FaUser from 'react-icons/lib/fa/user';
 import FaHome from 'react-icons/lib/fa/home';
 import FaWechat from 'react-icons/lib/fa/wechat';

@@ -46,7 +46,7 @@ app.get('/api/users', (req, res) => {
         .find()
         .exec()
         .then(users => { 
-            // Need to update this so sensitive is not sent to client
+            // Need to update this so sensitive data is not sent to client
             return res.status(200).json(users); 
         })
         .catch(err => console.error(err));

@@ -5,7 +5,6 @@ import { toggleBtn, editBtn } from './actions';
 import { selectLanguage } from '../language-choice/actions';
 import { postTranscriptGetTranslation } from '../dictaphone/actions';
 import FaMicrophone from 'react-icons/lib/fa/microphone';
-import Header from '../header';
 import LanguageChoice from '../language-choice';
 import EditButton from '../edit-btn';
 import './home.css';
