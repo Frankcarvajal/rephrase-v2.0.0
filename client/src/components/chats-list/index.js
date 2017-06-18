@@ -26,19 +26,25 @@ export class ChatList extends React.Component {
   }
 
   getChatRoomListings() {
-    if(this.props.chatRooms){
+    if (this.props.chatRooms) {
+      console.log(this.props.chatRooms);
       return this.props.chatRooms.map((room, index) => {
-        return (
+        const names = room.participants.map(u => { 
+          if (u.displayName !== this.props.user.displayName) {
+            return u.displayName;
+          }
+        });
+        return ( 
           <Link to={`/profile/chat/${room._id}`} key={index}>
             <li className="chat-listing">
-                <p>{ `Participants: ${room.participants.join(', ')}` }</p>
+                <p>{ `Participants: ${names.join(' ')}` }</p>
                 <p>{ `RoomId: ${room._id}` }</p>
             </li>
           </Link>
         )
       })
     }
-    return <p>Loading</p>
+    return (<p>Loading</p>);
   }
 
   render(){

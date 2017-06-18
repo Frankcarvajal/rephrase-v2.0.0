@@ -15,8 +15,7 @@ export class ChatRoom extends Component {
     this.state = {
       // this needs to be updated with all room data. everything changed here and 
       // change to just current room, for which you get the messages from there.
-      messages: [], // we store the all rm messages locally
-      participants: [] 
+      room: null 
     };
 
     this.accessToken = Cookies.get('accessToken');
@@ -35,13 +34,13 @@ export class ChatRoom extends Component {
 
   componentDidMount() {
     const currentRm = this.props.match.params.roomId;
-    if (this.props.user && this.props.chatRooms.indexOf(currentRm) < 0) {
-      this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
-    }
+    // if (this.props.user && this.props.chatRooms.indexOf(currentRm) < 0) {
+    //   this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
+    // }
     this.socket.emit('join room', { roomId: currentRm });
     this.getChatRoomStateFromDb()
       .then(room => { 
-        this.updateStateWithMessages(room.messages, this); 
+        this.updateStateWithMessages(room, this); 
       });
   }
 
@@ -54,14 +53,14 @@ export class ChatRoom extends Component {
   componentWillMount() {
     this.socket = io(); 
     const currentRoom = this;
-    this.socket.on('receive new message', function(roomMessages) {
-      currentRoom.updateStateWithMessages(roomMessages, currentRoom);
+    this.socket.on('receive new message', function(updatedRoom) {
+      currentRoom.updateStateWithMessages(updatedRoom, currentRoom);
     });
   }
 
-  updateStateWithMessages(roomMessages, context) {
+  updateStateWithMessages(updatedRoom, context) {
     context.setState({
-      messages: roomMessages
+      room: updatedRoom
     });
   }
 
@@ -80,14 +79,22 @@ export class ChatRoom extends Component {
   }
 
   insertMessagesDom() {
-    if (this.props.user) {
-      return this.state.messages.map((msg, index) => <li key={index}><b>{msg.createdBy}: &emsp;</b>{msg.body}</li>);
+    if (this.state.room && this.props.user) {
+      return this.state.room.messages.map((msg, index) => <li key={index}><b>{msg.createdBy.displayName}: &emsp;</b>{msg.body}</li>);
     }
   }
 
   showParticipants() {
-    const currentRoom = this.props.chatRooms.filter(room => room._id === this.props.match.params.roomId);
-    // return currentRoom[0].participants.filter(user => )
+    if (!this.state.room || !this.props.user) {
+      return;
+    }
+    return this.state.room.participants.map((person, index) => {
+      if (person._id !== this.props.user.id) {
+        return (
+          <h4 key={index}>{person.displayName}</h4>
+        );
+      }
+    });
   }
 
   render() {

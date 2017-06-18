@@ -63,7 +63,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        return mongoose.connect(process.env.DATABASE_LOCAL, err => {
+        return mongoose.connect(process.env.DATABASE_URL, err => {
             if (err) {
                 return reject(err);
             }

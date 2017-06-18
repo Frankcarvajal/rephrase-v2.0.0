@@ -10,15 +10,12 @@ const { passport } = require('../auth');
 //build out new array with all of the chats and send to frontend.
 router.get('/:userId', passport.authenticate('bearer', {session: false}), (req, res) => {
     return ChatRoom
-        .find()
-        .exec()
-        .then(rooms => {
-            const filteredRooms = rooms.filter(room => {
-                const condition = room.participants.indexOf(req.params.userId) > -1;
-                return condition;
-            });
-            return res.status(200).json(filteredRooms)
+        .find({
+            participants: { $in: [req.params.userId] }
         })
+        .populate('participants')
+        .exec()
+        .then(rooms => res.status(200).json(rooms))
         .catch(err => console.error(err))
 });
 
@@ -26,23 +23,19 @@ router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: fa
     return ChatRoom
         .findById(req.params.chatRoomId)
         .populate('participants')
+        .populate('messages.createdBy')
         .exec()
-        .then(room => {
-            console.log(room);
-            return res.status(200).json(room)
-        })
+        .then(room => res.status(200).json(room))
         .catch(err => console.error(err));
 });
 
 router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
     const { participants } = req.body;
-    console.log(participants);
     return ChatRoom.create({
         participants,
         messages: []
     })
     .then(newChatRoom => {
-        console.log(newChatRoom);
         return res.status(200).json(newChatRoom);
     })
     .catch(err => console.error(err))
@@ -57,22 +50,13 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
             { $push: { messages: { createdBy, body: newMessage } } },
             { safe: true, upsert: true, new: true }
         )
+        .populate('participants')
+        .populate('messages.createdBy')
         .exec()
         .then(room => {
-            return res.status(200).json(room.messages); // send back all msgs for the room
+            return res.status(200).json(room); 
         })
         .catch(err => console.error(err));
 });
-
-// router.get('/chatRoom/test/:chatRoomId', (req, res) => {
-//     return ChatRoom
-//         .findById(req.params.chatRoomId)
-//         .populate('participants')
-//         .exec()
-//         .then(room => {
-//             return res.status(200).json(room)
-//         })
-//         .catch(err => console.error(err));
-// });
 
 module.exports = { chatRoomRouter: router };
