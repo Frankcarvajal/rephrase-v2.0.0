@@ -11,9 +11,14 @@ export const chatListSuccess = (chatRooms) => ({
   chatRooms
 })
 
-export const fetchChatList = userId => dispatch => {
+export const fetchChatList = (userId, accessToken) => dispatch => {
   dispatch(chatListRequest());
-  fetch(`/api/chat/${userId}`)
+  fetch(`/api/chat/${userId}`, {
+    method: 'GET',
+    headers: {
+			'Authorization': `Bearer ${accessToken}` 
+		}
+  })
   .then(res => res.json())
   .then(chatRooms => {
     return dispatch(chatListSuccess(chatRooms))

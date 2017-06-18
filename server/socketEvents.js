@@ -28,9 +28,9 @@ exports = module.exports = io => {
             };
 
             requestPromise(options)
-                .then(updatedMessages => {
+                .then(updatedRoom => {
                     console.log('POST succeeded...'); 
-                    io.sockets.in(data.roomId).emit('receive new message', updatedMessages);
+                    io.sockets.in(data.roomId).emit('receive new message', updatedRoom);
                 })
                 .catch(err => console.error(err));
                 
