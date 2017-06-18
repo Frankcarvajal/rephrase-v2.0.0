@@ -3,6 +3,8 @@ import FaClose from 'react-icons/lib/fa/close';
 import './addChatRmForm.css';
 import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
+import { fetchChatList } from '../chats-list/actions';
+import { Link } from 'react-router-dom';
 
 // require the helper functions
 import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb } from './helpers';
@@ -14,7 +16,8 @@ export class AddChatRoomForm extends React.Component {
 
     this.state = {
       users: [],
-      selectedUsers: []
+      selectedUsers: [],
+      search: ''
     };
 
     this.accessToken = Cookies.get('accessToken');
@@ -25,6 +28,12 @@ export class AddChatRoomForm extends React.Component {
       .then(users => {
         this.setState({ users });
       });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user && !this.props.user) {
+      this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
+    }
   }
 
   handleAddUser(event, userData) {
@@ -52,11 +61,51 @@ export class AddChatRoomForm extends React.Component {
     })
   }
 
-  displayUsersAvailable() {
-    if (!this.state.users) {
-      return;
+  searchDisplay() {
+    if (!this.state.users || !this.props.chatRooms) {
+      return (<p>Loading...</p>);
     }
+    if (this.state.search.length === 0) {
+      return (
+        <div>
+          <h4>Recent Conversations</h4>
+          { this.displayRecentConvos() }
+        </div>
+      );
+    }
+    return (
+      <div>
+        <h4>Available Users</h4>
+        { this.displaySearchedUsers() }
+      </div>
+    );
+  }
+
+  displayRecentConvos() {
+    // Loop over the chat rooms and put in list of participants plus links to the rooms
+    return this.props.chatRooms.map((room, index) => {
+      const names = room.participants.map(u => { 
+        if (u.displayName === this.props.user.displayName) {
+          return null;
+        }
+        return u.displayName;
+      });
+      return ( 
+        <Link to={`/profile/chat/${room._id}`} key={index}>
+          <li className="chat-listing">
+            <p>{ `Participants: ${names.join(' ')}` }</p>
+            {/*<p>{ `RoomId: ${room._id}` }</p>*/}
+          </li>
+        </Link>
+      );
+    });
+  }
+
+  displaySearchedUsers() {
     return this.state.users.map((user, index) => {
+      if (user.displayName.indexOf(this.state.search) === -1) {
+        return null;
+      }
       return (  
         <li key={index} onClick={ e => this.handleAddUser(e, user) }>
           {user.displayName}
@@ -90,6 +139,12 @@ export class AddChatRoomForm extends React.Component {
       })
   }
 
+  handleChange(e) {
+    this.setState({
+      search: e.currentTarget.value
+    });
+  }
+
   render() {
     return (
       <div className='add-rm-form-wrapper'>
@@ -98,15 +153,19 @@ export class AddChatRoomForm extends React.Component {
         </div>
         <h1>Open a new conversation</h1>
         <form action="">
-          <input type="text" placeholder='Start a new conversation'/>
-          <button onClick={e => this.sendNewRoomRequest(e)}>Go</button>
+          <input 
+            type="text" 
+            placeholder='Start a new conversation' 
+            onChange={ e => this.handleChange(e) } 
+          />
+          <button onClick={ e => this.sendNewRoomRequest(e) }>Go</button>
         </form>
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
         </div>
         <div className='user-bin'>
           <ul className='user-bin-list'>
-            { this.displayUsersAvailable() }
+            { this.searchDisplay() }
           </ul>
         </div>
       </div>

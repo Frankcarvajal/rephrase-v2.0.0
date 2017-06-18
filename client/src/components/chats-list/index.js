@@ -27,18 +27,18 @@ export class ChatList extends React.Component {
 
   getChatRoomListings() {
     if (this.props.chatRooms) {
-      console.log(this.props.chatRooms);
       return this.props.chatRooms.map((room, index) => {
         const names = room.participants.map(u => { 
-          if (u.displayName !== this.props.user.displayName) {
-            return u.displayName;
+          if (u.displayName === this.props.user.displayName) {
+            return null;
           }
+          return u.displayName;
         });
         return ( 
           <Link to={`/profile/chat/${room._id}`} key={index}>
             <li className="chat-listing">
                 <p>{ `Participants: ${names.join(' ')}` }</p>
-                <p>{ `RoomId: ${room._id}` }</p>
+                {/*<p>{ `RoomId: ${room._id}` }</p>*/}
             </li>
           </Link>
         )
@@ -50,7 +50,7 @@ export class ChatList extends React.Component {
   render(){
       return(
       <div className='chat-list-wrapper'>
-        <h1>Chat Room List</h1>
+        <h1>My Open Conversations</h1>
         <div className='btn-container'>
           <Link to={'/profile/new-room'}>
             <button>Start a new conversation</button>
