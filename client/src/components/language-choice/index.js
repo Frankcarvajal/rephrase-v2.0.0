@@ -1,28 +1,59 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import * as Cookies from 'js-cookie'; 
+import { selectLanguage } from './actions';
+import { saveDefaultLanguageToDatabase } from '../profile/actions';
+import options from './options'; 
+import { setUpOptions } from './options';
 export class LanguageChoice extends Component{
+ 
+  constructor(props) {
+    super(props);
+
+    this.accessToken = Cookies.get('accessToken');
+  }
+  
   handleChange(event){
     event.preventDefault();
-    this.props.languageProp(event.target.value);   
+    if(this.props.forDictaphone) {
+      return this.updateDictaphoneLanguage(event.target.value);
+    }
+    return this.updateDefaultLanguage(event.target.value);
   }
+
+  updateDictaphoneLanguage(language){
+    this.props.dispatch(selectLanguage(language));
+  }
+
+  updateDefaultLanguage(language){
+    if (this.accessToken) {
+      this.props.dispatch(saveDefaultLanguageToDatabase(language, this.accessToken));
+    }
+  }
+
+  displayOptions(){
+    if (!this.props.forDictaphone && this.props.user){
+      const optionsAr = setUpOptions(this.props.user.defaultLanguage, options)
+      return this.mapOverOptions(optionsAr);
+    }
+    return this.mapOverOptions(options)
+  }
+  mapOverOptions(options){
+    return options.map((o, index) =>{
+      return <option key={index} name={o.name} value={o.value}>{o.name}</option> 
+    })
+  }
+  
 render(){ 
     return(
-      <p>
         <select name="Language" onChange={(e)=> this.handleChange(e)} >
-          <option value="en">English</option>
-          <option value="zh-CN">Chinese-Simplified</option>
-          <option value="zh-TW">Chinese-Traditional</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-          <option value="ja">Japanese</option>
-          <option value="es">Spanish</option>
+          { this.displayOptions() }
         </select>
-      </p>
     );
   }
 }
 const mapStateToProps = state => ({
-  userLanguage: state.userLanguage
+  userLanguage: state.userLanguage,
+  user: state.userData.user
 });
 export default connect(mapStateToProps)(LanguageChoice);

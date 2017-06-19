@@ -37,7 +37,6 @@ class Dictaphone extends Component {
     }
 
     const sendTranscriptToServer = transcript => {
-      SpeechRecognition.lang = 'zh-CN';
       recognition.onend = function(e) { console.log('SEND-TRANSCRIPT-TO-SERVER:', this.props) }
       const final = transcript;
       resetTranscript();
