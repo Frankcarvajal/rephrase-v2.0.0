@@ -5,6 +5,7 @@ import './chat-room.css';
 import io from 'socket.io-client';
 import * as Cookies from 'js-cookie'; 
 import { fetchChatList } from '../chats-list/actions';
+import { LanguageChoice } from '../language-choice';
 
 export class ChatRoom extends Component {
 
@@ -89,18 +90,24 @@ export class ChatRoom extends Component {
       return;
     }
     return this.state.room.participants.map((person, index) => {
-      if (person._id !== this.props.user.id) {
+      if (person._id !== this.props.user.id)
         return (
           <h4 key={index}>{person.displayName}</h4>
         );
-      }
     });
   }
+  
+  // translateMessagesToDefaultLanguage(){
+  //   fetch('/chat', {
+  //     method: 'POST',
 
+  //   })
+  // }
   render() {
     return (
       <div className='room'>
         <div className='room-header'>
+          <LanguageChoice forDictaphone={false} />
           { this.showParticipants() }
         </div>
         <h2>Messages shall come forth here</h2>

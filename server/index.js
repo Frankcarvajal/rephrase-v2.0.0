@@ -3,6 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const jsonParser = require('body-parser').json();
 
 const app = express();
 const server = require('http').createServer(app);
@@ -42,6 +43,7 @@ app.get('/api/me', passport.authenticate('bearer', {session: false}),
 });
 
 app.get('/api/users', (req, res) => {
+    console.log('req.users', req.user)
     return User
         .find()
         .exec()
@@ -52,12 +54,20 @@ app.get('/api/users', (req, res) => {
         .catch(err => console.error(err));
 })
 
-app.put('/api/me', (req, res) => {
-    User.update({
-        defaultLanguage: req.body.defaultLanguage
+app.put('/api/me', passport.authenticate('bearer', {session: false}), jsonParser,  (req, res) => {
+    console.log('user from passport', req.user);
+    console.log('REQUEST BODY', req.body);
+    return User.findByIdAndUpdate(
+            req.user._id, 
+            { $set: { defaultLanguage: req.body.defaultLanguage}}, 
+            {upsert: true, new: true}
+        ) 
+        .then(user => {
+            console.log('user should be updated', user);
+            return res.status(200).json(user);
+        })
+        .catch(err => console.error(err));    
     })
-    res.status(204).end();
-})
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 

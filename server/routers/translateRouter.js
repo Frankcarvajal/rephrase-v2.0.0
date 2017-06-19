@@ -5,6 +5,7 @@ const googleTranslate = require('google-translate')(process.env.TRANSLATE_API_KE
 const router = express.Router();
 
 router.post('/', jsonParser, (req, res) => {
+  console.log('translateRouterTEST', req.body);
   // For posting a string to translate, will return the translated string
   // Google translate will identify the language for you as well. 
   return googleTranslate.translate(req.body.toTranslate, req.body.targetLanguage, function(err, translation) {
@@ -14,6 +15,10 @@ router.post('/', jsonParser, (req, res) => {
     return res.status(200).json({ translation });
   });
 });
+
+router.post('/chat', jsonParser, (req, res) => {
+    return googleTranslate.translate
+})
 
 module.exports = { translateRouter: router };
 

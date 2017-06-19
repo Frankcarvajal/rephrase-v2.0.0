@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { toggleBtn, editBtn } from './actions';
-import { selectLanguage } from '../language-choice/actions';
 import { postTranscriptGetTranslation } from '../dictaphone/actions';
 import FaMicrophone from 'react-icons/lib/fa/microphone';
 import LanguageChoice from '../language-choice';
@@ -62,7 +61,7 @@ export class Home extends Component {
   render() {
     return (
       <div className="home-view">
-        <LanguageChoice   languageProp={(language) => this.props.dispatch(selectLanguage(language))} />
+        <LanguageChoice forDictaphone={true} />
         {this.handleSpeechRecognition()}
         <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
           {this.handleEdit()}
