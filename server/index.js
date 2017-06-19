@@ -68,6 +68,9 @@ app.put('/api/me', passport.authenticate('bearer', {session: false}), jsonParser
         })
         .catch(err => console.error(err));    
     })
+
+});
+
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
@@ -80,7 +83,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        return mongoose.connect(process.env.DATABASE_URL, err => {
+        return mongoose.connect(process.env.DATABASE_LOCAL, err => {
             if (err) {
                 return reject(err);
             }
