@@ -27,7 +27,6 @@ export class ChatList extends React.Component {
 
   getChatRoomListings() {
     if (this.props.chatRooms) {
-      console.log(this.props.chatRooms);
       return this.props.chatRooms.map((room, index) => {
         const names = room.participants.map(u => { 
           if (u.displayName !== this.props.user.displayName) {

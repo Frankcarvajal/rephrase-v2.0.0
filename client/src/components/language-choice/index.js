@@ -32,15 +32,18 @@ export class LanguageChoice extends Component{
   }
 
   displayOptions(){
-    if (!this.props.forDictaphone && this.props.user){
-      const optionsAr = setUpOptions(this.props.user.defaultLanguage, options)
-      return this.mapOverOptions(optionsAr);
-    }
+    // if (!this.props.forDictaphone && this.props.user){
+    //   // const optionsAr = setUpOptions(this.props.user.defaultLanguage, options)
+    //   return this.mapOverOptions(options);
+    // }
     return this.mapOverOptions(options)
   }
   mapOverOptions(options){
     return options.map((o, index) =>{
-      return <option key={index} name={o.name} value={o.value}>{o.name}</option> 
+       if (this.props.user && options.name === this.props.user.defaultLanguage){
+        return <option selected="selected" key={index} name={o.name} value={o.value}>{o.name}</option> 
+       }
+       return <option key={index} name={o.name} value={o.value}>{o.name}</option>
     })
   }
   
