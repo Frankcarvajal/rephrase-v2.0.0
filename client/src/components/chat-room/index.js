@@ -5,6 +5,7 @@ import './chat-room.css';
 import io from 'socket.io-client';
 import * as Cookies from 'js-cookie'; 
 import { fetchChatList } from '../chats-list/actions';
+import LanguageChoice from '../language-choice';
 
 export class ChatRoom extends Component {
 
@@ -15,12 +16,29 @@ export class ChatRoom extends Component {
     this.state = {
       // this needs to be updated with all room data. everything changed here and 
       // change to just current room, for which you get the messages from there.
-      room: null 
+      room: null,
+      translations: null 
     };
 
     this.accessToken = Cookies.get('accessToken');
   }
 
+    getMessageTranslations(messages){
+      return fetch(`/api/translate/messages`, {
+        method: 'POST',
+        headers: { 
+			    'Authorization': `Bearer ${this.accessToken}`,
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          defaultLanguage: this.props.user.defaultLanguage, 
+          messages 
+        }) 
+      })
+      .then(responseStream => responseStream.json())
+      .catch(err => console.error(err));
+    }
   getChatRoomStateFromDb() {
     return fetch(`/api/chat/chatRoom/${this.props.match.params.roomId}`, {
       method: 'GET',
@@ -37,11 +55,17 @@ export class ChatRoom extends Component {
     // if (this.props.user && this.props.chatRooms.indexOf(currentRm) < 0) {
     //   this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
     // }
+    let room;
     this.socket.emit('join room', { roomId: currentRm });
     this.getChatRoomStateFromDb()
-      .then(room => { 
-        this.updateStateWithMessages(room, this); 
-      });
+      .then(_room => {
+        // invoke function to get all translations
+        room = _room;
+        return this.getMessageTranslations(_room.messages);
+      })
+      .then(translations => {
+        this.updateStateWithMessages(room, translations, this); 
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,15 +76,25 @@ export class ChatRoom extends Component {
 
   componentWillMount() {
     this.socket = io(); 
-    const currentRoom = this;
+    const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
-      currentRoom.updateStateWithMessages(updatedRoom, currentRoom);
-    });
+      const m = updatedRoom.messages;
+      return cr.getMessageTranslations([m[m.length-1]])
+        .then(translation => {
+          cr.updateStateWithMessages(updatedRoom, translation, cr)
+      })
+    })
   }
 
-  updateStateWithMessages(updatedRoom, context) {
+  updateStateWithMessages(updatedRoom, translations, context) {
+    // Add some conditional logic that will append a new translated 
+    // msg onto the state.stranlsations array if a new msg comes in
+    if(this.state.translations){
+      translations = [...this.state.translations, ...translations]
+    }
     context.setState({
-      room: updatedRoom
+      room: updatedRoom,
+      translations
     });
   }
 
@@ -79,8 +113,9 @@ export class ChatRoom extends Component {
   }
 
   insertMessagesDom() {
-    if (this.state.room && this.props.user) {
-      return this.state.room.messages.map((msg, index) => <li key={index}><b>{msg.createdBy.displayName}: &emsp;</b>{msg.body}</li>);
+    console.log(this.state);
+    if (this.state.translations && this.props.user) {
+      return this.state.translations.map((msg, index) => <li key={index}><b>{this.state.room.messages[index].createdBy.displayName}: &emsp;</b>{msg.translatedText}</li>);
     }
   }
 
@@ -89,11 +124,10 @@ export class ChatRoom extends Component {
       return;
     }
     return this.state.room.participants.map((person, index) => {
-      if (person._id !== this.props.user.id) {
+      if (person._id !== this.props.user.id)
         return (
           <h4 key={index}>{person.displayName}</h4>
         );
-      }
     });
   }
 
@@ -101,6 +135,7 @@ export class ChatRoom extends Component {
     return (
       <div className='room'>
         <div className='room-header'>
+          <LanguageChoice forDictaphone={false} />
           { this.showParticipants() }
         </div>
         <h2>Messages shall come forth here</h2>

@@ -1,7 +1,7 @@
 import { SELECT_LANGUAGE } from './actions';
 
 const initialState = {
-  userLanguage: 'en',
+  userLanguage: 'es',
 };
 
 const selectLanguageReducer = (state=initialState, action) => {
