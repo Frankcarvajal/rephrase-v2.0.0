@@ -79,13 +79,14 @@ export class ChatRoom extends Component {
     this.socket = io(); 
     const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
-      console.log(updatedRoom);
-      const m = updatedRoom.messages;
-      return cr.getMessageTranslations([m[m.length-1]])
+      console.log('The updated room -> ', updatedRoom);
+      const newestMsg = updatedRoom.messages[updatedRoom.messages.length - 1];
+      console.log('the newest message -> ', newestMsg);
+      return cr.getMessageTranslations([newestMsg])
         .then(translation => {
           cr.updateStateWithMessages(updatedRoom, translation, cr)
-      })
-    })
+      });
+    });
   }
 
   updateStateWithMessages(updatedRoom, translations, context) {
@@ -106,7 +107,7 @@ export class ChatRoom extends Component {
 
   sendMessageToRoom(event) {
     event.preventDefault();
-    console.log(this.props.user.id);
+    console.log('message is sent by -> ', this.props.user.displayName);
     const msg = this.input.value.trim();
     this.input.value = '';
     this.socket.emit('new message', { 
