@@ -149,7 +149,9 @@ export class AddChatRoomForm extends React.Component {
     return (
       <div className='add-rm-form-wrapper'>
         <div className='close-icon-bin'>
-          <FaClose />
+          <Link to='/profile/chatlist'>
+            <FaClose />
+          </Link>
         </div>
         <h1>Open a new conversation</h1>
         <form action="">

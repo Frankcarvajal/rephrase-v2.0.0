@@ -4,11 +4,11 @@ import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { fetchChatList } from './actions';
 import { Link } from 'react-router-dom';
+import RoomListings from '../room-listings';
 
 export class ChatList extends React.Component {
 
   constructor(props) {
-
     super(props);
     
     this.accessToken = Cookies.get('accessToken');
@@ -28,25 +28,10 @@ export class ChatList extends React.Component {
   }
 
   getChatRoomListings() {
-    if (this.props.chatRooms) {
-      return this.props.chatRooms.map((room, index) => {
-        const names = room.participants.map(u => { 
-          if (u.displayName === this.props.user.displayName) {
-            return null;
-          }
-          return u.displayName;
-        });
-        return ( 
-          <Link to={`/profile/chat/${room._id}`} key={index}>
-            <li className="chat-listing">
-                <p>{ `Participants: ${names.join(' ')}` }</p>
-                {/*<p>{ `RoomId: ${room._id}` }</p>*/}
-            </li>
-          </Link>
-        )
-      })
+    if (this.props.chatRooms && this.props.user) {
+      return (<RoomListings chatRooms={this.props.chatRooms} user={this.props.user} />);
     }
-    return (<p>Loading</p>);
+    return null;
   }
 
   render(){
@@ -58,9 +43,7 @@ export class ChatList extends React.Component {
             <button>Start a new conversation</button>
           </Link>
         </div>
-        <ul className="chat-list">
-            {this.getChatRoomListings()}
-        </ul>
+          {this.getChatRoomListings()}
       </div>
     )
   }

@@ -30,17 +30,4 @@ const options = [
 
 ];
 
-export function setUpOptions(defaultLanguage, options){
-  let index;
-  options.forEach((option, i) => {
-    if (option.value === defaultLanguage){
-      index = i;
-    }
-  })
-  let firstHalf = options.slice(0,index);
-  let secondHalf = options.slice(index+1);
-  const result = [options[index], ...firstHalf, ...secondHalf];
-  return result;
-}
-
 export default options;

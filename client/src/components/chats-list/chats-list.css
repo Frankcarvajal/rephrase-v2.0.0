@@ -1,18 +1,11 @@
-.chat-list-wrapper .chat-list{
+.chat-list-wrapper {
   padding: 0;
   margin: 10px auto;
   max-width: 700px;
-  list-style: none;
 }
 
 .chat-list-wrapper h1 {
   text-align: center;
-}
-
-.chat-list-wrapper .chat-listing {
-  border: 1px solid black;
-  border-radius: 4px;
-  padding: 3px;
 }
 
 .chat-list-wrapper .btn-container {

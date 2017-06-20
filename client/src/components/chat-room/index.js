@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import * as Cookies from 'js-cookie'; 
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
+import RoomListings from '../room-listings';
 
 export class ChatRoom extends Component {
 
@@ -23,7 +24,7 @@ export class ChatRoom extends Component {
     this.accessToken = Cookies.get('accessToken');
   }
 
-    getMessageTranslations(messages) {
+    getMessageTranslations(messages, props) {
       return fetch(`/api/translate/messages`, {
         method: 'POST',
         headers: { 
@@ -32,7 +33,7 @@ export class ChatRoom extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-          defaultLanguage: this.props.user.defaultLanguage, 
+          defaultLanguage: props.user.defaultLanguage, 
           messages 
         }) 
       })
@@ -62,7 +63,7 @@ export class ChatRoom extends Component {
       .then(_room => {
         // invoke function to get all translations
         room = _room;
-        return this.getMessageTranslations(_room.messages);
+        return this.getMessageTranslations(_room.messages, this.props);
       })
       .then(translations => {
         this.updateStateWithMessages(room, translations, this); 
@@ -73,16 +74,22 @@ export class ChatRoom extends Component {
     if (nextProps.user && !this.props.user) {
       this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
     }
+    if (this.props.user) {
+      if (nextProps.user.defaultLanguage !== this.props.user.defaultLanguage) {
+        this.getMessageTranslations(this.state.room.messages, nextProps)
+          .then(translations => {
+            this.updateStateWithMessages(this.state.room, translations, this);
+          });
+      }
+    }
   }
 
   componentWillMount() {
     this.socket = io(); 
     const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
-      console.log('The updated room -> ', updatedRoom);
       const newestMsg = updatedRoom.messages[updatedRoom.messages.length - 1];
-      console.log('the newest message -> ', newestMsg);
-      return cr.getMessageTranslations([newestMsg])
+      return cr.getMessageTranslations([newestMsg], cr.props)
         .then(translation => {
           cr.updateStateWithMessages(updatedRoom, translation, cr)
       });
@@ -92,9 +99,13 @@ export class ChatRoom extends Component {
   updateStateWithMessages(updatedRoom, translations, context) {
     // Add some conditional logic that will append a new translated 
     // msg onto the state.stranlsations array if a new msg comes in
-    if (this.state.translations) {
-      translations = [...this.state.translations, ...translations]
+  
+    const t = this.state.translations;
+    
+    if (t && t[0].translatedTo === translations[0].translatedTo) {
+      translations = [...t, ...translations];
     }
+
     context.setState({
       room: updatedRoom,
       translations
@@ -107,7 +118,6 @@ export class ChatRoom extends Component {
 
   sendMessageToRoom(event) {
     event.preventDefault();
-    console.log('message is sent by -> ', this.props.user.displayName);
     const msg = this.input.value.trim();
     this.input.value = '';
     this.socket.emit('new message', { 
@@ -140,21 +150,31 @@ export class ChatRoom extends Component {
     });
   }
 
+  getChatRoomListings() {
+    if (this.props.chatRooms && this.props.user) {
+      return (<RoomListings chatRooms={this.props.chatRooms} user={this.props.user} />);
+    }
+    return null;
+  }
+
   render() {
     return (
-      <div className='room'>
-        <div className='room-header'>
-          <LanguageChoice forDictaphone={false} />
-          { this.showParticipants() }
+      <div className='chat-room-wrapper'>
+        { this.getChatRoomListings() }
+        <div className='room'>
+          <div className='room-header'>
+            <LanguageChoice forDictaphone={false} />
+            { this.showParticipants() }
+          </div>
+          <h2>Messages shall come forth here</h2>
+          <ul id="messages">
+            {this.insertMessagesDom()}
+          </ul>
+          <form action="">
+            <input id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+            <button onClick={ e => this.sendMessageToRoom(e) }>Send</button>
+          </form> 
         </div>
-        <h2>Messages shall come forth here</h2>
-        <ul id="messages">
-          {this.insertMessagesDom()}
-        </ul>
-        <form action="">
-          <input id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-          <button onClick={ e => this.sendMessageToRoom(e) }>Send</button>
-        </form> 
       </div>
     );
   }

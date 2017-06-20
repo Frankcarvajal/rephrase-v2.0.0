@@ -40,6 +40,9 @@ router.post('/messages', jsonParser, (req, res) => {
   Promise.all(requestsToGoogle)
     .then(translations => {
       console.log(translations);
+      for (let i=0; i<translations.length; i++) {
+        translations[i].translatedTo = req.body.defaultLanguage;
+      }
       return res.status(200).json(translations);
     })
     .catch(err => console.error(err));
