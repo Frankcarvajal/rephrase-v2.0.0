@@ -40,7 +40,6 @@ export function setUpOptions(defaultLanguage, options){
   let firstHalf = options.slice(0,index);
   let secondHalf = options.slice(index+1);
   const result = [options[index], ...firstHalf, ...secondHalf];
-  console.log(result);
   return result;
 }
 
