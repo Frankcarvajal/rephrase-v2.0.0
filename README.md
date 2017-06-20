@@ -1,4 +1,4 @@
-# Thinkful Full Stack Template
+# Rephrase
 
 A template for developing and deploying full stack JavaScript apps.
 
