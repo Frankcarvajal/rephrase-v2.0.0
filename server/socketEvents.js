@@ -2,7 +2,7 @@ const requestPromise = require('request-promise-native');
 
 let origin = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production') {
-    origin = 'https://re-phrase.herokuapp.com';
+    origin = 'https://rephrase-it.herokuapp.com';
 }
 
 exports = module.exports = io => { 
