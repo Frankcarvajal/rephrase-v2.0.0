@@ -23,7 +23,7 @@ export class ChatRoom extends Component {
     this.accessToken = Cookies.get('accessToken');
   }
 
-    getMessageTranslations(messages){
+    getMessageTranslations(messages) {
       return fetch(`/api/translate/messages`, {
         method: 'POST',
         headers: { 
@@ -39,6 +39,7 @@ export class ChatRoom extends Component {
       .then(responseStream => responseStream.json())
       .catch(err => console.error(err));
     }
+
   getChatRoomStateFromDb() {
     return fetch(`/api/chat/chatRoom/${this.props.match.params.roomId}`, {
       method: 'GET',
@@ -89,7 +90,7 @@ export class ChatRoom extends Component {
   updateStateWithMessages(updatedRoom, translations, context) {
     // Add some conditional logic that will append a new translated 
     // msg onto the state.stranlsations array if a new msg comes in
-    if(this.state.translations){
+    if (this.state.translations) {
       translations = [...this.state.translations, ...translations]
     }
     context.setState({
@@ -112,10 +113,15 @@ export class ChatRoom extends Component {
     });
   }
 
+  findUserName(i) {
+    if (this.state.room.messages[i].createdBy) {
+      return this.state.room.messages[i].createdBy.displayName;
+    }
+  }
+
   insertMessagesDom() {
-    console.log(this.state);
     if (this.state.translations && this.props.user) {
-      return this.state.translations.map((msg, index) => <li key={index}><b>{this.state.room.messages[index].createdBy.displayName}: &emsp;</b>{msg.translatedText}</li>);
+      return this.state.translations.map((msg, index) => <li key={index}><b>{this.findUserName(index)}: &emsp;</b>{msg.translatedText}</li>);
     }
   }
 

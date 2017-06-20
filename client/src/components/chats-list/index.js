@@ -8,7 +8,9 @@ import { Link } from 'react-router-dom';
 export class ChatList extends React.Component {
 
   constructor(props) {
+
     super(props);
+    
     this.accessToken = Cookies.get('accessToken');
   }
 
