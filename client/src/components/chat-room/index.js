@@ -105,6 +105,7 @@ export class ChatRoom extends Component {
 
   sendMessageToRoom(event) {
     event.preventDefault();
+    console.log(this.props.user.id);
     const msg = this.input.value.trim();
     this.input.value = '';
     this.socket.emit('new message', { 

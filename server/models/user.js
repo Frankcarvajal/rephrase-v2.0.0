@@ -10,6 +10,7 @@ const userSchema = new Schema({
 
 userSchema.methods.apiRepr = function() {
   return {
+    id: this._id,
     googleId: this.googleId,
     displayName: this.displayName,
     defaultLanguage: this.defaultLanguage

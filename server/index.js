@@ -61,7 +61,8 @@ app.put('/api/me', passport.authenticate('bearer', {session: false}), jsonParser
             {upsert: true, new: true}
         ) 
         .then(user => {
-            return res.status(200).json(user);
+            const _user = user.apiRepr();
+            return res.status(200).json(_user);
         })
         .catch(err => console.error(err));    
 })
