@@ -29,7 +29,7 @@ exports = module.exports = io => {
 
             requestPromise(options)
                 .then(updatedRoom => {
-                    console.log('POST succeeded...'); 
+                    console.log(updatedRoom); 
                     io.sockets.in(data.roomId).emit('receive new message', updatedRoom);
                 })
                 .catch(err => console.error(err));

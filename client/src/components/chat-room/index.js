@@ -79,6 +79,7 @@ export class ChatRoom extends Component {
     this.socket = io(); 
     const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
+      console.log(updatedRoom);
       const m = updatedRoom.messages;
       return cr.getMessageTranslations([m[m.length-1]])
         .then(translation => {
