@@ -1,6 +1,9 @@
 .header-wrapper {
   width: 100%;
   background-color: #AFC2D5;
+  -webkit-box-shadow: -2px -117px 83px 107px rgba(0,0,0,0.32);
+  -moz-box-shadow: -2px -117px 83px 107px rgba(0,0,0,0.32);
+  box-shadow: -2px -117px 83px 107px rgba(0,0,0,0.32);
 }
 
 .header-wrapper .app-header {
@@ -42,4 +45,8 @@
 
 .header-wrapper svg:hover{
   color: white;
+}
+.header {
+  padding: 0 80px;
+  background-color: #AFC2D5;
 }

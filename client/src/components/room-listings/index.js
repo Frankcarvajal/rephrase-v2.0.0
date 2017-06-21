@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './room-listings.css';
+import { Collection, CollectionItem } from 'react-materialize';
 
 export default function RoomListings(props) {
 
@@ -12,19 +13,21 @@ export default function RoomListings(props) {
         return u.displayName;
       });
       return ( 
+
         <Link to={`/profile/chat/${room._id}`} key={index}>
-          <li className="chat-listing">
+          <CollectionItem className="chat-listing">
               <p>{ `Participants: ${names.join(' ')}` }</p>
               {/*<p>{ `RoomId: ${room._id}` }</p>*/}
-          </li>
+          </CollectionItem>
         </Link>
+
       )
     });
 
     return (
-      <ul className="chat-list">
+      <Collection className="chat-list">
         {roomsJsx}
-      </ul>
+      </Collection>
     );
 
   }

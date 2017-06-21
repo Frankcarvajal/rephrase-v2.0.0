@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchChatList } from './actions';
 import { Link } from 'react-router-dom';
 import RoomListings from '../room-listings';
+import { Button } from 'react-materialize';
 
 export class ChatList extends React.Component {
 
@@ -40,7 +41,7 @@ export class ChatList extends React.Component {
         <h1>My Open Conversations</h1>
         <div className='btn-container'>
           <Link to={'/profile/new-room'}>
-            <button>Start a new conversation</button>
+            <Button wave='light'>Start a new conversation</Button>
           </Link>
         </div>
           {this.getChatRoomListings()}

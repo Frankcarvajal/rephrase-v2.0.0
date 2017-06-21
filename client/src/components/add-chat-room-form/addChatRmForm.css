@@ -8,24 +8,27 @@
   font-size: 26px;
 }
 
-.add-rm-form-wrapper input {
+/*.add-rm-form-wrapper input {
   width: 90%;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 5px;
   border-radius: 5px;
   font-size: 18px;
-}
-
-.add-rm-form-wrapper button {
+}*/
+/*
+.wrapper button {
   width: 8%;
   margin-left: 1%;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 2px;
   font-size: 18px;
-}
+}*/
 
+row input {
+  width: 100%;
+}
 .add-rm-form-wrapper .user-bin-list {
   padding: 30px 20px;
 }

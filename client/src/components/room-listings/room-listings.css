@@ -5,5 +5,9 @@
 .chat-list .chat-listing {
   border: 1px solid black;
   border-radius: 4px;
-  padding: 3px;
+  padding: 0;
+  margin: 0;
+}
+.chat-listing .collection-item p{
+  padding: 0;
 }
