@@ -5,6 +5,7 @@ import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
 import { Link } from 'react-router-dom';
+import { Row, Input, Button } from 'react-materialize';
 
 // require the helper functions
 import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb } from './helpers';
@@ -154,14 +155,15 @@ export class AddChatRoomForm extends React.Component {
           </Link>
         </div>
         <h1>Open a new conversation</h1>
-        <form action="">
-          <input 
+        <Row>
+          <Input
             type="text" 
             placeholder='Start a new conversation' 
             onChange={ e => this.handleChange(e) } 
           />
-          <button onClick={ e => this.sendNewRoomRequest(e) }>Go</button>
-        </form>
+          
+        </Row>
+        <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
         </div>

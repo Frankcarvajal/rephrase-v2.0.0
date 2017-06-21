@@ -7,6 +7,7 @@ import * as Cookies from 'js-cookie';
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
 import RoomListings from '../room-listings';
+import { Row, Input, Button } from 'react-materialize';
 
 export class ChatRoom extends Component {
 
@@ -167,14 +168,14 @@ export class ChatRoom extends Component {
             <LanguageChoice forDictaphone={false} />
             { this.showParticipants() }
           </div>
-          <h2>Messages shall come forth here</h2>
+          {/*<h2>Messages shall come forth here</h2>*/}
           <ul id="messages">
             {this.insertMessagesDom()}
           </ul>
-          <form action="">
-            <input id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-            <button onClick={ e => this.sendMessageToRoom(e) }>Send</button>
-          </form> 
+          <Row action="">
+            <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+            <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
+          </Row> 
         </div>
       </div>
     );

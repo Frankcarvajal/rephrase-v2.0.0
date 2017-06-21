@@ -4,6 +4,7 @@ import * as Cookies from 'js-cookie';
 
 import { selectLanguage } from './actions';
 import { saveDefaultLanguageToDatabase } from '../profile/actions';
+import { Row, Input } from 'react-materialize';
 import options from './options'; 
 
 export class LanguageChoice extends Component{
@@ -63,19 +64,23 @@ export class LanguageChoice extends Component{
     return options.map((o, index) => {
       if (props.user) {
         if (!props.forDictaphone && props.user.defaultLanguage === o.value) {
-          return <option key={index} name={o.name} value={o.value} selected>{o.name}</option>
+          return <option key={index} name={o.name} value={o.value} defaultValue>{o.name}</option>
         }
       }
-      return <option key={index} name={o.name} value={o.value}>{o.name}</option>
+      return <option key={index} name={o.name} value={o.value} defaultValue>{o.name}</option>
     });
   }
 
 render(){ 
     return(
-        <select name="Language" onChange={(e)=> this.handleChange(e)} >
-          <option name='top' value='default-option'>Select a language</option>
-          { this.state.options }
-        </select>
+        <Row>
+          <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange= {(e) =>
+          {this.handleChange(e)}}>
+            <option value='Choose a Language'>Choose a Language</option>
+            { this.state.options }
+          </Input>
+        </Row>
+
     );
   }
 }

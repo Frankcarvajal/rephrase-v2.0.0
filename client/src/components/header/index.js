@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import logo from './logo.png';
 import './header.css';
+import { Navbar, NavItem, Icon } from 'react-materialize';
 
 import { Link } from 'react-router-dom';
 import FaBars from 'react-icons/lib/fa/bars';
@@ -29,6 +30,13 @@ export class Header extends Component {
 
     render() {
         return (
+            // <Navbar className="header" brand={'rePHRASE' } right>
+            //     <NavItem href='get-started.html'><Icon>home</Icon></NavItem>
+            //     <NavItem href='get-started.html'><Icon>chat</Icon></NavItem>
+            //     <NavItem href='get-started.html'><Icon>account_box</Icon></NavItem>
+            //     <NavItem href='get-started.html'>Log Out</NavItem>
+            // </Navbar>
+
             <div className="header-wrapper">
                 <div className="app-header">
                     <FaBars size={30}/>
