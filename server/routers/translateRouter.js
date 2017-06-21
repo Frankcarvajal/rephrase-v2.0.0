@@ -39,6 +39,8 @@ router.post('/messages', jsonParser, (req, res) => {
   // return promise.all() with the array and then replace the body on each original
   Promise.all(requestsToGoogle)
     .then(translations => {
+      console.log(messages);
+      console.log('=============')
       console.log(translations);
       for (let i=0; i<translations.length; i++) {
         translations[i].translatedTo = req.body.defaultLanguage;

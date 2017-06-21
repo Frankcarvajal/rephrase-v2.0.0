@@ -66,6 +66,7 @@ export class ChatRoom extends Component {
         return this.getMessageTranslations(_room.messages, this.props);
       })
       .then(translations => {
+        console.log('Comp mounts and you get translations here =>', translations);
         this.updateStateWithMessages(room, translations, this); 
       })
   }
