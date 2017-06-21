@@ -59,12 +59,12 @@ export class ChatRoom extends Component {
       const newestMsg = updatedRoom.messages[updatedRoom.messages.length - 1];
       return getMessageTranslations([newestMsg], cr.props, this.accessToken)
         .then(translationData => {
-          cr.updateStateWithMessages(cr.state.room, translationData, cr)
+          cr.updateStateWithMessages(cr.state.room, translationData, cr, updatedRoom.messages)
       });
     });
   }
 
-  updateStateWithMessages(updatedRoom, translatedMessagesArr, context) {
+  updateStateWithMessages(updatedRoom, translatedMessagesArr, context, roomMessages) {
 
     let isNewDefaultLanguage = false;
     if ( translatedMessagesArr.length > 0 && updatedRoom.messages.length > 0) { 
@@ -76,13 +76,17 @@ export class ChatRoom extends Component {
     if ( !this.state.room || noMessages || isNewDefaultLanguage ) {
       updatedRoom = Object.assign({}, updatedRoom, {
         messages: translatedMessagesArr
-      })
+      });
     }
 
     if ( this.state.room && translatedMessagesArr.length === 1 && !noMessages) {
+      // Test to see if we want to drop the very first message 
+      if(updatedRoom.messages[0]._id !== roomMessages[0]._id) {
+        updatedRoom.messages.shift();
+      }
       updatedRoom = Object.assign({}, updatedRoom, {
         messages: [...updatedRoom.messages, ...translatedMessagesArr]
-      })
+      });
     }
 
     context.setState({

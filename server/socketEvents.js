@@ -17,6 +17,9 @@ exports = module.exports = io => {
             // emit a 'receive new message' event for the client with the new message
             // data.
 
+            // First check to see how many current messages are in the room
+            // If 13 delete oldest, because new one is coming in. 
+            // then post 
             const options = {
                 method: 'POST',
                 uri: `${origin}/api/chat/chatRoom/${data.roomId}`,
@@ -29,7 +32,6 @@ exports = module.exports = io => {
 
             requestPromise(options)
                 .then(updatedRoom => {
-                    console.log(updatedRoom); 
                     io.sockets.in(data.roomId).emit('receive new message', updatedRoom);
                 })
                 .catch(err => console.error(err));
