@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ChatMessage from '../chat-message'
 import { connect } from 'react-redux';
 import './chat-room.css';
 import io from 'socket.io-client';
@@ -8,6 +7,7 @@ import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
 import RoomListings from '../room-listings';
 import { Row, Input, Button } from 'react-materialize';
+import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
 
 export class ChatRoom extends Component {
 
@@ -16,59 +16,25 @@ export class ChatRoom extends Component {
     super(props);
 
     this.state = {
-      // this needs to be updated with all room data. everything changed here and 
-      // change to just current room, for which you get the messages from there.
-      room: null,
-      translations: null 
+      room: null
     };
 
     this.accessToken = Cookies.get('accessToken');
   }
 
-    getMessageTranslations(messages, props) {
-      return fetch(`/api/translate/messages`, {
-        method: 'POST',
-        headers: { 
-			    'Authorization': `Bearer ${this.accessToken}`,
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          defaultLanguage: props.user.defaultLanguage, 
-          messages 
-        }) 
-      })
-      .then(responseStream => responseStream.json())
-      .catch(err => console.error(err));
-    }
-
-  getChatRoomStateFromDb() {
-    return fetch(`/api/chat/chatRoom/${this.props.match.params.roomId}`, {
-      method: 'GET',
-      headers: { 
-			'Authorization': `Bearer ${this.accessToken}` 
-		  }
-    })
-    .then(responseStream => responseStream.json())
-    .catch(err => console.error(err));
-  }
-
   componentDidMount() {
     const currentRm = this.props.match.params.roomId;
-    // if (this.props.user && this.props.chatRooms.indexOf(currentRm) < 0) {
-    //   this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
-    // }
     let room;
     this.socket.emit('join room', { roomId: currentRm });
-    this.getChatRoomStateFromDb()
+    getChatRoomStateFromDb(this.props, this.accessToken)
       .then(_room => {
         // invoke function to get all translations
         room = _room;
-        return this.getMessageTranslations(_room.messages, this.props);
+        return getMessageTranslations(_room.messages, this.props, this.accessToken);
       })
-      .then(translations => {
-        console.log('Comp mounts and you get translations here =>', translations);
-        this.updateStateWithMessages(room, translations, this); 
+      .then(translatedMsgData=> {
+        console.log('Comp mounts and you get translations here =>', translatedMsgData);
+        this.updateStateWithMessages(room, translatedMsgData, this); 
       })
   }
 
@@ -78,9 +44,9 @@ export class ChatRoom extends Component {
     }
     if (this.props.user) {
       if (nextProps.user.defaultLanguage !== this.props.user.defaultLanguage) {
-        this.getMessageTranslations(this.state.room.messages, nextProps)
-          .then(translations => {
-            this.updateStateWithMessages(this.state.room, translations, this);
+        getMessageTranslations(this.state.room.messages, nextProps, this.accessToken)
+          .then(translatedMsgData => {
+            this.updateStateWithMessages(this.state.room, translatedMsgData, this);
           });
       }
     }
@@ -91,26 +57,36 @@ export class ChatRoom extends Component {
     const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
       const newestMsg = updatedRoom.messages[updatedRoom.messages.length - 1];
-      return cr.getMessageTranslations([newestMsg], cr.props)
-        .then(translation => {
-          cr.updateStateWithMessages(updatedRoom, translation, cr)
+      return getMessageTranslations([newestMsg], cr.props, this.accessToken)
+        .then(translationData => {
+          cr.updateStateWithMessages(cr.state.room, translationData, cr)
       });
     });
   }
 
-  updateStateWithMessages(updatedRoom, translations, context) {
-    // Add some conditional logic that will append a new translated 
-    // msg onto the state.stranlsations array if a new msg comes in
-  
-    const t = this.state.translations;
-    
-    if (t && t[0].translatedTo === translations[0].translatedTo) {
-      translations = [...t, ...translations];
+  updateStateWithMessages(updatedRoom, translatedMessagesArr, context) {
+
+    let isNewDefaultLanguage = false;
+    if ( translatedMessagesArr.length > 0 && updatedRoom.messages.length > 0) { 
+      isNewDefaultLanguage = updatedRoom.messages[0].translatedTo !== translatedMessagesArr[0].translatedTo;
+    }
+
+    const noMessages = updatedRoom.messages.length === 0;
+
+    if ( !this.state.room || noMessages || isNewDefaultLanguage ) {
+      updatedRoom = Object.assign({}, updatedRoom, {
+        messages: translatedMessagesArr
+      })
+    }
+
+    if ( this.state.room && translatedMessagesArr.length === 1 && !noMessages) {
+      updatedRoom = Object.assign({}, updatedRoom, {
+        messages: [...updatedRoom.messages, ...translatedMessagesArr]
+      })
     }
 
     context.setState({
-      room: updatedRoom,
-      translations
+      room: updatedRoom
     });
   }
 
@@ -121,22 +97,25 @@ export class ChatRoom extends Component {
   sendMessageToRoom(event) {
     event.preventDefault();
     const msg = this.input.value.trim();
-    this.input.value = '';
-    this.socket.emit('new message', { 
-      roomId: this.props.match.params.roomId, 
-      msgData: { createdBy: this.props.user.id, body: msg }
-    });
-  }
-
-  findUserName(i) {
-    if (this.state.room.messages[i].createdBy) {
-      return this.state.room.messages[i].createdBy.displayName;
+    if ( msg.length > 0 ) {
+      this.input.value = '';
+      this.socket.emit('new message', { 
+        roomId: this.props.match.params.roomId, 
+        msgData: { createdBy: this.props.user.id, body: msg }
+      });
     }
   }
 
   insertMessagesDom() {
-    if (this.state.translations && this.props.user) {
-      return this.state.translations.map((msg, index) => <li key={index}><b>{this.findUserName(index)}: &emsp;</b>{msg.translatedText}</li>);
+    if (this.state.room && this.props.user) {
+      return this.state.room.messages.map((msg, index) => {
+        return ( 
+          <li key={index}>
+            <b>{msg.createdBy.displayName}: &emsp;</b>
+            {msg.translatedText}
+          </li>
+        );
+      });
     }
   }
 
@@ -160,6 +139,7 @@ export class ChatRoom extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className='chat-room-wrapper'>
         { this.getChatRoomListings() }
@@ -168,7 +148,6 @@ export class ChatRoom extends Component {
             <LanguageChoice forDictaphone={false} />
             { this.showParticipants() }
           </div>
-          {/*<h2>Messages shall come forth here</h2>*/}
           <ul id="messages">
             {this.insertMessagesDom()}
           </ul>

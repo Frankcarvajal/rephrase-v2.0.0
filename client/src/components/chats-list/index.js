@@ -41,7 +41,7 @@ export class ChatList extends React.Component {
         <h1>My Open Conversations</h1>
         <div className='btn-container'>
           <Link to={'/profile/new-room'}>
-            <Button wave='light'>Start a new conversation</Button>
+            <Button waves='light'>Start a new conversation</Button>
           </Link>
         </div>
           {this.getChatRoomListings()}
