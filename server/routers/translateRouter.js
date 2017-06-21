@@ -21,7 +21,6 @@ const apiCall = (messageData, targetLanguage) => {
       if (err) {
         reject(err);
       }
-      console.log(translation);
       // Add data to messageData
       messageData.translatedText = translation.translatedText;
       messageData.translatedTo = targetLanguage;
@@ -43,7 +42,6 @@ router.post('/messages', jsonParser, (req, res) => {
   // return promise.all() with the array and then replace the body on each original
   Promise.all(requestsToGoogle)
     .then(translatedMessages => {
-      console.log(translatedMessages);
       return res.status(200).json(translatedMessages);
     })
     .catch(err => console.error(err));

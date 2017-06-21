@@ -43,7 +43,6 @@ app.get('/api/me', passport.authenticate('bearer', {session: false}),
 });
 
 app.get('/api/users', (req, res) => {
-    console.log('req.users', req.user)
     return User
         .find()
         .exec()

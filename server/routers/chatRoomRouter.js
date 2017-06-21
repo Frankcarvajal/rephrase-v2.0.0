@@ -54,7 +54,25 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
         .populate('messages.createdBy')
         .exec()
         .then(room => {
-            return res.status(200).json(room); 
+            // we get the updated room here
+            // We see how many messages are on room.messages
+            if (room.messages.length <= 12) {
+                return res.status(200).json(room); 
+            }
+            room.messages.shift(); // remove first array item
+            ChatRoom
+                .findByIdAndUpdate(
+                    req.params.chatRoomId,
+                    { $set: { messages: room.messages } },
+                    { safe: true, upsert: true, new: true }
+                )
+                .populate('participants')
+                .populate('messages.createdBy')
+                .exec()
+                .then(updatedRoom => {
+                    return res.status(200).json(updatedRoom); 
+                })
+                .catch(err => console.error(err));
         })
         .catch(err => console.error(err));
 });
