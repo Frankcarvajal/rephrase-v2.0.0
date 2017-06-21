@@ -15,13 +15,17 @@ router.post('/', jsonParser, (req, res) => {
   });
 });
 
-const api = (toTranslate, targetLanguage) => {
+const apiCall = (messageData, targetLanguage) => {
   return new Promise((resolve, reject) => {
-    return googleTranslate.translate(toTranslate, targetLanguage, function(err, translation) {
+    return googleTranslate.translate(messageData.body, targetLanguage, function(err, translation) {
       if (err) {
         reject(err);
       }
-      return resolve(translation);
+      console.log(translation);
+      // Add data to messageData
+      messageData.translatedText = translation.translatedText;
+      messageData.translatedTo = targetLanguage;
+      return resolve(messageData);
     });
   });
 }
@@ -34,27 +38,15 @@ router.post('/messages', jsonParser, (req, res) => {
   // use the api function and req.body.defaultLanguage to send a request to 
   // google translate api and push this request to the empty array
   for(let i= 0; i< messages.length; i++) {
-     requestsToGoogle.push(api(messages[i].body, req.body.defaultLanguage)); 
+     requestsToGoogle.push(apiCall(messages[i], req.body.defaultLanguage)); 
   }
   // return promise.all() with the array and then replace the body on each original
   Promise.all(requestsToGoogle)
-    .then(translations => {
-      console.log(messages);
-      console.log('=============')
-      console.log(translations);
-      for (let i=0; i<translations.length; i++) {
-        translations[i].translatedTo = req.body.defaultLanguage;
-      }
-      return res.status(200).json(translations);
+    .then(translatedMessages => {
+      console.log(translatedMessages);
+      return res.status(200).json(translatedMessages);
     })
     .catch(err => console.error(err));
-  // message before returning the new array of messages to the client requester.
-    // return api('Hello', 'fr')
-    //   .then(result => {
-    //     console.log(result);
-    //     return res.status(200).json({result});
-    //   })
-    //   .catch(err => console.error(err));
 })
 
 
