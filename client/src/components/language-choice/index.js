@@ -7,6 +7,8 @@ import { saveDefaultLanguageToDatabase } from '../profile/actions';
 import { Row, Input } from 'react-materialize';
 import options from './options'; 
 
+import './language-choice.css';
+
 export class LanguageChoice extends Component{
  
   constructor(props) {
@@ -71,7 +73,7 @@ export class LanguageChoice extends Component{
 
 render(){ 
     return(
-        <Row>
+        <Row className='language-choice-row'>
           <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange= {(e) =>
           {this.handleChange(e)}}>
             <option value='Choose a Language'>Choose a Language</option>
