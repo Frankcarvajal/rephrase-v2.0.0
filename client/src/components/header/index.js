@@ -30,27 +30,29 @@ export class Header extends Component {
 
     render() {
         return (
-            // <Navbar className="header" brand={'rePHRASE' } right>
-            //     <NavItem href='get-started.html'><Icon>home</Icon></NavItem>
-            //     <NavItem href='get-started.html'><Icon>chat</Icon></NavItem>
-            //     <NavItem href='get-started.html'><Icon>account_box</Icon></NavItem>
-            //     <NavItem href='get-started.html'>Log Out</NavItem>
-            // </Navbar>
-
-            <div className="header-wrapper">
-                <div className="app-header">
-                    <FaBars size={30}/>
-                    <div className="app-title">
-                        <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
-                    </div>
-                    <div className="nav-icons">
-                        <Link to={'/'}><FaHome size={30} /></Link>
-                        { this.getChatIcon() }
-                        <Link to={'/profile'}><FaUser size={30} /></Link>
-                    </div>
-                    {this.getUserRegistration()}    
-                </div>
+            <div className='header'>
+                <Navbar brand={'rePHRASE' } right>
+                    <NavItem href='get-started.html'><Icon>home</Icon></NavItem>
+                    <NavItem href='get-started.html'><Icon>chat</Icon></NavItem>
+                    <NavItem href='get-started.html'><Icon>account_box</Icon></NavItem>
+                    <NavItem href='get-started.html'>Log Out</NavItem>
+                </Navbar>
             </div>
+
+            // <div className="header-wrapper">
+            //     <div className="app-header">
+            //         <FaBars size={30}/>
+            //         <div className="app-title">
+            //             <h1><span className="highlight">re</span>PHRASE</h1><img src={logo} className="app-logo" alt="logo" />
+            //         </div>
+            //         <div className="nav-icons">
+            //             <Link to={'/'}><FaHome size={30} /></Link>
+            //             { this.getChatIcon() }
+            //             <Link to={'/profile'}><FaUser size={30} /></Link>
+            //         </div>
+            //         {this.getUserRegistration()}    
+            //     </div>
+            // </div>
         );
     }
 }
