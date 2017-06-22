@@ -46,7 +46,19 @@
 .header-wrapper svg:hover{
   color: white;
 }
-.header {
-  padding: 0 80px;
-  background-color: #AFC2D5;
+
+.header .nav-wrapper{
+   background-color: #40535a;
 }
+.header nav {
+  background-color: #40535a;
+  padding: 0 80px;
+}
+/*nav .brand-logo{
+  font-size: 2.82em;
+}*/
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+  height: 100px;
+  line-height: 100px;
+}
+
