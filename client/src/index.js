@@ -9,10 +9,9 @@ import store from './store';
 
 ReactDOM.render(
   <div>
-  <Provider store={store}>
-    <App />
-  </Provider> 
-  
+    <Provider store={store}>
+      <App />
+    </Provider> 
   </div>,
   document.getElementById('root')
 );

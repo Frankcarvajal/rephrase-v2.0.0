@@ -22,29 +22,37 @@ export class ChatRoom extends Component {
     this.accessToken = Cookies.get('accessToken');
   }
 
-  componentDidMount() {
-    const currentRm = this.props.match.params.roomId;
+  retrieveAndSetRoomState(currentRmId, defaultLanguage) {
     let room;
-    this.socket.emit('join room', { roomId: currentRm });
-    getChatRoomStateFromDb(this.props, this.accessToken)
+    this.socket.emit('join room', { roomId: currentRmId });
+    getChatRoomStateFromDb(currentRmId, this.accessToken)
       .then(_room => {
         // invoke function to get all translations
         room = _room;
-        return getMessageTranslations(_room.messages, this.props, this.accessToken);
+        return getMessageTranslations(_room.messages, defaultLanguage, this.accessToken);
       })
       .then(translatedMsgData=> {
-        console.log('Comp mounts and you get translations here =>', translatedMsgData);
         this.updateStateWithMessages(room, translatedMsgData, this); 
       })
+      .catch(err => console.error(err));
   }
 
+  componentDidMount() {
+    if (this.props.user) {
+      const currentRm = this.props.match.params.roomId;
+      const userDefaultLang = this.props.user.defaultLanguage;
+      this.retrieveAndSetRoomState(currentRm, userDefaultLang);
+    }
+  }
+ 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user && !this.props.user) {
       this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));
     }
     if (this.props.user) {
-      if (nextProps.user.defaultLanguage !== this.props.user.defaultLanguage) {
-        getMessageTranslations(this.state.room.messages, nextProps, this.accessToken)
+      const nextDefault = nextProps.user.defaultLanguage;
+      if (nextDefault !== this.props.user.defaultLanguage) {
+        getMessageTranslations(this.state.room.messages, nextDefault, this.accessToken)
           .then(translatedMsgData => {
             this.updateStateWithMessages(this.state.room, translatedMsgData, this);
           });
@@ -57,31 +65,35 @@ export class ChatRoom extends Component {
     const cr = this;
     this.socket.on('receive new message', function(updatedRoom) {
       const newestMsg = updatedRoom.messages[updatedRoom.messages.length - 1];
-      return getMessageTranslations([newestMsg], cr.props, this.accessToken)
+      return getMessageTranslations([newestMsg], cr.props.user.defaultLanguage, this.accessToken)
         .then(translationData => {
           cr.updateStateWithMessages(cr.state.room, translationData, cr, updatedRoom.messages)
       });
     });
   }
 
+  componentWillUnmount() {
+    this.socket.emit('leave room', { roomId: this.props.match.params.roomId });
+  }
+
   updateStateWithMessages(updatedRoom, translatedMessagesArr, context, roomMessages) {
 
     let isNewDefaultLanguage = false;
-    if ( translatedMessagesArr.length > 0 && updatedRoom.messages.length > 0) { 
+    if (translatedMessagesArr.length > 0 && updatedRoom.messages.length > 0) { 
       isNewDefaultLanguage = updatedRoom.messages[0].translatedTo !== translatedMessagesArr[0].translatedTo;
     }
 
     const noMessages = updatedRoom.messages.length === 0;
 
-    if ( !this.state.room || noMessages || isNewDefaultLanguage ) {
+    if (!this.state.room || noMessages || isNewDefaultLanguage) {
       updatedRoom = Object.assign({}, updatedRoom, {
         messages: translatedMessagesArr
       });
     }
 
-    if ( this.state.room && translatedMessagesArr.length === 1 && !noMessages) {
+    if (this.state.room && translatedMessagesArr.length === 1 && !noMessages) {
       // Test to see if we want to drop the very first message 
-      if(updatedRoom.messages[0]._id !== roomMessages[0]._id) {
+      if (updatedRoom.messages[0]._id !== roomMessages[0]._id) {
         updatedRoom.messages.shift();
       }
       updatedRoom = Object.assign({}, updatedRoom, {
@@ -92,10 +104,7 @@ export class ChatRoom extends Component {
     context.setState({
       room: updatedRoom
     });
-  }
 
-  componentWillUnmount() {
-    this.socket.emit('leave room', { roomId: this.props.match.params.roomId });
   }
 
   sendMessageToRoom(event) {
@@ -143,7 +152,6 @@ export class ChatRoom extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className='chat-room-wrapper'>
         { this.getChatRoomListings() }

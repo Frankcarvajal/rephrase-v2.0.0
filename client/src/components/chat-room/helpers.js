@@ -1,4 +1,4 @@
-export function getMessageTranslations(messages, props, accessToken) {
+export function getMessageTranslations(messages, defaultLanguage, accessToken) {
       return fetch(`/api/translate/messages`, {
         method: 'POST',
         headers: { 
@@ -7,7 +7,7 @@ export function getMessageTranslations(messages, props, accessToken) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-          defaultLanguage: props.user.defaultLanguage, 
+          defaultLanguage, 
           messages 
         }) 
       })
@@ -15,8 +15,8 @@ export function getMessageTranslations(messages, props, accessToken) {
       .catch(err => console.error(err));
     }
 
-  export function getChatRoomStateFromDb(props, accessToken) {
-    return fetch(`/api/chat/chatRoom/${props.match.params.roomId}`, {
+  export function getChatRoomStateFromDb(roomId, accessToken) {
+    return fetch(`/api/chat/chatRoom/${roomId}`, {
       method: 'GET',
       headers: { 
 			'Authorization': `Bearer ${accessToken}` 
