@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import * as Cookies from 'js-cookie'; 
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
-import RoomListings from '../room-listings';
+
 import { Row, Input, Button } from 'react-materialize';
 import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
 
@@ -39,7 +39,7 @@ export class ChatRoom extends Component {
 
   componentDidMount() {
     if (this.props.user) {
-      const currentRm = this.props.match.params.roomId;
+      const currentRm = this.props.roomId;
       const userDefaultLang = this.props.user.defaultLanguage;
       this.retrieveAndSetRoomState(currentRm, userDefaultLang);
     }
@@ -73,7 +73,7 @@ export class ChatRoom extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.emit('leave room', { roomId: this.props.match.params.roomId });
+    this.socket.emit('leave room', { roomId: this.props.roomId });
   }
 
   updateStateWithMessages(updatedRoom, translatedMessagesArr, context, roomMessages) {
@@ -113,7 +113,7 @@ export class ChatRoom extends Component {
     if ( msg.length > 0 ) {
       this.input.value = '';
       this.socket.emit('new message', { 
-        roomId: this.props.match.params.roomId, 
+        roomId: this.props.roomId, 
         msgData: { createdBy: this.props.user.id, body: msg }
       });
     }
@@ -144,30 +144,20 @@ export class ChatRoom extends Component {
     });
   }
 
-  getChatRoomListings() {
-    if (this.props.chatRooms && this.props.user) {
-      return (<RoomListings chatRooms={this.props.chatRooms} user={this.props.user} />);
-    }
-    return null;
-  }
-
   render() {
     return (
-      <div className='chat-room-wrapper'>
-        { this.getChatRoomListings() }
-        <div className='room'>
-          <div className='room-header'>
-            <LanguageChoice forDictaphone={false} />
-            { this.showParticipants() }
-          </div>
-          <ul id="messages">
-            {this.insertMessagesDom()}
-          </ul>
-          <Row action="">
-            <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-            <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
-          </Row> 
+      <div className='room'>
+        <div className='room-header'>
+          <LanguageChoice forDictaphone={false} />
+          { this.showParticipants() }
         </div>
+        <ul id="messages">
+          {this.insertMessagesDom()}
+        </ul>
+        <Row action="">
+          <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+          <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
+        </Row> 
       </div>
     );
   }
