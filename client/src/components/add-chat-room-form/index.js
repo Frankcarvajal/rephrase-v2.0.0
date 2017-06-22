@@ -39,6 +39,9 @@ export class AddChatRoomForm extends React.Component {
 
   handleAddUser(event, userData) {
     event.preventDefault();
+    if (this.state.selectedUsers.length === 3) {
+      return;
+    }
     let isUserAlreadySelected = false;
     for (let i=0; i<this.state.selectedUsers.length; i++) {
       if (this.state.selectedUsers[i].displayName === userData.displayName) {
@@ -128,6 +131,9 @@ export class AddChatRoomForm extends React.Component {
 
   sendNewRoomRequest(e){
 		e.preventDefault();
+    if (!this.props.chatRooms) {
+      return;
+    }
     const selectedUsersIds = this.state.selectedUsers.map(users => users._id);
 		const participants = [...selectedUsersIds, this.props.user.id];
     const isUnique = isNewChatRoomUnique(participants, this.props.chatRooms);

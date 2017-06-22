@@ -4,7 +4,8 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 import Home from '../home';
 import Profile from '../profile';
-import ChatRoom from '../chat-room';
+
+import ChatWrapper from '../chat-wrapper';
 import * as Cookies from 'js-cookie';
 import { fetchUserData } from './actions';
 import ChatList from '../chats-list';
@@ -35,7 +36,7 @@ export class App extends Component {
           <Header />
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={() => this.handleProfileView()} />
-          <Route exact path="/profile/chat/:roomId" component={ChatRoom} />
+          <Route exact path="/profile/chat/:roomId" component={ChatWrapper} />
           <Route exact path="/profile/chatlist" component={ChatList} />
           <Route exact path="/profile/new-room" component={AddChatRoomForm} />
         </div>
