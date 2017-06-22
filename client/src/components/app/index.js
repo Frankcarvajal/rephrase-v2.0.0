@@ -23,7 +23,7 @@ export class App extends Component {
 
   handleProfileView() {
     if (!this.props.user) {
-      return (<Redirect to={'/'} />);
+      return (<Redirect to='/' />);
     }
     return (<Profile />);
   }

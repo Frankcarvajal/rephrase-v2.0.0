@@ -20,14 +20,12 @@ export class LanguageChoice extends Component{
   }
   
   componentDidMount() {
-    console.log('componentDidMount', this.props);
     const optionsJsx = this.mapOverOptions(options, this.props);
     this.updateOptionsJsx(optionsJsx);
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
-      console.log('componentWillReceiveProps', nextProps);
       const optionsJsx = this.mapOverOptions(options, nextProps);
       this.updateOptionsJsx(optionsJsx);
     }

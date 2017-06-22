@@ -14,7 +14,7 @@ class RoomListings extends React.Component {
           return u.displayName;
         });
         return ( 
-          <Link to={`/profile/chat/${room._id}`} key={index} onClick={ e => location.reload()}>
+          <Link to={`/profile/chat/${room._id}`} key={index}>
             <CollectionItem className="chat-listing">
                 <p>{ `Participants: ${names.join(' ')}` }</p>
             </CollectionItem>
