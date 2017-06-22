@@ -29,14 +29,17 @@ export class Home extends Component {
       );
     }
   }
-  toggleEdit(e){
+
+  toggleEdit(e) {
       this.props.dispatch(editBtn());
   }
-  handleEditSubmit(event){
+
+  handleEditSubmit(event) {
     event.preventDefault();
     let value = this.input.value;
     this.props.dispatch(postTranscriptGetTranslation(value, this.props.userLanguage));
   }
+  
   handleEdit(e){
     if(!this.props.speechRecognitionOn){
       if(this.props.isEditing) {
@@ -61,14 +64,18 @@ export class Home extends Component {
   render() {
     return (
       <div className="home-view">
-        <LanguageChoice forDictaphone={true} />
-        {this.handleSpeechRecognition()}
-        <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
-          {this.handleEdit()}
-        </form>
-        <hr/>
-        <div className="translation">
-          <p>{this.props.speechText.translatedText}</p>
+        <div className='home-container'>
+          <div className='translator-title'><h2>Translator</h2></div>
+          <LanguageChoice forDictaphone={true} />
+          <div className='translate-wrap'>
+            {this.handleSpeechRecognition()}
+            <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
+              {this.handleEdit()}
+            </form>
+          </div>
+          <div className="translation">
+            <p>{this.props.speechText.translatedText}</p>
+          </div>
         </div>
       </div>
     );

@@ -1,36 +1,53 @@
 .home-view {
   text-align: center;
+  margin-bottom: 200px;
 }
 
-/*.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+/*.home-view .row {
+
 }*/
+
+.translator-title {
+  margin-top: 50px;
+  padding: 20px 20px;
+  text-align: left;
+  color: #0099cc;
+  text-align: center;
+}
+
+.translator-title h2 {
+  margin: 0;
+}
+
+.home-view .home-container {
+  max-width: 700px;
+  margin: 0 auto;
+  /*background-color: #FFFCFF;*/
+  /*background-color: #cccccc*/
+}
 
 .home-view-intro {
   font-size: large;
 }
+
 .home-view .userText{
   height: 30px;
   width: 600px;
   vertical-align: text-top;
 }
-.home-view input{
+
+.home-view input {
   font-size:20px;
 }
+
 .home-view p{
   color: #474448;
 }
-.home-view .home-view hr{
-  border-top: 1px solid #dcdcdc;
-  width: 100%;
-}
-.speak{
-  width: 250px;
+
+.speak {
+  width: 150px;
   height: 60px;
-  background-color: #C95A7B;
+  background-color: #0099cc;
   color: white;
   border: 0;
   text-align: center;
@@ -38,13 +55,13 @@
   font-size: 30px;
   border-top-left-radius: 4px; 
   border-bottom-left-radius: 4px;
-  margin-top: 30px;
   transition: all 0.3s ease 0s;
 }
+
 .home-view .submit{
-  width: 250px;
-  height: 60px;
-  background-color: #C95A7B;
+  width: 100px;
+  height: 40px;
+  background-color: #0099cc;
   color: white;
   border: 0;
   text-align: center;
@@ -54,66 +71,57 @@
   margin-top: 30px;
   transition: all 0.3s ease 0s;
 }
+
 .home-view .fa-microphone {
   font-size: 30px;
 }
-.home-view button:hover{
+
+.home-view button:hover {
   opacity: 0.75;
 }
+
 .home-view .fa-bars:hover, .fa-user:hover {
   color: white; 
 }
-.home-view .edit-button{
+
+.home-view .edit-button {
   background-color: white;
   width: 80px;
   height: 60px;
-  border: 2px solid #C95A7B;
-  margin-top: 30px;
-  padding: 0;
+  border: 2px solid #0099cc;
   vertical-align: top;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  color: #C95A7B;
+  color: #0099cc;
   font-size: 30px;
   font-family: 'Open Sans', sans-serif;
-}
-.home-view .speak, .edit-button{
-  margin-bottom: 50px;
 }
 
 .home-view form#translate {
   vertical-align: middle;
+  padding: 0 20px 20px;
 } 
-.home-view form#translate p{
-  width: 500px;
-}
-.home-view .original-text-container{
-  position: relative;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.home-view .original-text{
-  text-align: center;
-  width:430px;
-}
-.home-view input {
-    width: 100%;
-    height: 150px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    resize: none;
-    text-align: center;
-}
-.home-view .tts-icon{
-  height: 60px;
-  vertical-align: top;
-  margin-top: 30px;
 
+.translate-wrap, .translation {
+  min-height: 250px;
+  padding: 30px 0;
+  border: 2px solid #ccc;
+  border-radius: 7px;
+  background-color: #f8f8f8;
 }
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+
+.translation {
+  margin-top: 30px;
 }
+
+.home-view .original-text {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.home-view input {
+  margin-top: 50px;
+  text-align: center;
+}
+
+
