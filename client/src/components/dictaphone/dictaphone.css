@@ -2,6 +2,7 @@
   opacity: 0.75;
 }
 
-.dictaphone-wrapper .transcript{
+.dictaphone-wrapper .transcript {
   text-align: center;
+  padding-top: 40px;
 }
