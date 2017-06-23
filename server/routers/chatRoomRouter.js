@@ -30,6 +30,8 @@ router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: fa
 });
 
 router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
+    // Use the $all operator to check if a chat room with incoming participants already exists
+    // https://stackoverflow.com/questions/12027636/whats-difference-between-in-and-all-operators-in-mongoose
     const { participants } = req.body;
     return ChatRoom.create({
         participants,
