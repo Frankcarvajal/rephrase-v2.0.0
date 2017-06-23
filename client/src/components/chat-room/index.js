@@ -6,7 +6,7 @@ import * as Cookies from 'js-cookie';
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
 
-import { Row, Input, Button } from 'react-materialize';
+import { Row, Button } from 'react-materialize';
 import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
 import FaUser from 'react-icons/lib/fa/user';
 
@@ -141,6 +141,7 @@ export class ChatRoom extends Component {
       if (person._id !== this.props.user.id) {
         return person.displayName;
       }
+      return undefined;
     });
     participants = participants.filter(u => typeof u !== 'undefined');
     if (participants.length === 0) {
