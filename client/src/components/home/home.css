@@ -3,10 +3,6 @@
   margin-bottom: 200px;
 }
 
-/*.home-view .row {
-
-}*/
-
 .translator-title {
   margin-top: 50px;
   padding: 20px 20px;
@@ -26,11 +22,15 @@
   /*background-color: #cccccc*/
 }
 
+.home-view .instructions {
+  margin-top: 20px;
+}
+
 .home-view-intro {
   font-size: large;
 }
 
-.home-view .userText{
+.home-view .userText {
   height: 30px;
   width: 600px;
   vertical-align: text-top;
@@ -80,8 +80,8 @@
   opacity: 0.75;
 }
 
-.home-view .fa-bars:hover, .fa-user:hover {
-  color: white; 
+.fa-user:hover {
+  color: #fff; 
 }
 
 .home-view .edit-button {
@@ -111,7 +111,7 @@
 }
 
 .translation {
-  margin-top: 30px;
+  margin-top: 0;
 }
 
 .home-view .original-text {

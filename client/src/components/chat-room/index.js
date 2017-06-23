@@ -8,6 +8,7 @@ import LanguageChoice from '../language-choice';
 
 import { Row, Input, Button } from 'react-materialize';
 import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
+import FaUser from 'react-icons/lib/fa/user';
 
 export class ChatRoom extends Component {
 
@@ -136,12 +137,23 @@ export class ChatRoom extends Component {
     if (!this.state.room || !this.props.user) {
       return;
     }
-    return this.state.room.participants.map((person, index) => {
-      if (person._id !== this.props.user.id)
-        return (
-          <h4 key={index}>{person.displayName}</h4>
-        );
+    let participants = this.state.room.participants.map((person, index) => {
+      if (person._id !== this.props.user.id) {
+        return person.displayName;
+      }
     });
+    participants = participants.filter(u => typeof u !== 'undefined');
+    if (participants.length === 0) {
+      return 'Just You';
+    }
+    return participants.join(', ');
+  }
+
+  getNumber() {
+    if (!this.state.room || !this.props.user) {
+      return;
+    }
+    return this.state.room.participants.length;
   }
 
   render() {
@@ -150,15 +162,17 @@ export class ChatRoom extends Component {
 
         <div className='rm-flex-item'>
           <div className='room-header'>
-            { this.showParticipants() }
+            <h5><span><em>{ this.showParticipants() }</em></span></h5>
+            <FaUser />
+            <span> { this.getNumber() }</span>
           </div>
           <ul id="messages">
             {this.insertMessagesDom()}
           </ul>
           <Row action="">
-            <form>
+            <form onSubmit={e => this.sendMessageToRoom(e)}>
               <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-              <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
+              <Button type='submit' waves='light'>Send</Button>
             </form>
           </Row>
         </div>
