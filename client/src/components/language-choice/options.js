@@ -24,8 +24,33 @@ const options = [
     value: 'de'
   },
   {
+    name: 'Greek',
+    value: 'el'
+  },
+  {
+    name: 'Hebrew',
+    value: 'he'
+  },
+  {
+    name: 'Italian',
+    value: 'it'
+  },
+  {
     name: 'Japanese',
     value: 'ja'
+  },
+  {
+    name: 'Polish',
+    value: 'pl'
+  },
+  {
+    name: 'Portugeuse',
+    value: 'pt'
+  },
+
+  {
+    name: 'Russian',
+    value: 'ru'
   }
 
 ];

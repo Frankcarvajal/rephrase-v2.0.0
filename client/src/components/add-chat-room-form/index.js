@@ -71,7 +71,7 @@ export class AddChatRoomForm extends React.Component {
     }
     if (this.state.search.length === 0) {
       return (
-        <div>
+        <div className="recent-converstions">
           <h4>Recent Conversations</h4>
           { this.displayRecentConvos() }
         </div>
@@ -97,7 +97,7 @@ export class AddChatRoomForm extends React.Component {
       return ( 
         <Link to={`/profile/chat/${room._id}`} key={index}>
           <li className="chat-listing">
-            <p>{ `Participants: ${names.join(' ')}` }</p>
+            <p><span>Participants: </span>{`${names.join(' ')}` }</p>
             {/*<p>{ `RoomId: ${room._id}` }</p>*/}
           </li>
         </Link>
@@ -155,21 +155,24 @@ export class AddChatRoomForm extends React.Component {
   render() {
     return (
       <div className='add-rm-form-wrapper'>
-        <div className='close-icon-bin'>
-          <Link to='/profile/chatlist'>
-            <FaClose />
-          </Link>
+        <div className="conversation-wrapper">
+          <h3>Open a new conversation</h3>
+          <div className='close-icon-bin'>
+            <Link to='/profile/chatlist'>
+              <FaClose />
+            </Link>
+          </div>
         </div>
-        <h1>Open a new conversation</h1>
         <Row>
           <Input
             type="text" 
             placeholder='Start a new conversation' 
-            onChange={ e => this.handleChange(e) } 
+            onChange={ e => this.handleChange(e) }
+             
           />
+          <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
           
         </Row>
-        <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
         </div>

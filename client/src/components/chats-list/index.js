@@ -38,7 +38,7 @@ export class ChatList extends React.Component {
   render(){
       return(
       <div className='chat-list-wrapper'>
-        <h1>My Open Conversations</h1>
+        <h3>My Open Conversations</h3>
         <div className='btn-container'>
           <Link to={'/profile/new-room'}>
             <Button waves='light'>Start a new conversation</Button>

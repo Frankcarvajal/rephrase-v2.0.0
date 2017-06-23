@@ -25,6 +25,11 @@
   /*background-color: #FFFCFF;*/
   /*background-color: #cccccc*/
 }
+body{
+  /*background-color: #DFDFDF;*/
+  background-color: #F4FAFF;
+  /*background-color: #E0F2E9;*/
+}
 
 .home-view-intro {
   font-size: large;
@@ -105,9 +110,10 @@
 .translate-wrap, .translation {
   min-height: 250px;
   padding: 30px 0;
-  border: 2px solid #ccc;
+  /*border: 2px solid #ccc;*/
   border-radius: 7px;
-  background-color: #f8f8f8;
+  background-color: white;
+  border: 1px solid #e0e0e0;
 }
 
 .translation {
@@ -124,4 +130,18 @@
   text-align: center;
 }
 
+.select-dropdown  li span{
+  color: #474448;
+}
+.select-dropdown li:hover, .select-dropdown li span:hover {
+  background-color: #0099cc;
+  color: white;
+}
 
+.select-wrapper .initialized {
+  color: white;
+}
+
+.select-dropdown li .selected{
+  background-color: magenta;
+}

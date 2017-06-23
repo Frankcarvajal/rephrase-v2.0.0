@@ -39,7 +39,7 @@ row input {
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px solid #d1d1d1;
-  text-align: center;
+  text-align: left;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -58,4 +58,42 @@ row input {
   display: inline-block;
   padding-left: 20px;
   cursor: pointer;
+}
+
+.row {
+  display: flex;
+  align-items: center
+}
+
+input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+  width: 450px;
+}
+div.user-bin {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  padding: 0;
+}
+div.user-bin{
+  padding: 0;
+}
+ul.user-bin-list {
+  padding: 0;
+}
+li.chat-listing p{
+  text-align: left;
+}
+.add-rm-form-wrapper .user-bin-list li{
+  border: none;
+  padding: 0;
+}
+
+.chat-listing p span {
+  display: inline-block;
+  padding-right: 20px;
+  font-size: 17px;
+  font-weight: bold;
+}
+.conversation-wrapper {
+  display: flex;
+  align-items: center;
 }

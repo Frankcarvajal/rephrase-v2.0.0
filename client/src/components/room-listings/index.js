@@ -16,7 +16,8 @@ class RoomListings extends React.Component {
         return ( 
           <Link to={`/profile/chat/${room._id}`} key={index}>
             <CollectionItem className="chat-listing">
-                <p>{ `Participants: ${names.join(' ')}` }</p>
+                <p><span>Participants: </span> 
+                { `${names.join(' ')}` }</p>
             </CollectionItem>
           </Link>
         )
@@ -26,6 +27,7 @@ class RoomListings extends React.Component {
     render() {
       return (
         <Collection className="chat-list">
+          <h4>Rooms</h4>
           {this.getRoomsJsx()}
         </Collection>
       );

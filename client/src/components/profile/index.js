@@ -9,9 +9,9 @@ export class Profile extends Component {
     render() {
         return (
           <div className='profile-view'>
-            <h1>Profile View</h1>
+            <h3>Profile View</h3>
             <p>User profile goes here</p>
-            <h2>Defualt Language</h2>
+            <h4>Defualt Language</h4>
             <LanguageChoice forDictaphone={false} />
           </div>
         );
