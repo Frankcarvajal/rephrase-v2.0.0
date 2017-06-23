@@ -65,14 +65,18 @@ export class Home extends Component {
     return (
       <div className="home-view">
         <div className='home-container'>
-          <div className='translator-title'><h2>Translator</h2></div>
+          <div className='translator-title'>
+            <h2>Translator</h2>
+          </div>
           <LanguageChoice forDictaphone={true} />
+          <p className='instructions'><em>Original text: click on the button and start speaking to get a new translation</em></p>
           <div className='translate-wrap'>
             {this.handleSpeechRecognition()}
             <form id="translate" onSubmit={e =>{ this.handleEditSubmit(e);this.toggleEdit();}}>
               {this.handleEdit()}
             </form>
           </div>
+          <p className='instructions'><em>The translation will appear here</em></p>
           <div className="translation">
             <p>{this.props.speechText.translatedText}</p>
           </div>

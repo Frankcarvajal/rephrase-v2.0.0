@@ -3,10 +3,6 @@
   margin-bottom: 200px;
 }
 
-/*.home-view .row {
-
-}*/
-
 .translator-title {
   margin-top: 50px;
   padding: 20px 20px;
@@ -31,11 +27,15 @@ body{
   /*background-color: #E0F2E9;*/
 }
 
+.home-view .instructions {
+  margin-top: 20px;
+}
+
 .home-view-intro {
   font-size: large;
 }
 
-.home-view .userText{
+.home-view .userText {
   height: 30px;
   width: 600px;
   vertical-align: text-top;
@@ -85,8 +85,8 @@ body{
   opacity: 0.75;
 }
 
-.home-view .fa-bars:hover, .fa-user:hover {
-  color: white; 
+.fa-user:hover {
+  color: #fff; 
 }
 
 .home-view .edit-button {
@@ -117,7 +117,7 @@ body{
 }
 
 .translation {
-  margin-top: 30px;
+  margin-top: 0;
 }
 
 .home-view .original-text {

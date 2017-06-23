@@ -1,13 +1,52 @@
+.collection {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 30px; 
+  min-height: 100%;
+}
+
+h5 svg {
+  font-size: 17px;
+  vertical-align: inherit !important;
+  fill: #33bf70;
+}
+
+.collection ul {
+  padding-left: 20px;
+}
+
+.collection ul li:first-child {
+  margin-bottom: 70px;
+}
+
+.collection ul li:last-child h5 {
+  margin-right: 20px;
+}
+
+.collection .number {
+  background-color: #40535a;
+  color: #fff;
+  margin-right: 7px;
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+
+
 .chat-list {
   list-style: none;
 }
 
-.chat-list .chat-listing {
-  border: 1px solid black;
-  border-radius: 4px;
-  padding: 0;
-  margin: 0;
+.collection .collection-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-right: 20px;
 }
-.chat-listing .collection-item p{
+
+.collection .collection-item:hover {
+  background-color: #eeeeee !important;
+  cursor: pointer;
+}
+
+.chat-listing .collection-item p {
   padding: 0;
 }

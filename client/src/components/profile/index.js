@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Header from '../header';
 import './profile.css';
 import LanguageChoice from '../language-choice'
 import { connect } from 'react-redux';
-import * as Cookies from 'js-cookie';
 
 export class Profile extends Component {
     render() {

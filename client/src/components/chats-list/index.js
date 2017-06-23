@@ -18,7 +18,8 @@ export class ChatList extends React.Component {
   componentDidMount() {
     //go to server, get all of users chats, and save them in state
     if (this.props.user) {
-      this.props.dispatch(fetchChatList(this.props.user.id, this.accessToken));
+      const userId = this.props.user.id;
+      this.props.dispatch(fetchChatList(userId, this.accessToken));
     }
   }
 
@@ -30,7 +31,9 @@ export class ChatList extends React.Component {
 
   getChatRoomListings() {
     if (this.props.chatRooms && this.props.user) {
-      return (<RoomListings chatRooms={this.props.chatRooms} user={this.props.user} />);
+      const rooms = this.props.chatRooms;
+      const userData = this.props.user;
+      return (<RoomListings chatRooms={rooms} user={userData} />);
     }
     return null;
   }

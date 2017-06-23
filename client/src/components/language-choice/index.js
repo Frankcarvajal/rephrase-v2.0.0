@@ -74,9 +74,9 @@ export class LanguageChoice extends Component{
 render(){ 
     return(
         <Row className='language-choice-row'>
-          <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange= {(e) =>
+          <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange={(e) =>
           {this.handleChange(e)}}>
-            <option value='Choose a Language'>Choose a Language</option>
+            <option>Choose a Language</option>
             { this.state.options }
           </Input>
         </Row>

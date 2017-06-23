@@ -6,8 +6,9 @@ import * as Cookies from 'js-cookie';
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
 
-import { Row, Input, Button } from 'react-materialize';
+import { Row, Button } from 'react-materialize';
 import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
+import FaUser from 'react-icons/lib/fa/user';
 
 export class ChatRoom extends Component {
 
@@ -136,28 +137,51 @@ export class ChatRoom extends Component {
     if (!this.state.room || !this.props.user) {
       return;
     }
-    return this.state.room.participants.map((person, index) => {
-      if (person._id !== this.props.user.id)
-        return (
-          <h4 key={index}>{person.displayName}</h4>
-        );
+    let participants = this.state.room.participants.map((person, index) => {
+      if (person._id !== this.props.user.id) {
+        return person.displayName;
+      }
+      return undefined;
     });
+    participants = participants.filter(u => typeof u !== 'undefined');
+    if (participants.length === 0) {
+      return 'Just You';
+    }
+    return participants.join(', ');
+  }
+
+  getNumber() {
+    if (!this.state.room || !this.props.user) {
+      return;
+    }
+    return this.state.room.participants.length;
   }
 
   render() {
     return (
       <div className='room'>
-        <div className='room-header'>
-          <LanguageChoice forDictaphone={false} />
-          { this.showParticipants() }
+
+        <div className='rm-flex-item'>
+          <div className='room-header'>
+            <h5><span><em>{ this.showParticipants() }</em></span></h5>
+            <FaUser />
+            <span> { this.getNumber() }</span>
+          </div>
+          <ul id="messages">
+            {this.insertMessagesDom()}
+          </ul>
+          <Row action="">
+            <form onSubmit={e => this.sendMessageToRoom(e)}>
+              <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+              <Button type='submit' waves='light'>Send</Button>
+            </form>
+          </Row>
         </div>
-        <ul id="messages">
-          {this.insertMessagesDom()}
-        </ul>
-        <Row action="">
-          <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-          <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
-        </Row> 
+
+        <div className='rm-flex-language'>
+          <LanguageChoice forDictaphone={false} /> 
+        </div>
+
       </div>
     );
   }

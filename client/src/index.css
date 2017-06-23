@@ -9,6 +9,15 @@ body {
   /*background-color:#EFF1F1;*/
 }
 
+#root, #root > div, .app {
+  min-height: 100%;
+  position:absolute; 
+  top:0; 
+  bottom:0; 
+  right:0; 
+  left:0; 
+}
+
 h1, h2, h3, h4 {
   font-family: 'Raleway', sans-serif;
 }
