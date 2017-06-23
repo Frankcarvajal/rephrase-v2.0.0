@@ -1,3 +1,6 @@
+body {
+  color:#40535a;
+}
 .chat-list-wrapper {
   padding: 0;
   margin: 10px auto;
@@ -10,6 +13,20 @@
 
 .chat-list-wrapper .btn-container {
   max-width: 300px;
-  margin: 10px auto;
-  text-align: center;
+}
+
+.btn, .btn-large {
+  background-color: #0099cc;
+}
+.btn:hover, .btn-large:hover {
+  background-color: #40535a;
+}
+.collection .collection-item {
+  padding: 0;
+}
+.collection {
+  background-color: white;
+}
+ul.collection {
+  padding-left: 20px;
 }
