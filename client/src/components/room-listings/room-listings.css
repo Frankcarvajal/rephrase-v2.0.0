@@ -1,8 +1,18 @@
 .collection {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 30px; 
+  padding-top: 10px; 
   min-height: 100%;
+  padding-bottom: 30px;
+  padding-left: 0 !important;
+}
+
+.sidebar-container .collection li ul li {
+  margin-left: 0 !important;
+}
+
+.collection li, .collection li a li {
+  margin-left: 10px !important;
 }
 
 h5 svg {
@@ -11,19 +21,17 @@ h5 svg {
   fill: #33bf70;
 }
 
-.collection ul {
-  padding-left: 20px;
-}
-
 .collection ul li:first-child {
-  margin-bottom: 70px;
+  padding-top: 18px;
+  margin-bottom: 30px;
 }
 
 .collection ul li:last-child h5 {
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
-.collection .number {
+.number {
   background-color: #40535a;
   color: #fff;
   margin-right: 7px;
@@ -34,6 +42,11 @@ h5 svg {
 
 .chat-list {
   list-style: none;
+}
+
+.chat-listing {
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
 }
 
 .collection .collection-item {

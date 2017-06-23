@@ -7,6 +7,10 @@ body {
   padding: 0;
   font-family: sans-serif;
   /*background-color:#EFF1F1;*/
+  /*background-color: #DFDFDF;*/
+  background-color: #F4FAFF;
+  /*background-color: #C9D6EA;*/
+  /*background-color: #E0F2E9;*/
 }
 
 #root, #root > div, .app {

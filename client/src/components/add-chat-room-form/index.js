@@ -88,17 +88,20 @@ export class AddChatRoomForm extends React.Component {
   displayRecentConvos() {
     // Loop over the chat rooms and put in list of participants plus links to the rooms
     return this.props.chatRooms.map((room, index) => {
-      const names = room.participants.map(u => { 
+      let names = room.participants.map(u => { 
         if (u.displayName === this.props.user.displayName) {
-          return null;
+          return '';
         }
         return u.displayName;
       });
+        names = names.filter(n => n !== '');
+        const num = names.length > 0 ? names.length : 1;
+        const displayNames = names.length > 0 ? names.join(', ') : 'Just me';
       return ( 
         <Link to={`/profile/chat/${room._id}`} key={index}>
           <li className="chat-listing">
-            <p><span>Participants: </span>{`${names.join(' ')}` }</p>
-            {/*<p>{ `RoomId: ${room._id}` }</p>*/}
+            <span className='number'>{ num }</span>
+            <span>{ displayNames }</span>
           </li>
         </Link>
       );

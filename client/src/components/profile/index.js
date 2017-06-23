@@ -4,20 +4,27 @@ import LanguageChoice from '../language-choice'
 import { connect } from 'react-redux';
 
 export class Profile extends Component {
-    render() {
-        return (
-          <div className='profile-view'>
-            <h3>Profile View</h3>
-            <p>User profile goes here</p>
-            <h4>Defualt Language</h4>
-            <LanguageChoice forDictaphone={false} />
-          </div>
-        );
+
+  getDisplayName() {
+    if (this.props.user) {
+      return `${this.props.user.displayName}'s Profile`;
     }
+  }
+
+  render() {
+    return (
+      <div className='profile-view'>
+        <h3>{this.getDisplayName()}</h3>
+        <h4>Set your default language</h4>
+        <p><em>Translate your chats into any of the following languages</em></p>
+        <LanguageChoice forDictaphone={false} />
+      </div>
+    );
+  }
 }
 
 
 const mapStateToProps = state => ({
-
+  user: state.userData.user
 })
 export default connect(mapStateToProps)(Profile);

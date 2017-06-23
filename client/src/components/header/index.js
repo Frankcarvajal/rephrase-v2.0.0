@@ -30,7 +30,7 @@ export class Header extends Component {
         <div className="header-wrapper">
             <div className="app-header">
                 <div className="app-title">
-                  <img src={logo} className='logo-image' alt='logo'/>
+                  <img src={logo} alt='' />
                 </div>
                 <div className="nav-icons">
                     <Link to={'/'}><FaHome size={35} /></Link>

@@ -1,17 +1,22 @@
-.Profile {
-    display: inline-block;
+.profile-view {
+    max-width: 600px;
+    margin: 70px auto 50px;
+    text-align: center;
 }
-.profile-view{
-    max-width: 700px;
-    margin: 0 auto;
+
+.profile-view h3, h4 {
+    margin-top: 30px;
+    margin: 30px;
 }
 
 .select-wrapper input.select-dropdown {
     text-align: left
 }
+
 .row .langauge-choice-row {
     margin: 0;
 }
+
 .col .input-field .s12 {
     margin: 0;
 }

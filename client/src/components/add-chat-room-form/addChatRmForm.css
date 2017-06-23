@@ -8,6 +8,10 @@
   font-size: 26px;
 }
 
+.add-rm-form-wrapper .close-icon-bin {
+  margin-left: 7px;
+}
+
 /*.add-rm-form-wrapper input {
   width: 90%;
   padding-top: 15px;
@@ -68,6 +72,7 @@ row input {
 input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
   width: 450px;
 }
+
 div.user-bin {
   background-color: white;
   border: 1px solid #e0e0e0;

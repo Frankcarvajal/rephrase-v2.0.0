@@ -76,7 +76,7 @@ render(){
         <Row className='language-choice-row'>
           <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange={(e) =>
           {this.handleChange(e)}}>
-            <option>Choose a Language</option>
+            <option value='default-option'>Choose a Language</option>
             { this.state.options }
           </Input>
         </Row>
