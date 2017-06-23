@@ -46,10 +46,12 @@ export class ChatWrapper extends Component {
     }
     return (
       <div className='chat-room-wrapper'>
-        <RoomListings chatRooms={this.props.chatRooms} 
-          user={this.props.user} 
-          currentRm={this.state.roomId} 
-        />
+        <div className='sidebar-container'>
+          <RoomListings chatRooms={this.props.chatRooms} 
+            user={this.props.user} 
+            currentRm={this.state.roomId} 
+          />
+        </div>
         <ChatRoom roomId={this.state.roomId} key={this.state.roomId} />
       </div>
     );

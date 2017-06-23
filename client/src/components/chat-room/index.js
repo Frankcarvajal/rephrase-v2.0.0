@@ -147,17 +147,26 @@ export class ChatRoom extends Component {
   render() {
     return (
       <div className='room'>
-        <div className='room-header'>
-          <LanguageChoice forDictaphone={false} />
-          { this.showParticipants() }
+
+        <div className='rm-flex-item'>
+          <div className='room-header'>
+            { this.showParticipants() }
+          </div>
+          <ul id="messages">
+            {this.insertMessagesDom()}
+          </ul>
+          <Row action="">
+            <form>
+              <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
+              <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
+            </form>
+          </Row>
         </div>
-        <ul id="messages">
-          {this.insertMessagesDom()}
-        </ul>
-        <Row action="">
-          <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-          <Button waves='light'onClick={ e => this.sendMessageToRoom(e) }>Send</Button>
-        </Row> 
+
+        <div className='rm-flex-language'>
+          <LanguageChoice forDictaphone={false} /> 
+        </div>
+
       </div>
     );
   }

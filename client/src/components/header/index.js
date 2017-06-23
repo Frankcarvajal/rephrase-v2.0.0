@@ -4,8 +4,6 @@ import logo from '../../assets/logo.png';
 import './header.css';
 
 import { Link } from 'react-router-dom';
-import FaBars from 'react-icons/lib/fa/bars';
-// import FaMicrophone from 'react-icons/lib/fa/microphone';
 import FaUser from 'react-icons/lib/fa/user';
 import FaHome from 'react-icons/lib/fa/home';
 import FaWechat from 'react-icons/lib/fa/wechat';
@@ -32,7 +30,7 @@ export class Header extends Component {
         <div className="header-wrapper">
             <div className="app-header">
                 <div className="app-title">
-                  <img src={logo} className='logo-image' />
+                  <img src={logo} className='logo-image' alt='logo'/>
                 </div>
                 <div className="nav-icons">
                     <Link to={'/'}><FaHome size={35} /></Link>
