@@ -28,7 +28,7 @@ The following situation sums up the use of rephrase's chat rooms: John Doe is fr
 
 # Socket.io, web sockets, and implementing the chat feature
 
-Rephrase's chat rooms are built thanks to socket.io, which uses a technology called web sockets to enable !["... real-time bidirectional event-based communication."](https://socket.io/) 
+Rephrase's chat rooms are built thanks to socket.io, which uses a technology called web sockets to enable ["... real-time bidirectional event-based communication."](https://socket.io/) 
 In sum, web sockets are similar to http requests in that they are a networking protocol that enables communication between client and server. The difference lies in how they structure that communication. Whereas the http protocol transfers data based on the 'client-request and server-response' model, with web sockets, requests and responses serve different purposes. In the web socket model, a client first requests to open a communication channel with the server. The server responds by establishing the connection and notifying the client. Once the connection is open, the server can send data without being solicited by the client.
 When a user enters a rephrase chat room, they connect to the server via a web socket connection provided by socket.io. Messages are sent and received over this connection, which enables the real-time chat feature.      
 
