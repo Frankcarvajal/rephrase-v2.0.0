@@ -6,12 +6,12 @@ A translation & chat application built with react, node, and socket.io
 
 Rephrase offers two key features. The first is targeted at travelers who need to quickly translate a sentence into another language. Using the Google Chrome speech-to-text web API in conjunction with the Google translate API, rephrase records a spoken statement and then translates the statement into a target language identified by the user. Please note that this speech-to-text feature is currently only supported by Chrome, and therefore will not currently work on other browsers, such as Firefox, IE, or Safari.
 
-![Speak and be translated with rephrase](https://github.com/wshuang6/french-verbs-app/blob/master/client/assets/home.png)
+![Speak and be translated with rephrase](https://github.com/pszujewski/rephrase-v2.0.0/blob/master/client/src/assets/home.png)
 
 The second feature of Rephrase is a chat application that integrates the Google Translate API to offer users the ability to hold conversations in virtually any language. Want to hold a conversation with a Chinese-speaker? Simply type your messages in English and your interlocutor can choose to receive those languages in Chinese. 
 The following situation sums up the use of rephrase's chat rooms: John Doe is from Ontario but currently lives in Mexico. He speaks Spanish well but would prefer to conduct business with his landlord in English if possible. Thanks to rephrase, instead of having to text his landlord in Spanish, John can open a chat room with his landlord and send his messages in English. His landlord receives them in Spanish and replies in Spanish, but John receives those replies in English. John can also view the original message in Spanish if he wishes.    
 
-![A rephrase chat room can translate your messages into a dozen different languages](https://github.com/wshuang6/french-verbs-app/blob/master/client/assets/rooms.png)
+![A rephrase chat room can translate your messages into a dozen different languages](https://github.com/pszujewski/rephrase-v2.0.0/blob/master/client/src/assets/rooms.png)
 
 * [View the deployed site](https://rephrase-it.herokuapp.com/)
 
