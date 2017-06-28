@@ -40,6 +40,14 @@ export class ChatWrapper extends Component {
     }
   }
 
+  //  componentDidUpdate(prevProps, prevState) {
+  //   console.log('======= componentDidUpdate ========');
+  //   console.log('this.props =>', this.props);
+  //   console.log('prevProps =>', prevProps);
+  //   console.log('this.state =>', this.state);
+  //   console.log('prevState =>', prevState);
+  // }
+
   render() {
     if (!this.state.roomId || !this.props.chatRooms || !this.props.user) {
       return (<p>Loading...</p>);

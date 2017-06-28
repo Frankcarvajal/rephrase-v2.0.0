@@ -45,7 +45,7 @@ export class ChatRoom extends Component {
       this.retrieveAndSetRoomState(currentRm, userDefaultLang);
     }
   }
- 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.user && !this.props.user) {
       this.props.dispatch(fetchChatList(nextProps.user.id, this.accessToken));

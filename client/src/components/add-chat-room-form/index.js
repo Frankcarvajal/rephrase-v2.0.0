@@ -5,6 +5,7 @@ import * as Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
 import { Link } from 'react-router-dom';
+import { addNewChatRoom } from './actions'
 import { Row, Input, Button } from 'react-materialize';
 
 // require the helper functions
@@ -145,8 +146,10 @@ export class AddChatRoomForm extends React.Component {
     }
     return postChatRoomToDb(this.accessToken, participants)
       .then(newChatRoom => {
-        return this.props.history.push(`/profile/chat/${newChatRoom._id}`);
+        this.props.history.push(`/profile/chat/${newChatRoom._id}`);
+        this.props.dispatch(addNewChatRoom(newChatRoom));
       })
+      .catch(err => console.error(err));
   }
 
   handleChange(e) {

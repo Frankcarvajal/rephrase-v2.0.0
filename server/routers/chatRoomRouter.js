@@ -38,7 +38,10 @@ router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, 
         messages: []
     })
     .then(newChatRoom => {
-        return res.status(200).json(newChatRoom);
+        return ChatRoom.findById(newChatRoom._id).populate('participants');
+    })
+    .then(populatedRoom => {
+        return res.status(200).json(populatedRoom);
     })
     .catch(err => console.error(err))
 });
