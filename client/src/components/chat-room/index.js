@@ -92,7 +92,7 @@ export class ChatRoom extends Component {
       });
     }
 
-    if (this.state.room && translatedMessagesArr.length === 1 && !noMessages) {
+    if (this.state.room && translatedMessagesArr.length === 1 && !noMessages && !isNewDefaultLanguage) {
       // Test to see if we want to drop the very first message 
       if (updatedRoom.messages[0]._id !== roomMessages[0]._id) {
         updatedRoom.messages.shift();
