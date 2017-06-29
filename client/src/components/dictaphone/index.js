@@ -16,24 +16,19 @@ import FaMicrophoneSlash from 'react-icons/lib/fa/microphone-slash';
     
 class Dictaphone extends Component {
 
-  componentDidMount() {
-    console.log('Dictaphone is mounting');
-  }
-
-  componentWillUnmount() {
-    console.log('Dictaphone is being torn down');
-
-  }
-
-  componentWillReceiveProps() {
-    console.log('Dictaphone will receive new props');
-  }
-
   render() {
     const { transcript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
 
     if (!browserSupportsSpeechRecognition) {
-      return null
+      alert('Your browser does not support speech recognition. Please use Google Chrome. Otherwise, sign in and you can still use the chat room feature!');
+      return (
+        <div className='dictaphone-wrapper'>
+          <button className="speak">
+              <FaMicrophoneSlash />
+          </button>
+          <EditButton className="edit" />
+        </div>
+      );
     }
 
     const sendTranscriptToServer = transcript => {
