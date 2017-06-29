@@ -45,5 +45,30 @@
   color: #0099cc;
 }
 
+.header-wrapper .registration {
+  cursor: pointer;
+}
 
+@media only screen and (max-width: 860px) {
+  .header-wrapper .app-header {
+    display: block;
+  }
+  .header-wrapper .app-title {
+    text-align: center;
+  }
+  .header-wrapper img {
+   display: inline-block;
+  }
+  .header-wrapper .nav-icons {
+    display: inline-block;
+    margin-left: auto;
+    padding-bottom: 20px;
+  }
+}
 
+@media only screen and (max-width: 500px) {
+  .header-wrapper img {
+   height: 125px;
+   width: 400px;
+  }
+}

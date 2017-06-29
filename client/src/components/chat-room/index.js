@@ -173,7 +173,7 @@ export class ChatRoom extends Component {
           <Row action="">
             <form onSubmit={e => this.sendMessageToRoom(e)}>
               <input label="message" id="m" placeholder='Enter new message here' ref={input => this.input = input} />
-              <Button type='submit' waves='light'>Send</Button>
+              <div className='chat-btn-wrap'><Button type='submit' waves='light'>Send</Button></div>
             </form>
           </Row>
         </div>

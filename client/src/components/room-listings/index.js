@@ -40,7 +40,7 @@ class RoomListings extends React.Component {
         );
       }
       return (
-        <li><h4>Rooms</h4></li>
+        <li><h4>Chat Rooms</h4></li>
       );
     }
 

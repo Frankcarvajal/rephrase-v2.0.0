@@ -1,5 +1,5 @@
 .add-rm-form-wrapper {
-  max-width: 550px;
+  max-width: 700px;
   margin: 50px auto 20px;
 }
 
@@ -10,6 +10,11 @@
 
 .add-rm-form-wrapper .close-icon-bin {
   margin-left: 7px;
+}
+
+.add-rm-form-wrapper .to-center-wrap {
+  max-width: 550px;
+  margin: 0 auto;
 }
 
 /*.add-rm-form-wrapper input {
@@ -34,7 +39,7 @@ row input {
   width: 100%;
 }
 .add-rm-form-wrapper .user-bin-list {
-  padding: 30px 20px;
+  padding: 20px 20px;
 }
 
 .add-rm-form-wrapper .user-bin-list li {

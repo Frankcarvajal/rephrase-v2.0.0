@@ -12,9 +12,9 @@ export class Header extends Component {
 
     getUserRegistration() {
         if (this.props.user) {
-            return (<a href={'/api/auth/logout'}>Log out</a>);
+            return (<a className='registration' href={'/api/auth/logout'}>Log out</a>);
         }
-        return (<a href={'/api/auth/google'}>Sign in with Google</a>);
+        return (<a className='registration' href={'/api/auth/google'}>Sign in with Google</a>);
     }
     getChatIcon(){
         if(this.props.user){
@@ -37,7 +37,7 @@ export class Header extends Component {
                     { this.getChatIcon() }
                     <Link to={'/profile'}><FaUser size={35} /></Link>
                 </div>
-                {this.getUserRegistration()}    
+                {this.getUserRegistration()}   
             </div>
         </div>
         );

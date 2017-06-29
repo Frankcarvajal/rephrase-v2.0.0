@@ -14,7 +14,6 @@ export const translationSuccess = data => ({
 });
 
 export const postTranscriptGetTranslation = (transcript, language) => dispatch => {
-  console.log(transcript, language);
   dispatch(translationRequest());
   return fetch('/api/translate', {
     method: "POST",
@@ -26,7 +25,6 @@ export const postTranscriptGetTranslation = (transcript, language) => dispatch =
   })
   .then(res => res.json())
   .then(translationData => { 
-    console.log(translationData);
     dispatch(translationSuccess(translationData));
   })
   .catch(err => console.error(err));

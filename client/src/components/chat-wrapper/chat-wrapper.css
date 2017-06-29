@@ -6,3 +6,8 @@
 .sidebar-container {
   min-height: 100%;
 }
+
+.sidebar-container .collection {
+  padding-left: 20px !important;
+  padding-right: 20px;
+}

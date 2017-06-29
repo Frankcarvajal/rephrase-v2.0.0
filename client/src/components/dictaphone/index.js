@@ -32,7 +32,7 @@ class Dictaphone extends Component {
     }
 
     const sendTranscriptToServer = transcript => {
-      recognition.onend = function(e) { console.log('SEND-TRANSCRIPT-TO-SERVER:', this.props) }
+      recognition.onend = function(e) { console.log('on end...') }
       const final = transcript;
       resetTranscript();
       recognition.stop(); 

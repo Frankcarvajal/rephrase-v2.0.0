@@ -13,13 +13,11 @@ const speechRecognitionReducer = (state=initialState, action) => {
     });
   }
   if (action.type === EDIT_BTN) {
-    console.log('We are totally editting', state);
     return Object.assign({}, state, {
       isEditing: !state.isEditing
     })
   }
     if (action.type === TOGGLE_DICTAPHONE_IS_MOUNTED) {
-    console.log('We are totally editting');
     return Object.assign({}, state, {
       dictaphoneIsMounted: state.dictaphoneIsMounted
     })

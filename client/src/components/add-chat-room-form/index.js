@@ -165,24 +165,26 @@ export class AddChatRoomForm extends React.Component {
   render() {
     return (
       <div className='add-rm-form-wrapper'>
-        <div className="conversation-wrapper">
-          <h3>Open a new conversation</h3>
-          <div className='close-icon-bin'>
-            <Link to='/profile/chatlist'>
-              <FaClose />
-            </Link>
+        <div className='to-center-wrap'>
+          <div className="conversation-wrapper">
+            <h3>Open a new conversation</h3>
+            <div className='close-icon-bin'>
+              <Link to='/profile/chatlist'>
+                <FaClose />
+              </Link>
+            </div>
           </div>
+          <Row>
+            <Input
+              type="text" 
+              placeholder='Start a new conversation' 
+              onChange={ e => this.handleChange(e) }
+              value={this.state.search} 
+            />
+            <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
+          </Row>
         </div>
-        <Row>
-          <Input
-            type="text" 
-            placeholder='Start a new conversation' 
-            onChange={ e => this.handleChange(e) }
-            value={this.state.search} 
-          />
-          <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
-          
-        </Row>
+
         <div className='selected-users-wrap'>
           {this.displaySelectedUsers()}
         </div>
