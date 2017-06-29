@@ -153,8 +153,12 @@ export class AddChatRoomForm extends React.Component {
   }
 
   handleChange(e) {
+    let char = e.currentTarget.value;
+    if (this.state.search.length === 0) {
+      char = char.toUpperCase();
+    }
     this.setState({
-      search: e.currentTarget.value
+      search: char
     });
   }
 
@@ -174,7 +178,7 @@ export class AddChatRoomForm extends React.Component {
             type="text" 
             placeholder='Start a new conversation' 
             onChange={ e => this.handleChange(e) }
-             
+            value={this.state.search} 
           />
           <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
           
