@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RoomListings from '../room-listings';
 import ChatRoom from '../chat-room';
 import * as Cookies from 'js-cookie'; 
+import windowSize from 'react-window-size';
 
 import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
@@ -40,12 +41,10 @@ export class ChatWrapper extends Component {
     }
   }
 
-  //  componentDidUpdate(prevProps, prevState) {
-  //   console.log('======= componentDidUpdate ========');
-  //   console.log('this.props =>', this.props);
-  //   console.log('prevProps =>', prevProps);
-  //   console.log('this.state =>', this.state);
-  //   console.log('prevState =>', prevState);
+  // evalWindowSize() {
+  //   if (this.props.windowWidth < 900) {
+
+  //   }
   // }
 
   render() {
@@ -72,4 +71,4 @@ const mapStateToProps = state => ({
   chatRooms: state.chat.chatRooms
 });
 
-export default connect(mapStateToProps)(ChatWrapper);
+export default connect(mapStateToProps)(windowSize(ChatWrapper));

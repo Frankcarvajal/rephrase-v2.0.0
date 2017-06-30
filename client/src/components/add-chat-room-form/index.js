@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
 import { Link } from 'react-router-dom';
 import { addNewChatRoom } from './actions'
-import { Row, Input, Button } from 'react-materialize';
+import { Input, Button } from 'react-materialize';
 
 // require the helper functions
 import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb } from './helpers';
@@ -174,7 +174,7 @@ export class AddChatRoomForm extends React.Component {
               </Link>
             </div>
           </div>
-          <Row>
+          <div className='input-wrapper'>
             <Input
               type="text" 
               placeholder='Start a new conversation' 
@@ -182,7 +182,7 @@ export class AddChatRoomForm extends React.Component {
               value={this.state.search} 
             />
             <Button waves='light' onClick={ e => this.sendNewRoomRequest(e) }>Go</Button>
-          </Row>
+          </div>
         </div>
 
         <div className='selected-users-wrap'>

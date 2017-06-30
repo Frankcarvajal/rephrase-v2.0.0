@@ -37,7 +37,9 @@ export class Header extends Component {
                     { this.getChatIcon() }
                     <Link to={'/profile'}><FaUser size={35} /></Link>
                 </div>
-                {this.getUserRegistration()}   
+                <div className='registration-container'>
+                    <p>{this.getUserRegistration()}</p>
+                </div>   
             </div>
         </div>
         );
