@@ -3,3 +3,9 @@
   max-width: 400px;
   margin: 0 auto;
 }
+
+@media only screen and (max-width: 900px) {
+  select {
+    display: initial !important;
+  }
+}

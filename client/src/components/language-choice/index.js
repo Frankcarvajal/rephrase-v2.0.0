@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Cookies from 'js-cookie'; 
+import windowSize from 'react-window-size';
 
 import { selectLanguage } from './actions';
 import { saveDefaultLanguageToDatabase } from '../profile/actions';
@@ -71,16 +72,31 @@ export class LanguageChoice extends Component{
     });
   }
 
+evalWindowSize() {
+  if (this.props.windowWidth < 900) {
+    return (
+      <select onChange={(e) =>{this.handleChange(e)}}>
+        <option value='default-option'>Choose a Language</option>
+        { this.state.options }
+      </select>
+    );
+  }
+  return (
+    <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' 
+      onChange={(e) =>
+      {this.handleChange(e)}}
+    >
+      <option value='default-option'>Choose a Language</option>
+      { this.state.options }
+    </Input>
+  );
+}
+
 render(){ 
     return(
         <Row className='language-choice-row'>
-          <Input s={12} type='select' label="Language Choice" defaultValue='Choose a Language' onChange={(e) =>
-          {this.handleChange(e)}}>
-            <option value='default-option'>Choose a Language</option>
-            { this.state.options }
-          </Input>
+          { this.evalWindowSize() }
         </Row>
-
     );
   }
 }
@@ -88,4 +104,4 @@ const mapStateToProps = state => ({
   userLanguage: state.userLanguage,
   user: state.userData.user
 });
-export default connect(mapStateToProps)(LanguageChoice);
+export default connect(mapStateToProps)(windowSize(LanguageChoice));
