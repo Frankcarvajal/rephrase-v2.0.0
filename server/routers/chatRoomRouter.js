@@ -32,6 +32,12 @@ router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: fa
 router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
     // Use the $all operator to check if a chat room with incoming participants already exists
     // https://stackoverflow.com/questions/12027636/whats-difference-between-in-and-all-operators-in-mongoose
+    // $all specifies a minimum set of elements that must be matched.
+    // return ChatRoom.find({
+    //     participants: { $all: participants }
+    // })
+    // .then(foundRms => {   
+    // })
     const { participants } = req.body;
     return ChatRoom.create({
         participants,
@@ -80,6 +86,21 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
                 .catch(err => console.error(err));
         })
         .catch(err => console.error(err));
+});
+
+// For deleting a chat room
+router.delete('/chatRoom/:chatRoomId', (req, res) => {
+    return ChatRoom
+        .findByIdAndRemove(req.params.chatRoomId)
+        .exec()
+        .then(result => {
+            console.log('DELETED ROOM =>', result);
+            res.json({ message: 'Room Deleted!'});
+        })
+        .catch(err => { 
+            console.error(err);
+            res.send(err); 
+        });
 });
 
 module.exports = { chatRoomRouter: router };
