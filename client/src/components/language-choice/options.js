@@ -52,7 +52,6 @@ const options = [
     name: 'Russian',
     value: 'ru'
   }
-
 ];
 
 export default options;
