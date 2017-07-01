@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import RoomListings from '../room-listings';
 import ChatRoom from '../chat-room';
 import * as Cookies from 'js-cookie'; 
+import { Link } from 'react-router-dom';
 import windowSize from 'react-window-size';
+import FaCircle from 'react-icons/lib/fa/circle';
 
 import { connect } from 'react-redux';
 import { fetchChatList } from '../chats-list/actions';
@@ -41,11 +43,24 @@ export class ChatWrapper extends Component {
     }
   }
 
-  // evalWindowSize() {
-  //   if (this.props.windowWidth < 900) {
-
-  //   }
-  // }
+  evalWindowSize() {
+    if (this.props.windowWidth < 900) {
+      return (
+        <ul className='mobile-options'>
+          <li><FaCircle /> {this.props.user.displayName}</li>
+          <li className='mobile-link-option'><Link to='/profile/chatlist'>GO TO ANOTHER ROOM</Link></li>
+          <li className='mobile-link-option'><Link to='/profile'>CHANGE MY DEFAULT LANGUAGE</Link></li>
+        </ul>
+      );
+    }
+    return (
+      <RoomListings 
+        chatRooms={this.props.chatRooms} 
+        user={this.props.user} 
+        currentRm={this.state.roomId} 
+      />
+    );
+  }
 
   render() {
     if (!this.state.roomId || !this.props.chatRooms || !this.props.user) {
@@ -54,10 +69,7 @@ export class ChatWrapper extends Component {
     return (
       <div className='chat-room-wrapper'>
         <div className='sidebar-container'>
-          <RoomListings chatRooms={this.props.chatRooms} 
-            user={this.props.user} 
-            currentRm={this.state.roomId} 
-          />
+          { this.evalWindowSize() }
         </div>
         <ChatRoom roomId={this.state.roomId} key={this.state.roomId} />
       </div>

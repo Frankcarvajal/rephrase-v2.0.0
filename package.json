@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
+    "heroku-postbuild": "cd client && yarn install --only=dev && yarn run build",
     "dev": "run-p dev:server dev:client start",
-    "dev:client": "cd client && cross-env BROWSER=none npm start -- --color=always | xp http://localhost:3000/ http://localhost:8080/",
-    "dev:server": "cd server && npm start",
+    "dev:client": "cd client && cross-env BROWSER=none yarn start -- --color=always | xp http://localhost:3000/ http://localhost:8080/",
+    "dev:server": "cd server && yarn start",
     "install": "run-s install:server install:client",
-    "install:server": "cd server && npm install",
-    "install:client": "cd client && npm install"
+    "install:server": "cd server && yarn install",
+    "install:client": "cd client && yarn install"
   },
   "cacheDirectories": [
     "node_modules",
