@@ -47,9 +47,9 @@ export class ChatWrapper extends Component {
     if (this.props.windowWidth < 900) {
       return (
         <ul className='mobile-options'>
-          <li><FaCircle /> {this.props.user.displayName}</li>
-          <li className='mobile-link-option'><Link to='/profile/chatlist'>GO TO ANOTHER ROOM</Link></li>
-          <li className='mobile-link-option'><Link to='/profile'>CHANGE MY DEFAULT LANGUAGE</Link></li>
+          <li><FaCircle /> <span className='user-name'>{this.props.user.displayName}</span></li>
+          <li className='mobile-link-option'><div><Link to='/profile/chatlist'>GO TO ANOTHER ROOM</Link></div></li>
+          <li className='mobile-link-option'><div><Link to='/profile'>CHANGE MY DEFAULT LANGUAGE</Link></div></li>
         </ul>
       );
     }

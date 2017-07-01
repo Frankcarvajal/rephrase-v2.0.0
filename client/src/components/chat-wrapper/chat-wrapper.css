@@ -38,6 +38,12 @@
   cursor: pointer;
 }
 
+.chat-room-wrapper .mobile-options .mobile-link-option div {
+  display: inline-block;
+  line-height: 30px;
+  vertical-align: text-top;
+}
+
 .chat-room-wrapper .mobile-options .mobile-link-option a {
   cursor: pointer !important;
 }
@@ -47,9 +53,14 @@
 }
 
 .chat-room-wrapper .mobile-options li svg {
-  font-size: 10px;
+  font-size: 14px;
   vertical-align: inherit !important;
   fill: #33bf70;
+}
+
+.chat-room-wrapper .user-name {
+  font-size: 22px;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 900px) {

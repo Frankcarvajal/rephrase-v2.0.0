@@ -23,6 +23,10 @@ body {
   padding-left: 12px;
 }
 
+.chat-list-wrapper .btn-container button {
+  width: 100%;
+}
+
 .btn, .btn-large {
   background-color: #0099cc;
 }
