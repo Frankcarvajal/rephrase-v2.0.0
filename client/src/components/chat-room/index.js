@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import * as Cookies from 'js-cookie'; 
 import { fetchChatList } from '../chats-list/actions';
 import LanguageChoice from '../language-choice';
+import windowSize from 'react-window-size';
 
 import { Row, Button } from 'react-materialize';
 import { getMessageTranslations, getChatRoomStateFromDb } from './helpers';
@@ -157,6 +158,17 @@ export class ChatRoom extends Component {
     return this.state.room.participants.length;
   }
 
+  evalWindowSize() {
+    if (this.props.windowWidth < 650) {
+      return null;
+    }
+    return (
+      <div className='rm-flex-language'>
+        <LanguageChoice forDictaphone={false} /> 
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className='room'>
@@ -178,9 +190,7 @@ export class ChatRoom extends Component {
           </Row>
         </div>
 
-        <div className='rm-flex-language'>
-          <LanguageChoice forDictaphone={false} /> 
-        </div>
+        { this.evalWindowSize() }
 
       </div>
     );
@@ -192,4 +202,4 @@ const mapStateToProps = state => ({
   chatRooms: state.chat.chatRooms
 });
 
-export default connect(mapStateToProps)(ChatRoom);
+export default connect(mapStateToProps)(windowSize(ChatRoom));

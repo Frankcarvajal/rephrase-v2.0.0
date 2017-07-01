@@ -3,11 +3,57 @@
   min-height: 100%;
 }
 
-.sidebar-container {
+.chat-room-wrapper .sidebar-container {
   min-height: 100%;
 }
 
-.sidebar-container .collection {
+.chat-room-wrapper .sidebar-container .collection {
   padding-left: 20px !important;
   padding-right: 20px;
+} 
+
+.chat-room-wrapper .mobile-options {
+  padding: 20px 20px 0;
+}
+
+@media only screen and (min-width: 650px) {
+  .chat-room-wrapper .mobile-options {
+    display: flex;
+    justify-content: space-around;
+  }
+  .chat-room-wrapper .mobile-options .mobile-link-option {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+.chat-room-wrapper .mobile-options li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 2px;
+  border-radius: 3px;
+}
+
+.chat-room-wrapper .mobile-options .mobile-link-option {
+  cursor: pointer;
+}
+
+.chat-room-wrapper .mobile-options .mobile-link-option a {
+  cursor: pointer !important;
+}
+
+.chat-room-wrapper .mobile-options .mobile-link-option:hover {
+  background-color: #eeeeee;
+}
+
+.chat-room-wrapper .mobile-options li svg {
+  font-size: 10px;
+  vertical-align: inherit !important;
+  fill: #33bf70;
+}
+
+@media only screen and (max-width: 900px) {
+  .chat-room-wrapper {
+    display: block;
+  }
 }

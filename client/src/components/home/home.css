@@ -102,6 +102,12 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+@media only screen and (max-width: 500px) {
+  .home-view .edit-button {
+    font-size: 24px;
+  }
+}
+
 .home-view form#translate {
   vertical-align: middle;
   padding: 0 20px 20px;

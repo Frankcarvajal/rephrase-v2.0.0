@@ -60,15 +60,18 @@
    display: inline-block;
   }
   .header-wrapper .nav-icons {
-    display: inline-block;
-    margin-left: auto;
-    padding-bottom: 20px;
+    text-align: center;
+  }
+  .header-wrapper .registration-container {
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 20px;
   }
 }
 
 @media only screen and (max-width: 500px) {
   .header-wrapper img {
-   height: 125px;
-   width: 400px;
+   height: 118.75px;
+   width: 380px;
   }
 }

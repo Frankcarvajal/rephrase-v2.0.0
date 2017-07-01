@@ -1,4 +1,5 @@
 .add-rm-form-wrapper {
+  padding: 10px 20px;
   max-width: 700px;
   margin: 50px auto 20px;
 }
@@ -35,9 +36,23 @@
   font-size: 18px;
 }*/
 
-row input {
-  width: 100%;
+.add-rm-form-wrapper .input-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
+
+.add-rm-form-wrapper .input-wrapper .input-field {
+  width: 82% !important;
+}
+
+.add-rm-form-wrapper .input-wrapper .input-field input {
+  width: 100% !important;
+}
+
+.add-rm-form-wrapper .input-wrapper button {
+  top: 15px !important;
+}
+
 .add-rm-form-wrapper .user-bin-list {
   padding: 20px 20px;
 }

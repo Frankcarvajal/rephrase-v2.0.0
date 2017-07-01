@@ -20,7 +20,7 @@ class Dictaphone extends Component {
     const { transcript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
 
     if (!browserSupportsSpeechRecognition) {
-      alert('Your browser does not support speech recognition. Please use Google Chrome. Otherwise, sign in and you can still use the chat room feature!');
+      alert('Sorry, your browser does not support speech recognition. Please switch to Chrome (desktop). Otherwise, sign in and you can still use the chat room feature!');
       return (
         <div className='dictaphone-wrapper'>
           <button className="speak">

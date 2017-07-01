@@ -3,7 +3,7 @@ body {
 }
 
 .chat-list-wrapper {
-  padding: 0;
+  padding: 10px 20px;
   margin: 70px auto 50px;
   max-width: 700px;
 }
@@ -17,9 +17,10 @@ body {
   margin: 0 auto;
 }
 
-.btn-container {
+.chat-list-wrapper .btn-container {
   padding-top: 10px;
   padding-bottom: 30px;
+  padding-left: 12px;
 }
 
 .btn, .btn-large {
