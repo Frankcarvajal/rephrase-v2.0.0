@@ -4,6 +4,12 @@
   margin: 50px auto 20px;
 }
 
+@media only screen and (max-width: 860px) {
+ .add-rm-form-wrapper {
+    margin: 10px auto 50px;
+  }
+}
+
 .add-rm-form-wrapper .close-icon-bin {
   text-align: right;
   font-size: 26px;
