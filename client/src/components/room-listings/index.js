@@ -9,7 +9,7 @@ class RoomListings extends React.Component {
 
     getDeleteBtnText() {
       if (this.props.deleteMode) {
-        return 'Don\'t delete';
+        return 'I\'m done!';
       }
       return 'Delete rooms';
     }

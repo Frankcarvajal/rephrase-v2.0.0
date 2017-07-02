@@ -32,25 +32,46 @@ router.get('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: fa
 
 router.post('/', passport.authenticate('bearer', {session: false}), jsonParser, (req, res) => {
     // Use the $all operator to check if a chat room with incoming participants already exists
-    // https://stackoverflow.com/questions/12027636/whats-difference-between-in-and-all-operators-in-mongoose
     // $all specifies a minimum set of elements that must be matched.
-    // return ChatRoom.find({
-    //     participants: { $all: participants }
-    // })
-    // .then(foundRms => {   
-    // })
     const { participants } = req.body;
-    return ChatRoom.create({
-        participants,
-        messages: []
+    return ChatRoom.find({
+        participants: { $all: participants }
     })
-    .then(newChatRoom => {
-        return ChatRoom.findById(newChatRoom._id).populate('participants');
+    .exec()
+    .then(foundRms => {   
+    
+        // console.log("Here are the found rooms =>", foundRms);
+
+        for (let i=0; i<foundRms.length; i++) {
+            if (foundRms[i].participants.length === participants.length) {
+                // console.log('Room already exists, starting process');
+                return ChatRoom
+                    .findById(foundRms[i]._id)
+                    .populate('participants')
+                    .exec()
+                    .then(foundRm => {
+                        // console.log('Sending back room now...');
+                        return res.status(200).json(foundRm);
+                    })
+                    .catch(err => console.error(err));
+            }
+        }
+
+        // console.log('Room does not exist, creating new one now...');
+
+        return ChatRoom.create({
+            participants,
+            messages: []
+        })
+        .then(newChatRoom => {
+            return ChatRoom.findById(newChatRoom._id).populate('participants').exec();
+        })
+        .then(populatedRoom => {
+            // console.log('Sending back NEWEST room, successfully created...');
+            return res.status(200).json(populatedRoom);
+        })
+        .catch(err => console.error(err));
     })
-    .then(populatedRoom => {
-        return res.status(200).json(populatedRoom);
-    })
-    .catch(err => console.error(err))
 });
 
 router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {

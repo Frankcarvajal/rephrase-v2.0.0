@@ -45,3 +45,14 @@ export function fetchAllUsers(accessToken) {
 		.then(responseStream => responseStream.json())
     .catch(err => console.error(err));
   }
+
+  export function roomAlreadyExists(newRm, allRooms) {
+    for (let i=0; i<allRooms.length; i++) {
+      if (allRooms[i]._id === newRm._id) {
+        console.log('The room exists already...');
+        return true;
+      }
+    }
+    console.log('The room does NOT EXIST ALREADY');
+    return false;
+  }

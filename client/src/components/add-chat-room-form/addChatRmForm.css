@@ -79,6 +79,7 @@
 
 .selected-users-wrap .selected span svg {
   vertical-align: text-bottom !important;
+  font-size: 18px;
 }
 
 .row {

@@ -9,7 +9,7 @@ import { addNewChatRoom } from './actions'
 import { Input, Button } from 'react-materialize';
 
 // require the helper functions
-import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb } from './helpers';
+import { fetchAllUsers, isNewChatRoomUnique, postChatRoomToDb, roomAlreadyExists } from './helpers';
 
 export class AddChatRoomForm extends React.Component {
 
@@ -146,6 +146,9 @@ export class AddChatRoomForm extends React.Component {
     if (!this.props.chatRooms) {
       return;
     }
+    if (this.props.chatRooms.length === 10) {
+      return alert('Oops. You\'ve reached your limit. Please delete some open chat rooms before creating a new one');
+    }
     const selectedUsersIds = this.state.selectedUsers.map(users => users._id);
 		const participants = [...selectedUsersIds, this.props.user.id];
     const isUnique = isNewChatRoomUnique(participants, this.props.chatRooms);
@@ -155,7 +158,11 @@ export class AddChatRoomForm extends React.Component {
     return postChatRoomToDb(this.accessToken, participants)
       .then(newChatRoom => {
         this.props.history.push(`/profile/chat/${newChatRoom._id}`);
-        this.props.dispatch(addNewChatRoom(newChatRoom));
+        const roomExists = roomAlreadyExists(newChatRoom, this.props.chatRooms);
+        if (!roomExists) {
+          // console.log('Adding a new chat room to chat list... Dispatch!');
+          this.props.dispatch(addNewChatRoom(newChatRoom));
+        }
       })
       .catch(err => console.error(err));
   }
@@ -174,13 +181,13 @@ export class AddChatRoomForm extends React.Component {
     return (
       <div className='add-rm-form-wrapper'>
         <div className='to-center-wrap'>
-          <div className="conversation-wrapper">
-            <h3>Open a new conversation</h3>
-            <div className='close-icon-bin'>
+          <div className='close-icon-bin'>
               <Link to='/profile/chatlist'>
                 <FaClose />
               </Link>
-            </div>
+          </div>
+          <div className="conversation-wrapper">
+            <h3>Open a new conversation</h3>
           </div>
           <div className='input-wrapper'>
             <Input
