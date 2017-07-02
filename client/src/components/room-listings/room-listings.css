@@ -55,6 +55,24 @@ h5 svg {
   border-radius: 3px;
 }
 
+.chat-room-title-container {
+  text-align: center;
+}
+
+.chat-room-title-container a {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid #ff4444;
+  border-radius: 3px;
+  color: #ff4444;
+  cursor: pointer;
+}
+
+.chat-room-title-container a:hover {
+  font-size: 15px;
+  border: 1.5px solid #ff4444;
+}
+
 .collection .collection-item {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -68,4 +86,14 @@ h5 svg {
 
 .chat-listing .collection-item p {
   padding: 0;
+}
+
+.trash-icon-wrap {
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.trash-icon-wrap:hover {
+  font-size: 20px;
+  color: #ff4444;
 }

@@ -25,3 +25,31 @@ export const fetchChatList = (userId, accessToken) => dispatch => {
   })
   .catch(err => console.error(err))
 } 
+
+export const DELETE_CHAT_ROOM_REQ = 'DELETE_CHAT_ROOM_REQ';
+export const deleteChatRoomReq = () => ({
+  type: DELETE_CHAT_ROOM_REQ,
+  loading: true
+});
+
+export const DELETE_CHAT_ROOM_SUCCESS = 'DELETE_CHAT_ROOM_SUCCESS';
+export const deleteChatRoomSuccess = chatRooms => ({
+  type: DELETE_CHAT_ROOM_SUCCESS,
+  loading: false,
+  chatRooms
+});
+
+export const deleteChatRoom = (roomId, accessToken) => dispatch => {
+  dispatch(deleteChatRoomReq());
+  return fetch(`/api/chat/chatRoom/${roomId}`, {
+      method: 'DELETE',
+      headers: {
+			  'Authorization': `Bearer ${accessToken}`
+		  }
+    })
+    .then(response => response.json())
+    .then(newChatList => {
+      return dispatch(deleteChatRoomSuccess(newChatList));
+    })
+    .catch(err => console.error(err));
+}

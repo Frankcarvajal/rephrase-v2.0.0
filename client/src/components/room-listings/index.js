@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import './room-listings.css';
 import { Collection, CollectionItem } from 'react-materialize';
 import FaCircle from 'react-icons/lib/fa/circle';
+import FaTrash from 'react-icons/lib/fa/trash';
 
 class RoomListings extends React.Component {
+
+    getDeleteBtnText() {
+      if (this.props.deleteMode) {
+        return 'Don\'t delete';
+      }
+      return 'Delete rooms';
+    }
 
     getRoomsJsx() {
       return this.props.chatRooms.map((room, index) => {
@@ -17,11 +25,20 @@ class RoomListings extends React.Component {
         names = names.filter(n => n !== '');
         const num = names.length > 0 ? names.length : 1;
         const displayNames = names.length > 0 ? names.join(', ') : 'Just me';
+        if (this.props.deleteMode) {
+          return (
+            <CollectionItem className="chat-listing" key={index}>
+              <span className='number'>{ num }</span>
+              <span>{ displayNames }</span>
+              <span className='trash-icon-wrap' onClick={e => this.props.sendDeleteRoom(e, room._id) }><FaTrash /></span>
+            </CollectionItem>
+          );
+        }
         return ( 
           <Link to={`/profile/chat/${room._id}`} key={index}>
             <CollectionItem className="chat-listing">
-                <span className='number'>{ num }</span>
-                <span>{ displayNames }</span>
+              <span className='number'>{ num }</span>
+              <span>{ displayNames }</span>
             </CollectionItem>
           </Link>
         )
@@ -29,6 +46,13 @@ class RoomListings extends React.Component {
     }
 
     getHeaders() {
+      if (this.props.chatRooms.length === 0 && this.props.user) {
+        return (
+        <li className='chat-room-title-container'>
+          <h4>Welcome! You currently have no open conversations</h4>
+        </li>
+        );
+      }
       if (this.props.currentRm && this.props.user) {
         return (
           <li>
@@ -40,7 +64,10 @@ class RoomListings extends React.Component {
         );
       }
       return (
-        <li><h4>Chat Rooms</h4></li>
+        <li className='chat-room-title-container'>
+          <h4>Chat Rooms</h4>
+          <a className='delete-rooms' onClick={e => this.props.updateDeleteMode(e)}>{ this.getDeleteBtnText() }</a>
+        </li>
       );
     }
 

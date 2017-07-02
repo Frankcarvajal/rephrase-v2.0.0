@@ -3,6 +3,7 @@ const { ChatRoom } = require('../models/chatRoom');
 const router = express.Router();
 const jsonParser = require('body-parser').json();
 const { passport } = require('../auth');
+const requestPromise = require('request-promise-native');
 
 
 // this endpoint gets all the chatrooms that a user is a participant in
@@ -89,14 +90,19 @@ router.post('/chatRoom/:chatRoomId', jsonParser, (req, res) => {
 });
 
 // For deleting a chat room
-router.delete('/chatRoom/:chatRoomId', (req, res) => {
+router.delete('/chatRoom/:chatRoomId', passport.authenticate('bearer', {session: false}), (req, res) => {
     return ChatRoom
         .findByIdAndRemove(req.params.chatRoomId)
         .exec()
         .then(result => {
-            console.log('DELETED ROOM =>', result);
-            res.json({ message: 'Room Deleted!'});
+            return ChatRoom
+                .find({
+                    participants: { $in: [req.user._id] }
+                })
+                .populate('participants')
+                .exec()
         })
+        .then(rooms => res.json(rooms))
         .catch(err => { 
             console.error(err);
             res.send(err); 

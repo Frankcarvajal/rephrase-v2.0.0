@@ -51,7 +51,8 @@ export class AddChatRoomForm extends React.Component {
     }
     if (!isUserAlreadySelected && userData._id !== this.props.user.id) {
       this.setState({
-        selectedUsers: [...this.state.selectedUsers, userData]
+        selectedUsers: [...this.state.selectedUsers, userData],
+        search: ''
       });
     }
   }
@@ -71,6 +72,13 @@ export class AddChatRoomForm extends React.Component {
       return (<p>Loading...</p>);
     }
     if (this.state.search.length === 0) {
+      if (this.props.chatRooms.length === 0) {
+        return (
+          <div className="recent-converstions">
+            <h5>Search for other users by name to get started</h5>
+          </div>
+        );
+      }
       return (
         <div className="recent-converstions">
           <h4>Recent Conversations</h4>
@@ -115,7 +123,7 @@ export class AddChatRoomForm extends React.Component {
         return null;
       }
       return (  
-        <li key={index} onClick={ e => this.handleAddUser(e, user) }>
+        <li className='searched-user' key={index} onClick={ e => this.handleAddUser(e, user) }>
           {user.displayName}
         </li>  
       );
@@ -127,7 +135,7 @@ export class AddChatRoomForm extends React.Component {
       return (
         <div key={index} className='selected'>
           {user.displayName}
-          <span onClick={e => this.handleRemoveSelectedUser(e, user)}>X</span>
+          <span onClick={e => this.handleRemoveSelectedUser(e, user)}><FaClose /></span>
         </div>
       );
     });

@@ -2,7 +2,7 @@ import React from 'react';
 import './chats-list.css';
 import * as Cookies from 'js-cookie'; 
 import { connect } from 'react-redux';
-import { fetchChatList } from './actions';
+import { fetchChatList, deleteChatRoom } from './actions';
 import { Link } from 'react-router-dom';
 import RoomListings from '../room-listings';
 import { Button } from 'react-materialize';
@@ -12,6 +12,10 @@ export class ChatList extends React.Component {
   constructor(props) {
     super(props);
     
+    this.state = {
+      deleteMode: false
+    };
+
     this.accessToken = Cookies.get('accessToken');
   }
 
@@ -29,11 +33,25 @@ export class ChatList extends React.Component {
     }
   }
 
+  updateDeleteMode(event) {
+    this.setState({
+      deleteMode: !this.state.deleteMode
+    });
+  }
+
   getChatRoomListings() {
     if (this.props.chatRooms && this.props.user) {
       const rooms = this.props.chatRooms;
       const userData = this.props.user;
-      return (<RoomListings chatRooms={rooms} user={userData} />);
+      return (
+        <RoomListings 
+          chatRooms={rooms} 
+          user={userData} 
+          deleteMode={this.state.deleteMode}
+          updateDeleteMode={e => this.updateDeleteMode(e)}
+          sendDeleteRoom={(e, id) => this.props.dispatch(deleteChatRoom(id, this.accessToken))} 
+        />
+      );
     }
     return null;
   }
